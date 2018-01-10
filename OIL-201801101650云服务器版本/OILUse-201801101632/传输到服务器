@@ -1,0 +1,5 @@
+scp -r /home/fumeng/OIL/DEMOAPP.war  root@39.104.89.196:/usr/lib/apache-tomcat-8.5.24/webapps
+
+scp -r /home/fumeng/OIL/OIL_USE/SERVER  root@39.104.89.196:/home
+
+
