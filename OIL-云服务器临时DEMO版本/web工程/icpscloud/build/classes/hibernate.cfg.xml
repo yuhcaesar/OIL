@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		  "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		  "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory >
+	
+		<!-- SQL方言，设定的是MySQL -->
+		<!--  <property name="dialect">org.hibernate.dialect.MySQLDialect	</property>-->
+		<property name="dialect">org.hibernate.dialect.OracleDialect	</property>
+		
+		<!-- jdbc url -->
+		<!--
+		  <property name="connection.url">
+			jdbc:mysql://localhost:3306/tstas?characterEncoding=utf-8
+		</property>
+		-->
+		<property name="connection.url">
+			jdbc:oracle:thin:@localhost:1521:orcl
+		</property>		
+		
+		<!-- 数据库用户名和密码 -->
+		<property name="connection.username">c##emes</property>
+		<property name="connection.password">emes</property>
+		
+		<!-- 驱动程序 -->
+		 <!-- <property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
+		<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		
+		<!-- 为true表示将Hibernate发送给数据库的sql显示出来 -->
+		<property name="hibernate.show_sql">true</property>
+		
+		<!-- 数据库事务自动提交 -->
+		<property name="connection.autocommit">true</property>
+		
+		<!-- 数据库自动重连 -->
+		<property name="connection.autoReconnect">true</property>
+        <property name="connection.autoReconnectForPools">true</property>
+        <property name="connection.is-connection-validation-required">true</property>
+        
+		<!-- 其他属性配置 -->
+		<property name="hibernate.generate_statistics">true</property>
+		<property name="hibernate.connection.release_mode">auto</property>
+		
+		<!-- 映射文件 -->
+		<!-- 在applicationContext.xml文件里的hbm.xml文件配置也可以放到这儿 -->
+		<!--  <mapping resource="models.hbm.xml"></mapping>  -->
+	</session-factory>
+</hibernate-configuration>
