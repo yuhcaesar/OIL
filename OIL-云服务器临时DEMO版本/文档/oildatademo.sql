@@ -21,15 +21,15 @@ USE `oil`;
 DROP TABLE IF EXISTS `oildatademo`;
 
 CREATE TABLE `oildatademo` (
-  `DataID` int(8) NOT NULL auto_increment,
-  `Data1` char(8) collate utf8_unicode_ci default NULL COMMENT '数据项1',
-  `Data2` char(8) collate utf8_unicode_ci NOT NULL COMMENT '数据项2',
-  `data3` char(8) collate utf8_unicode_ci NOT NULL COMMENT '数据项3',
-  `Data4` char(8) collate utf8_unicode_ci NOT NULL COMMENT '数据项4',
-  `Data5` char(8) collate utf8_unicode_ci NOT NULL COMMENT '数据项5',
-  `Data6` char(8) collate utf8_unicode_ci NOT NULL COMMENT '数据项6',
-  `Data7` char(8) collate utf8_unicode_ci default NULL,
-  `Data8` char(20) collate utf8_unicode_ci default NULL,
+  `DataID` int(20) NOT NULL auto_increment,
+  `Data1` char(20) collate utf8_unicode_ci default NULL COMMENT 'Data1',
+  `Data2` char(20) collate utf8_unicode_ci NOT NULL COMMENT 'Data2',
+  `data3` char(20) collate utf8_unicode_ci NOT NULL COMMENT 'Data3',
+  `Data4` char(20) collate utf8_unicode_ci NOT NULL COMMENT 'Data4',
+  `Data5` char(20) collate utf8_unicode_ci NOT NULL COMMENT 'Data5',
+  `Data6` char(20) collate utf8_unicode_ci NOT NULL COMMENT 'Data6',
+  `Data7` char(20) collate utf8_unicode_ci default NULL COMMENT 'Data7',
+  `Data8` char(20) collate utf8_unicode_ci default NULL COMMENT 'Data8',
   `time` char(40) collate utf8_unicode_ci default NULL,
   PRIMARY KEY  (`DataID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -7,8 +7,8 @@
 tomcat路径  /usr/lib/apache-tomcat-8.5.25
 mysql用户名root
 mysql密码tree
-使用的demo数据库 OIL
-使用的demo表 OilDataDemo
+使用的数据库 OIL
+使用的表 OilDataDemo
 
 启动方式：
 进入tomcat路径，进入bin, ./startup.sh
