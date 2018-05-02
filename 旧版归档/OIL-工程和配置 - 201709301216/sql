@@ -1,0 +1,42 @@
+create database OIL;
+
+use OIL;
+
+CREATE TABLE OilData_043(
+  DataID int(8) NOT NULL AUTO_INCREMENT,
+  VID char(4) NOT NULL COMMENT "厂商识别码",
+  PID char(4) NOT NULL COMMENT "产品识别码",
+  DID char(24) NOT NULL COMMENT "设备识别码",
+  Data1 char(8)  DEFAULT NULL COMMENT "数据项1",
+  Data2 char(8)  DEFAULT NULL COMMENT "数据项2",
+  data3 char(8)  DEFAULT NULL COMMENT "数据项3",
+  Time char(24)  DEFAULT NULL COMMENT "时间记录",
+  PRIMARY KEY (DataID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci   ;
+
+
+CREATE TABLE OilData_053(
+  DataID int(8) NOT NULL AUTO_INCREMENT,
+  VID char(4) NOT NULL COMMENT "厂商识别码",
+  PID char(4) NOT NULL COMMENT "产品识别码",
+  DID char(24) NOT NULL COMMENT "设备识别码",
+  Data1 char(8)  DEFAULT NULL COMMENT "数据项1",
+  Data2 char(8)  DEFAULT NULL COMMENT "数据项2",
+  data3 char(8)  DEFAULT NULL COMMENT "数据项3",
+  Time char(24)  DEFAULT NULL COMMENT "时间记录",
+  PRIMARY KEY (DataID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci   ;
+
+CREATE TABLE  OilData_037(
+  DataID int(8) NOT NULL AUTO_INCREMENT,
+  VID char(4) NOT NULL COMMENT "厂商识别码",
+  PID char(4) NOT NULL COMMENT "产品识别码",
+  DID char(24) NOT NULL COMMENT "设备识别码",
+  NPostion char(15)  DEFAULT NULL COMMENT "N坐标",
+  EPosition char(15)  DEFAULT NULL COMMENT "E坐标",
+  CommandID char(8)  DEFAULT NULL COMMENT "CommandID",
+  Time char(24)  DEFAULT NULL COMMENT "时间记录",
+  PRIMARY KEY (DataID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+

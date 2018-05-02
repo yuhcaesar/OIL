@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+     <class name="business.icpscloud.facility.entity.FacilityEntity" table="OilDataDemo" catalog="OIL">
+        <!-- 以下是设备信息 -->
+        <id name="DataID" type="java.lang.Integer">
+            <generator class="identity"></generator>
+        </id>
+        <property name="Data1" type="java.lang.String">
+            <column name="Data1">             
+            </column>           
+        </property>
+         <property name="Data2" type="java.lang.String">
+            <column name="Data2">             
+            </column>           
+        </property>
+         <property name="Data3" type="java.lang.String">
+            <column name="data3">
+            </column>           
+        </property>  
+         <property name="Data4" type="java.lang.String">
+            <column name="Data4">             
+            </column>           
+        </property>
+         <property name="Data5" type="java.lang.String">
+            <column name="Data5">             
+            </column>           
+        </property>
+         <property name="Data6" type="java.lang.String">
+            <column name="data6">
+            </column>           
+        </property>  
+        <property name="Data7" type="java.lang.String">
+            <column name="data7">
+            </column>           
+        </property>  
+        <property name="Data8" type="java.lang.String">
+            <column name="data8">
+            </column>           
+        </property>  
+        <property name="Time" type="java.lang.String">
+            <column name="time">
+            </column>           
+        </property> 
+    </class>
+</hibernate-mapping>

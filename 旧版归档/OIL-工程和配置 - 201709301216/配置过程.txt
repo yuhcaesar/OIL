@@ -1,0 +1,97 @@
+/****************安装JAVA***********************/
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo update-java-alternatives -s java-8-oracle
+java -version
+//如果安装成功了会有显示
+(参考：http://www.cnblogs.com/a2211009/p/4265225.html)
+/****************安装tomcat***********************/
+下载tomcat地址：http://tomcat.apache.org/download-80.cgi,下载tar.gz类型的
+解压到/usr/lib
+sudo tar zxvf "apache-tomcat-8.0.28.tar.gz"(这个名字要跟下载的文件名字相同) -C /usr/lib
+sudo mv "apache-tomcat-8.0.28" tomcat8
+sudo chmod -R 777 tomcat8
+
+打开tomcat8的bin文件夹startup.sh的文件，在最后一行上面输入
+
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+JRE_HOME=${JAVA_HOME}/jre
+PATH=$JAVA_HOME/bin:$PATH
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+TOMCAT_HOME=/usr/lib/tomcat8
+
+然后在shutdown.sh中也做相应的改变
+//在bin文件夹 运行tomcat
+./startup.sh
+//在bin文件夹 关闭tomcat
+
+//shutdown.sh
+
+(参考：http://blog.csdn.net/xingjiarong/article/details/49386989)
+
+/****************安装mysql**********************/
+sudo apt-get install mysql-server
+sudo apt-get isntall mysql-client
+sudo apt-get install libmysqlclient-dev
+(安装的时候注意用户名为root，密码是tree)
+(参考：http://www.cnblogs.com/zhuyp1015/p/3561470.html)
+
+/****************设置数据库**********************/
+mysql -u root -p
+输入密码(tree)
+复制下面的内容到终端
+
+create database OIL;
+
+use OIL;
+
+CREATE TABLE OilData_043(
+  DataID int(8) NOT NULL AUTO_INCREMENT,
+  VID char(4) NOT NULL COMMENT "厂商识别码",
+  PID char(4) NOT NULL COMMENT "产品识别码",
+  DID char(24) NOT NULL COMMENT "设备识别码",
+  Data1 char(8)  DEFAULT NULL COMMENT "数据项1",
+  Data2 char(8)  DEFAULT NULL COMMENT "数据项2",
+  data3 char(8)  DEFAULT NULL COMMENT "数据项3",
+  Time char(24)  DEFAULT NULL COMMENT "时间记录",
+  PRIMARY KEY (DataID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci   ;
+
+
+CREATE TABLE OilData_053(
+  DataID int(8) NOT NULL AUTO_INCREMENT,
+  VID char(4) NOT NULL COMMENT "厂商识别码",
+  PID char(4) NOT NULL COMMENT "产品识别码",
+  DID char(24) NOT NULL COMMENT "设备识别码",
+  Data1 char(8)  DEFAULT NULL COMMENT "数据项1",
+  Data2 char(8)  DEFAULT NULL COMMENT "数据项2",
+  data3 char(8)  DEFAULT NULL COMMENT "数据项3",
+  Time char(24)  DEFAULT NULL COMMENT "时间记录",
+  PRIMARY KEY (DataID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci   ;
+
+CREATE TABLE  OilData_037(
+  DataID int(8) NOT NULL AUTO_INCREMENT,
+  VID char(4) NOT NULL COMMENT "厂商识别码",
+  PID char(4) NOT NULL COMMENT "产品识别码",
+  DID char(24) NOT NULL COMMENT "设备识别码",
+  NPostion char(15)  DEFAULT NULL COMMENT "N坐标",
+  EPosition char(15)  DEFAULT NULL COMMENT "E坐标",
+  CommandID char(8)  DEFAULT NULL COMMENT "CommandID",
+  Time char(24)  DEFAULT NULL COMMENT "时间记录",
+  PRIMARY KEY (DataID)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+/****************配置工程**********************/
+
+进入到 计算机/usr/lib/tomcat8/appache-tomcat-8.0.46/wabapps
+将工程文件复制进去
+重新启动tomcat (在tomcatbin文件夹打开终端输入./startup.sh)
+
+/*****************运行*****************************/
+打开服务器程序：
+在OIL_USE/SERVER中打开终端，输入 ./operate
+打开浏览器，输入地址： http://localhost:8080/icpscloud/facility/getDevDetailAction.action
+其他机器访问：http://[ip地址]：8080/icpscloud/facility/getDevDetailAction.action

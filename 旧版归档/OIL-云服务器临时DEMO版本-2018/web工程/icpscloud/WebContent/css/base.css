@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+*{ padding: 0; margin: 0}
+fieldset,img{border: 0;}
+a{ text-decoration: none;}
+table{ border-collapse: collapse; border-spacing: 0;}
+ol,ul{ list-style: none;}
+address,caption,cite,code,dfn,em,strong,var{ font-weight: normal;;font-style: normal;
+}
+h1,h2,h3,h4,h5,h6{font-weight: normal;font-size: 100%;}
+q:before,q:after{content: '';}
+abbr,acronym{ border: 0;}
+
+/*顶部*/
+.top{ width: 100%; height: 28px; background-color: #dbecfc; }
+.top .center{ width: 1180px; margin: 0 auto;}
+.top .center span{ color: #6e7a77; font-size: 12px; line-height: 28px;}
+.top .center .left{ float: left;}
+.top .center .right{ float: right; color: #2d2e89;}
+.top .center a:hover{ text-decoration: underline;}
+/*头部*/
+.header{ width: 100%; height: 178px; background: url(../images/header-bg.jpg) center; }
+.header .center{ margin: 0 auto; width: 1180px; line-height: 178px;}
+.header .center span{ color: #2d2e89; font-size: 36px; font-family: "微软雅黑"; }
+.header .center img{ float: right; vertical-align: center; margin-top:55px; margin-right: 30px;}
+/*导航*/
+.nav{ background: #135fab; width: 100%; height: 50px; line-height: 50px;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.nav_bar{position:relative; z-index:1; height:50px; line-height:50px; color:#fbf6f6;width:1180px;margin: 0 auto;z-index: 9000;}
+.nav_bar .nav{ margin: 0 auto; width: 1180px;}
+.nav a{color:#fbf6f6;}
+.nav h3{font-size:100%; font-weight:normal;}
+.nav h3 a{display:block; width:147px; text-align:center; font-size:14px;font-family: "微软雅黑"; }
+.nav h3 a:hover{ background: #156abe; height: 47px;}
+.nav .m{float:right; position:relative; z-index:1;}
+.nav .sub{display:none; position:absolute; left:-3px; top:50px; z-index:1; width:147px; border:1px solid #E6E4E3; border-top:0;  background:#fff;}
+.nav .sub li{text-align:center; padding:0 8px; margin-bottom:-1px;}
+.nav .sub li a{display:block;  border-bottom:1px solid #E6E4E3; padding:8px 0; height:32px; line-height:32px; color:#666; font-family: "微软雅黑"; font-size: 14px; }
+.nav .sub li a:hover{color:#003d87;font-family: "微软雅黑";}
+.nav .block{height:3px; width:147px; background:#003d87; position:absolute; left:0; top:47px; overflow:hidden;}	
+.nav h3 a .a1{position: absolute; left:30px; top: 15px;} 
+.nav h3 a .a2{position: absolute; left:18px; top: 15px;} 
+.nav h3 a .a3{position: absolute; left:14px; top: 15px;} 
+.nav h3 a .a4{position: absolute; left:6px; top: 9px;} 
+.nav h3 a .a5{position: absolute; left:14px; top: 9px;} 
+.nav h3 a .a6{position: absolute; left:24px; top: 15px;} 
+.nav h3 a .a7{position: absolute; left:22px; top: 15px;} 
+.nav h3 a .a8{position: absolute; left:16px; top: 13px;} 
