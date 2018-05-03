@@ -4,3 +4,6 @@ http://39.104.89.196:8080/icpscloudOILNew3/facility/getDevDetail1Action.action
 
 ÐÂ°æÍøÖ·
 http://39.104.89.196:8080/monitor17/monitor/login!loginInput.action
+
+201805032149ÍøÖ·
+http://39.104.89.196:8080/monitor/login!loginInput.action
