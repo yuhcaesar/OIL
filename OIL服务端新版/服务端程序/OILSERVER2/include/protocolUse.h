@@ -47,9 +47,9 @@ class protocolUse
     {
        string* Use = stringSplite(getIn,',');
        string theDataClip = "";
-       for(int i = 0 ; i <6 ;i ++)
+       for(int i = 0 ; i < 7 ;i ++)
           theDataClip += Use[i]+","; 
-       string save =  theSaveString + theDataClip +"'1','"+getTime() +"');";
+       string save =  theSaveString + theDataClip +"'"+getTime() +"');";
         cout<<save<<endl;
         theDBC.DBQuery(save);
 
