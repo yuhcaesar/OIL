@@ -32,7 +32,10 @@ class DBController
       void DBQuery(string sql)
       {
         if(mysql_query(&connection, sql.c_str()))
-            makeLogShow(4,"DB operate fail");
+            {
+              makeLogShow(4,"DB operate fail");
+              makeLogShow(4 , mysql_error(&connection));
+            }
         else 
             makeLogShow(1,"DB operate over");
       }
