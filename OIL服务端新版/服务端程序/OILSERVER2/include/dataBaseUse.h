@@ -18,7 +18,12 @@ class DBController
 
         mysql_init(&connection);
         makeLogShow(1,"try to start DB");
-        if(mysql_real_connect(&connection,hostIP.c_str(),user.c_str(),password.c_str(),database.c_str(),0,NULL,0))
+        IpSave = hostIP.c_str();
+        userSave = user.c_str();
+        passwordSave = password.c_str();
+        databaseSave =database.c_str();
+
+        if(mysql_real_connect(&connection,IpSave,userSave,passwordSave,databaseSave,0,NULL,0))
         { 
             makeLogShow(1,"DB linked");
         }
@@ -28,6 +33,20 @@ class DBController
        }
        makeLogShow(1,"DB opened");
       }
+      void reStart()
+      {
+       mysql_init(&connection);
+        makeLogShow(1,"try to start DB");
+        if(mysql_real_connect(&connection,IpSave,userSave,passwordSave,databaseSave,0,NULL,0))
+        { 
+          makeLogShow(1,"DB linked");
+        }
+        else
+        {
+         makeLogShow(4,"DB link failed");
+        }
+        makeLogShow(1,"DB opened");
+      }
       
       void DBQuery(string sql)
       {
@@ -35,6 +54,7 @@ class DBController
             {
               makeLogShow(4,"DB operate fail");
               makeLogShow(4 , mysql_error(&connection));
+              reStart();
             }
         else 
             makeLogShow(1,"DB operate over");
@@ -59,6 +79,10 @@ class DBController
 
      private:
        MYSQL connection;
+      const char* IpSave ;
+      const char* userSave ;
+      const char* passwordSave ;
+      const char* databaseSave ;
        void makeLogShow(int type,string theinformation)
        {
            cout<<theinformation<<endl;
