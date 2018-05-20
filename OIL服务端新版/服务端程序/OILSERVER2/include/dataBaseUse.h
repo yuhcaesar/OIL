@@ -30,11 +30,13 @@ class DBController
         else
        {
          makeLogShow(4,"DB link failed");
+         makeLogShow(4,mysql_error(&connection));
        }
        makeLogShow(1,"DB opened");
       }
       void reStart()
       {
+       mysql_close(&connection);
        mysql_init(&connection);
         makeLogShow(1,"try to start DB");
         if(mysql_real_connect(&connection,IpSave,userSave,passwordSave,databaseSave,0,NULL,0))
@@ -44,6 +46,7 @@ class DBController
         else
         {
          makeLogShow(4,"DB link failed");
+         makeLogShow(4, mysql_error(&connection));
         }
         makeLogShow(1,"DB opened");
       }
@@ -54,6 +57,7 @@ class DBController
             {
               makeLogShow(4,"DB operate fail");
               makeLogShow(4 , mysql_error(&connection));
+             if(!mysql_ping(&connection))
               reStart();
             }
         else 

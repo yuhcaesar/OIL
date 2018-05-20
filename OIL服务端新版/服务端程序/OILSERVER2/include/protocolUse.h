@@ -26,7 +26,10 @@ class protocolUse
     
     DBController theDBC;
     int stringCount = 0;
-    string theSaveString = "INSERT INTO t_guid (data1 , data2 , data3 , data4, data5,  data6, gid, time) values("; 
+    int saveCounter = 0;
+    int saveCounterMax = 10;
+    string saveStringUse = "INSERT INTO t_guid(data1,data2,data3,data4,data5,data6,gid,time)values";
+    string theSaveString = "INSERT INTO t_guid (data1 , data2 , data3 , data4, data5,  data6, gid, time) values"; 
     void makeLogShow(int type,string theinformation)
     {
            cout<<theinformation<<endl; 
@@ -48,10 +51,21 @@ class protocolUse
        string* Use = stringSplite(getIn,',');
        string theDataClip = "";
        for(int i = 0 ; i < 7 ;i ++)
-          theDataClip += Use[i]+","; 
-       string save =  theSaveString + theDataClip +"'"+getTime() +"');";
-        cout<<save<<endl;
-        theDBC.DBQuery(save);
+          theDataClip += Use[i]+",";
+ 
+       saveCounter++;
+       saveStringUse +=  "\n("+ theDataClip +"'"+getTime() +"')";
+       saveStringUse += saveCounter<saveCounterMax? ",":";";
+       if(saveCounter >= saveCounterMax)
+       {
+            saveCounter = 0;
+           // theDBC.DBQuery(saveStringUse);
+            cout<<"\n-------------------\n"<<saveStringUse<<"\n-------------------\n";
+            theDBC.DBQuery(saveStringUse);
+            saveStringUse = theSaveString;   
+       }
+       // cout<<save<<endl;
+       // theDBC.DBQuery(save);
 
     }
 
