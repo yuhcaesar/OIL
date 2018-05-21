@@ -48,10 +48,18 @@ class protocolUse
 
     void saveStringForDemo(string getIn)
     {
-       string* Use = stringSplite(getIn,',');
+       
+       string *  Use = stringSplite(getIn,',');
        string theDataClip = "";
+       int checkCount = stringSplitCount(getIn, ',');
+       if(checkCount< 7 )
+       {
+          cout<<"The data is not complete"<<endl;
+           return;
+       }
+
        for(int i = 0 ; i < 7 ;i ++)
-          theDataClip += Use[i]+",";
+         theDataClip += Use[i]+",";
  
        saveCounter++;
        saveStringUse +=  "\n("+ theDataClip +"'"+getTime() +"')";
@@ -70,11 +78,11 @@ class protocolUse
     }
 
 //splite String With Char
-    string * stringSplite(string information,char spliteChar)
+    string*  stringSplite(string information,char spliteChar)
     {
      int index = 0;
      int countNeed = 0;
-     string * theStringClips;
+     string*  theStringClips;
      string sub_str;
 
      stringstream ssForCount(information);
@@ -83,13 +91,22 @@ class protocolUse
      while(getline(ssForCount,sub_str,spliteChar)) 
        countNeed ++;
      theStringClips = new  string [countNeed];     
-     while(getline(ss,sub_str,spliteChar)) 
+     while(getline(ss,sub_str,spliteChar) && index < countNeed ) 
      {
-       theStringClips [index] = sub_str;
+       theStringClips [index]= sub_str;
        index ++;
       }
 
     return theStringClips;
+   }
+    int stringSplitCount(string information , char splitChar)
+   {
+        int count = 0;
+         string sub;
+         stringstream S(information);
+        while(getline(S,sub,splitChar))
+          count++;
+         return count;   
    }
 
   string getTime()
