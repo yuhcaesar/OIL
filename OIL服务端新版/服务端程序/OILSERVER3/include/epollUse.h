@@ -97,7 +97,8 @@ bool epollUse::init(int port , int sock_count , protocolUse thePin)
     struct epoll_event ev;  
     ev.data.fd = m_listen_sock;  
     ev.events  = EPOLLIN | EPOLLOUT;  
-    epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, m_listen_sock, &ev);  
+    epoll_ctl(m_epoll_fd, EPOLL_CTL_ADD, m_listen_sock, &ev); 
+    cout<<"epoll server inited"<<endl;   
 }  
 
   
@@ -174,6 +175,8 @@ int epollUse::epoll_server_wait(int time_out)
   
 void epollUse::run(int time_out)  
 {  
+    cout<<"epoll server start running"<<endl;  
+    cout<<"--------------------------------"<<endl;
     char *recv_buf = new char[65535];  
     char *send_buf = new char[65535];  
     while(1)  
@@ -204,7 +207,7 @@ void epollUse::run(int time_out)
                     if(m_epoll_events[i].events & EPOLLIN)  
                     {  
                         int recv_count = recv_data(m_epoll_events[i].data.fd, recv_buf);  
-                        cout<<recv_buf<<endl;  
+                        cout<<"receive: "<<recv_buf<<endl;  
 
                         string receiveString(recv_buf);
                         theProtocolController.getString(receiveString);
