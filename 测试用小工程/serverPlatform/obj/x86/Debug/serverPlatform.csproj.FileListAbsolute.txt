@@ -49,3 +49,5 @@ E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverP
 E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
 E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
 E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.exe
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.pdb
