@@ -10,6 +10,6 @@
         <Label x:Name="label_Copy" Content="port" HorizontalAlignment="Left" Margin="72,85,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="portText" HorizontalAlignment="Left" Height="23" Margin="116,85,0,0" TextWrapping="Wrap" Text="10005" VerticalAlignment="Top" Width="120"/>
         <Label Content="text" HorizontalAlignment="Left" Margin="72,131,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="information" HorizontalAlignment="Left" Height="23" Margin="116,134,0,0" TextWrapping="Wrap" Text="'1','2','3','4','5','6','7','8'" VerticalAlignment="Top" Width="354"/>
+        <TextBox x:Name="information" HorizontalAlignment="Left" Height="86" Margin="116,134,0,0" TextWrapping="Wrap" Text="'1','2','3','4','5','6','7','8'" VerticalAlignment="Top" Width="354" UndoLimit="700"/>
     </Grid>
 </Window>

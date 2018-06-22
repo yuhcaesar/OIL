@@ -36,10 +36,14 @@ class protocolUse
     //更复杂的协议处理
     void ProtocolOperate(string  information)
     {
+
+     try
+     {
      int lengthAll =  information.size();
      cout<<"all length = "<<lengthAll<<endl;
      string head =  information .substr(0,8);
-     cout<<"head is "<< head<< endl;
+     int headInt = toIntValue(information .substr(0,8).c_str());
+     cout<<"head is "<< head<<"  headInt "<< headInt <<endl;
      string VID = information .substr(8,4);
      cout<<"VID is "<< VID << endl;
      string PID =  information .substr(12,4);
@@ -57,33 +61,39 @@ class protocolUse
      string tail = information .substr(lengthAll-4,4);
      cout<<"tail is "<<  tail << endl;
      //if( operate1 == "31")//如果是上传过来的数据
-	{
+	//{
 	     //if(operate2 == "3D")
 	     {
 	       data0x3D( VID,PID, DID, data);
 	     }
-	}
+	//}
+     } 
+     catch(int i)
+     {
+       cout<<"not match the protocol"<<endl;
+     }
     }
     
     //-----------------------------------协议处理--------------------------------------------------//
 
        void data0x3D(string VID , string PID ,string DID,  string dataIn)
        { 
-           int indexNow = 0;
-           cout<<dataIn.size()<<" is the size"<<endl;
-           for(int i = 0 ; (i+7) < dataIn.size() ; )
-           {
-                const char *  A = dataIn.substr(i,i+2).c_str();
-                i+=2;
-                const char *  B = dataIn.substr(i,i+2).c_str();
-                i+=2;
-                const char *  C = dataIn.substr(i,i+2).c_str();
-                i+=2;
-                const char *  D = dataIn.substr(i,i+2).c_str();
-                i+=2;
-                float theFloat = changeToFloat(A,B,C,D);
-                cout<<"getFloat "<<theFloat<<" at "<<i<<endl;
-           }
+	   int indexNow = 0;
+	   cout<<dataIn.size()<<" is the size"<<endl;
+	   for(int i = 0 ; (i+7) < dataIn.size() ; )
+	   {
+	        const char *  A = dataIn.substr(i,i+2).c_str();
+	        i+=2;
+	        const char *  B = dataIn.substr(i,i+2).c_str();
+	        i+=2;
+	        const char *  C = dataIn.substr(i,i+2).c_str();
+	        i+=2;
+	        const char *  D = dataIn.substr(i,i+2).c_str();
+	        i+=2;
+	        float theFloat = changeToFloat(A,B,C,D);
+	        cout<<"getFloat "<<theFloat<<" at "<<i<<endl;
+	   }
+    
        }
 	void dataUse43(string VID , string PID ,string DID,  string dataIn)
 	{ 

@@ -51,3 +51,13 @@ E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverP
 E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
 D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.exe
 D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\bin\Debug\serverPlatform.exe
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\bin\Debug\serverPlatform.pdb
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.csprojResolveAssemblyReference.cache
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\MainWindow.baml
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\MainWindow.g.cs
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\App.g.cs
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform_MarkupCompile.cache
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
