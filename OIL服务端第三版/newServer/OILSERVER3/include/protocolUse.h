@@ -15,6 +15,16 @@ class protocolUse
   {
     theDBC = theDBCIn;
     makeLogShow(1,"protocoluse is opened");
+    //cout<<"demo "<<changeToFloat("A4","70" , "45" , "41")<<endl;
+    //union {unsigned int a ; float f;};
+    //a = 0x414570A4;
+    //cout<<f<<endl;
+    //string SSS = "414570A4";
+    // const char * E = SSS.c_str();
+    //float theFloat2 = changeToFloatConvert(E);
+    //cout<<"getFloat "<<theFloat2<<" at " <<endl;
+
+    
   }
 
   void getString(string information)
@@ -44,6 +54,7 @@ class protocolUse
      string head =  information .substr(0,8);
      int headInt = toIntValue(information .substr(0,8).c_str());
      cout<<"head is "<< head<<"  headInt "<< headInt <<endl;
+
      string VID = information .substr(8,4);
      cout<<"VID is "<< VID << endl;
      string PID =  information .substr(12,4);
@@ -82,18 +93,11 @@ class protocolUse
 	   cout<<dataIn.size()<<" is the size"<<endl;
 	   for(int i = 0 ; (i+7) < dataIn.size() ; )
 	   {
-	        const char *  A = dataIn.substr(i,i+2).c_str();
-	        i+=2;
-	        const char *  B = dataIn.substr(i,i+2).c_str();
-	        i+=2;
-	        const char *  C = dataIn.substr(i,i+2).c_str();
-	        i+=2;
-	        const char *  D = dataIn.substr(i,i+2).c_str();
-	        i+=2;
-	        float theFloat = changeToFloat(A,B,C,D);
-	        cout<<"getFloat "<<theFloat<<" at "<<i<<endl;
+	        string subString = dataIn.substr(i,i+8).c_str();
+	        i+=8;
+                float theFloat2 = changeToFloatConvert(subString);
+	        cout<<"getFloat "<<theFloat2<<" at "<<i<<endl;
 	   }
-    
        }
 	void dataUse43(string VID , string PID ,string DID,  string dataIn)
 	{ 
@@ -187,15 +191,45 @@ class protocolUse
      return i;
    }  
 
+    float changeToFloatConvert(string theString)
+    {
+     if(theString.size()<8)
+      return 0;
+     
+     string A = theString.substr(0,2);
+     string B = theString.substr(2,2);
+     string C = theString.substr(4,2);
+     string D = theString.substr(6,2);
+     string vert = D+C+B+A;
+     //vert = A+B +C+D;
+     const char * E = vert.c_str();
+
+     long int n;
+     sscanf(E, "%x", &n);
+      float theFloat = *((float*)&n);
+      return theFloat;
+    }
+
     float changeToFloat(const char * a,const char * b,const char * c,const char * d)
     {
+     //正向
      int AA = strtoll(a , NULL , 16);
      int BB = strtoll(b , NULL , 16);
      int CC = strtoll(c , NULL , 16);
      int DD = strtoll(d , NULL , 16);
      unsigned char pp[] = {AA,BB,CC,DD};
      float * theFloat = (float *) pp;
-     return * theFloat;
+     unsigned char pp2[] = {DD,CC,BB , AA};
+     float * theFloat2 = (float *) pp2;
+     
+     float A =   * theFloat;
+     float B=   * theFloat2;
+
+     //cout<<A;
+     //cout<<"---------"<<endl;
+     //cout<<B;
+     //cout<<"---------"<<endl;
+     return A;
     }
 
     //字符串切分
