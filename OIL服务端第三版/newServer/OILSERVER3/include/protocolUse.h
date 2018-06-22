@@ -46,15 +46,13 @@ class protocolUse
     //更复杂的协议处理
     void ProtocolOperate(string  information)
     {
-
-     try
-     {
      int lengthAll =  information.size();
+     if(lengthAll < 48)
+       return;
      cout<<"all length = "<<lengthAll<<endl;
      string head =  information .substr(0,8);
      int headInt = toIntValue(information .substr(0,8).c_str());
      cout<<"head is "<< head<<"  headInt "<< headInt <<endl;
-
      string VID = information .substr(8,4);
      cout<<"VID is "<< VID << endl;
      string PID =  information .substr(12,4);
@@ -78,11 +76,6 @@ class protocolUse
 	       data0x3D( VID,PID, DID, data);
 	     }
 	//}
-     } 
-     catch(int i)
-     {
-       cout<<"not match the protocol"<<endl;
-     }
     }
     
     //-----------------------------------协议处理--------------------------------------------------//
