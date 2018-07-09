@@ -30,6 +30,7 @@ class protocolUse
   void getString(string information)
   {
     // saveStringForDemo(information);
+     information = ASCOperate(information);
      ProtocolOperate(information);
   }
 
@@ -43,6 +44,18 @@ class protocolUse
     string saveStringUse = "INSERT INTO t_guid(data1,data2,data3,data4,data5,data6,gid,time)values";
     string theSaveString = "INSERT INTO t_guid (data1 , data2 , data3 , data4, data5,  data6, gid, time) values"; 
 
+    //ASCii转字符串
+    string ASCOperate(string stringIn)
+    {
+      string out = "";
+      for(int i =0 ; i < stringIn.size() ; i ++)
+      {
+         int value = stringIn[i];
+         out += toString(value );
+      }
+      cout<<"theTrueString = "<<out<<endl;
+      return out;
+    }
     //更复杂的协议处理
     void ProtocolOperate(string  information)
     {
