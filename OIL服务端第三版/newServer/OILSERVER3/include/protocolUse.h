@@ -50,8 +50,9 @@ class protocolUse
       string out = "";
       for(int i =0 ; i < stringIn.size() ; i ++)
       {
-         int value = stringIn[i];
-         out += toString(value );
+         int ValueUse = stringIn[i];
+         //out +=toString(ValueUse);
+         out += intTo16(ValueUse).substr(2,2);
       }
       cout<<"theTrueString = "<<out<<endl;
       return out;
@@ -170,14 +171,21 @@ class protocolUse
            cout<<theinformation<<endl; 
     }
 
-
-    // char *转int(十六进制)
+    //int 转十六进制
+    string intTo16(int i)
+    {
+      char str[100];
+      sprintf(str,"0x%x" ,i);
+      return str;
+    }
+    // (十六进制)转int
     int toIntValue(const char * IN)
     {
          int ValueUse = 0;          
          sscanf(IN, "%x", &ValueUse); 
          return  ValueUse ;    
     }
+
     //int 转string
     string toString(int In)
     {
@@ -212,8 +220,8 @@ class protocolUse
 
      long int n;
      sscanf(E, "%x", &n);
-      float theFloat = *((float*)&n);
-      return theFloat;
+     float theFloat = *((float*)&n);
+     return theFloat;
     }
 
     float changeToFloat(const char * a,const char * b,const char * c,const char * d)
