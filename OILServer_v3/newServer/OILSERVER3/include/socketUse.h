@@ -12,115 +12,138 @@
 
 
 #define CONNECT_NUM 5
-#define MAX_NUM 300
+#define MAX_NUM 3000
 
 using namespace std;
 
 
 class socketController
 {
-   public:
-    void InitTheSocketModule(int port)
-    { 
-      makeLogShow(1,"socket opening");
-      startTheServer(port);
-    }
+public:
+        void InitTheSocketModule(int port)
+        { 
+                makeLogShow(1,"socket opening");
+                startTheServer(port);
+        }
 
-       void sendInformation(int clientSock,string information)
-       {
-           if(isStarted)
-           {
-	    if(write(clientSock,information.c_str(),MAX_NUM)==-1)//sizeof(information.c_str())
-            {
-	       makeLogShow(4,"socked send fail");
-              return;
-	    }
-             makeLogShow(1,"send "+information);
-           }
-       }
+        void sendInformation(int clientSock,string information)
+        {
+                if(isStarted)
+                {
+                        if(write(clientSock,information.c_str(),MAX_NUM)==-1)//sizeof(information.c_str())
+                        {
+                                makeLogShow(4,"socked send fail");
+                                return;
+                        }
+                        makeLogShow(1,"send "+information);
+                }
+        }
 
 
-       string getInformation(int clientSock)
-       {
-            string informationReturn = "";
-            if(isStarted)
-           {
-            char revBuf[MAX_NUM]={0};
-	    if(read(clientSock,revBuf,sizeof(revBuf))==-1)
-	    {
-	      makeLogShow(4,"socket read fail");
-              return "";
-	     }
-
-	      informationReturn = revBuf;
-	      makeLogShow(1,"read:("+informationReturn+")");
-	      bzero(revBuf,sizeof(revBuf)); 
-           }
-              return informationReturn;	
-       }
-
-     int acceptSocket()
+        string getInformation(int clientSock)
+        {
+                string informationReturn = "";
+                int n;
+                if(isStarted)
+                {
+                        unsigned char revBuf[MAX_NUM]={0};
+/****
+     if(read(clientSock,revBuf,sizeof(revBuf))==-1)
      {
-         return accept(serverSock,NULL,NULL);
+     makeLogShow(4,"socket read fail");
+     return "";
      }
+
+     informationReturn = revBuf;
+     makeLogShow(1,"read:("+informationReturn+")");
+     bzero(revBuf,sizeof(revBuf)); 
+*/
+                        n = recv(clientSock,revBuf,sizeof(revBuf),0);
+                        if ( n < 0 ) {
+                                makeLogShow(4,"socket read fail");
+                                return "";
+                        } else {
+                                makeLogShow(1,"len:("+to_string(n)+")");
+                        }
+                        //printf("chars:%s\n",revBuf);
+                        char c[255];
+                        unsigned char x=0;
+                        for ( int i = 0; i < n ; i++) {
+                                
+                                //informationReturn += revBuf[i];
+                                sprintf(c,"%x",revBuf[i]);
+                                informationReturn += c;
+                        }
+                        printf("\n");
+                        //informationReturn = revBuf; 
+                        makeLogShow(1,"read:("+informationReturn+")");
+                        bzero(revBuf,sizeof(revBuf)); 
+                }
+                return informationReturn;	
+        }
+
+        int acceptSocket()
+        {
+                return accept(serverSock,NULL,NULL);
+        }
      
-      void closeClient(int clientSock)
-      {
-        close(clientSock);
-      } 
-      void closeServer()
-      {
-         close(serverSock);
-      }
+        void closeClient(int clientSock)
+        {
+                close(clientSock);
+        } 
+        void closeServer()
+        {
+                close(serverSock);
+        }
 
 
 
-   private:
+private:
 
-      struct sockaddr_in serverAddr;
-      int port  =10005;
-      int maxNumber =100;
-      int connectNumber = 5;
-      int serverSock=-1;
-      int clientSock=-1;
-      bool isStarted = false;
+        struct sockaddr_in serverAddr;
+        int port  =10005;
+        int maxNumber =100;
+        int connectNumber = 5;
+        int serverSock=-1;
+        int clientSock=-1;
+        bool isStarted = false;
      
-       void makeLogShow(int type ,string theinformation)
-       {
-           cout<<theinformation<<endl; 
-       }
+        void makeLogShow(int type ,string theinformation)
+        {
+                cout<<theinformation<<endl; 
+        }
 
-       void startTheServer(int port)
-       {
-          serverSock=-1;
-          clientSock=-1;
-          serverSock=socket(AF_INET,SOCK_STREAM,0);
-          if(serverSock<0)
-	  {
-	     makeLogShow(4,"socket build fail");
-	     return;
-          }
-             makeLogShow(1,"socket build over");
-           memset(&serverAddr,0,sizeof(serverAddr));
-           serverAddr.sin_family=AF_INET;
-	   serverAddr.sin_port=htons((u_short) port);
-           serverAddr.sin_addr.s_addr=htons(INADDR_ANY);
+        void startTheServer(int port)
+        {
+                serverSock=-1;
+                clientSock=-1;
+                serverSock=socket(AF_INET,SOCK_STREAM,0);
+                if(serverSock<0)
+                {
+                        makeLogShow(4,"socket build fail");
+                        return;
+                }
+                makeLogShow(1,"socket build over");
+                memset(&serverAddr,0,sizeof(serverAddr));
+                serverAddr.sin_family=AF_INET;
+                serverAddr.sin_port=htons((u_short) port);
+                serverAddr.sin_addr.s_addr=htons(INADDR_ANY);
           
-           if(bind(serverSock,(struct sockaddr*)&serverAddr,sizeof(struct sockaddr_in))==-1)
-           {
-		makeLogShow(4,"socket lock fail");
-                return;
-           }
-	   makeLogShow(1,"socket lock over");
+                if(bind(serverSock,(struct sockaddr*)&serverAddr,sizeof(struct sockaddr_in))==-1)
+                {
+                        makeLogShow(4,"socket lock fail");
+                        return;
+                }
+                makeLogShow(1,"socket lock over");
 
-	   if(listen(serverSock,10)==-1)
-	   {
-		makeLogShow(4,"socket listten fail");
-                return;
-	   }
+                if(listen(serverSock,10)==-1)
+                {
+                        makeLogShow(4,"socket listten fail");
+                        return;
+                }
 		makeLogShow(1,"socket listen over");
-           isStarted =true;
-       }
+                isStarted =true;
+        }
 };
 
 
