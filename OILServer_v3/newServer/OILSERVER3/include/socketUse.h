@@ -68,15 +68,16 @@ public:
                         //printf("chars:%s\n",revBuf);
                         char c[255];
                         unsigned char x=0;
-                        for ( int i = 0; i < n ; i++) {
+                        for ( int i = 0; i < n ; i++) {                      
                                 
-                                //informationReturn += revBuf[i];
-                                sprintf(c,"%x",revBuf[i]);
+                                //printf("%d:%x:%u\n",i,revBuf[i],revBufo[i]);
+                                sprintf(c,"%02x",revBuf[i]);
                                 informationReturn += c;
                         }
                         printf("\n");
                         //informationReturn = revBuf; 
                         makeLogShow(1,"read:("+informationReturn+")");
+                        cout<<informationReturn.size();
                         bzero(revBuf,sizeof(revBuf)); 
                 }
                 return informationReturn;	
