@@ -71,7 +71,9 @@ float stringToFloat(string str);
 //string转int
 int stringToInt(string str);
 
-float changeToFloatConvert(string theString);
+int ToIntConvert(string theString);
+
+float ToFloatConvert(string theString, double prec);
 
 float changeToFloat(const char * a,const char * b,const char * c,const char * d);
 
