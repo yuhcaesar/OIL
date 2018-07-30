@@ -51,41 +51,14 @@ private:
         //----------------------------------------------------------------------------------------//
         //作为示例存在的处理方式
         void saveStringForDemo(string getIn);
-        
 };
 
-string ASCOperate(string stringIn);
-//其实就是输出Log等会再说
 void makeLogShow(int type,string theinformation);
-
-//int 转十六进制
-string intTo16(int i);
-// (十六进制)转int
-int toIntValue(const char * IN);
-
-//int 转string
-string toString(int In);
-
-//string转float
-float stringToFloat(string str);
-//string转int
-int stringToInt(string str);
 
 int ToIntConvert(string theString);
 
 float ToFloatConvert(string theString, double prec);
 
-float changeToFloat(const char * a,const char * b,const char * c,const char * d);
-
-//字符串切分
-string*  stringSplite(string information,char spliteChar);
-//获取字符串切分长度
-int stringSplitCount(string information , char splitChar);
-//获得时间字符串
-string getTime();
-
 string CtoString(const char * c);
- 
-
 
 #endif     

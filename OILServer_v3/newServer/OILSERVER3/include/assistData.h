@@ -1,0 +1,21 @@
+#ifndef __assistData_H__
+#define __assistData_H__
+
+#define ASSIST_DATA_HEADER 0,8
+#define ASSIST_DATA_VID 8,4
+#define ASSIST_DATA_PID 12,4
+#define ASSIST_DATA_DID 16,24
+#define ASSIST_DATA_OPERATIASSIST1 40,2
+#define ASSIST_DATA_OPERATIASSIST2 42,2
+#define ASSIST_DATA_OPERATIASSIST3 44,2
+#define ASSIST_DATA_LENGTH 46,4
+
+#define ASSIST_DATA_DATA01 50,2
+#define ASSIST_DATA_DATA02 52,2
+#define ASSIST_DATA_DATA03 54,2
+#define ASSIST_DATA_DATA_(n) 56+(n-4)*1,4
+
+#define ASSIST_DATA_TRAILER(X) X-4,4
+
+
+#endif

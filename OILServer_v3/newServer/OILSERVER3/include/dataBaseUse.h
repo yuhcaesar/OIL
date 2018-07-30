@@ -85,6 +85,7 @@ private:
         MYSQL connection;
         const char* IpSave ;
         const char* userSave ;
+
         const char* passwordSave ;
         const char* databaseSave ;
         void makeLogShow(int type,string theinformation)
