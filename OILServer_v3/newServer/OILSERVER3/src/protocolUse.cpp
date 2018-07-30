@@ -10,6 +10,9 @@
 #include "param.h"
 #include "upParam.h"
 #include "upInterval.h"
+#include "onData.h"
+#include "offData.h"
+
 using namespace std;
 
 void protocolUse :: InitTheProtocolModule( DBController theDBCIn )
@@ -30,7 +33,7 @@ void protocolUse :: ProtocolOperate(string  information)
         if(lengthAll < 48)
                 return;
         cout<<"all length = "<<lengthAll<<endl;
-        string head =  information .substr(0,8);
+        string head =  information.substr(0,8);
         int headInt = toIntValue(information .substr(0,8).c_str());
         cout<<"head is "<< head<<"  headInt "<< headInt <<endl;
         string VID = information .substr(8,4);
@@ -43,7 +46,7 @@ void protocolUse :: ProtocolOperate(string  information)
         cout<<"operate1 is "<<  operate1 << endl;
         string operate2 = information .substr(42,2);
         cout<<"operate2 is "<<  operate2 << endl;
-
+	
         int ret = -1;
         if ( operate2 == LoginEvent )
         {
@@ -224,8 +227,13 @@ int protocolUse :: handleUpInterval(string info)
 
         tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA11).c_str());
         root["Data"]["Data11"] = to_string(tmpData);
-        param->setMeasureOpt(tmpData);
-        root["Parameters"]["MeasureOption"] = to_string(param->getMeasureOpt());
+        param->setOnMeasureOpt(tmpData);
+        root["Parameters"]["OnlineMeasureOption"] = to_string(param->getOffMeasureOpt());
+
+        tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA12).c_str());
+        root["Data"]["Data12"] = to_string(tmpData);
+        param->setOffMeasureOpt(tmpData);
+        root["Parameters"]["OfflineMeasureOption"] = to_string(param->getOffMeasureOpt());
 
         tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA12).c_str());
         root["Data"]["Data12"] = to_string(tmpData);
@@ -361,6 +369,136 @@ int protocolUse :: handleOnData(string info)
         
         root["Trailer"] = info.substr(info.size()-4, 4);
 */
+        root["Header"] = info.substr(ON_DATA_HEADER);
+        root["VID"] = info.substr(ON_DATA_VID);
+        root["PID"] = info.substr(ON_DATA_PID);
+        root["DID"] = info.substr(ON_DATA_DID);
+        root["Operation1"] = info.substr(ON_DATA_OPERATION1);
+        root["Operation2"] = info.substr(ON_DATA_OPERATION2);
+        root["Operation3"] = info.substr(ON_DATA_OPERATION3);
+        root["Length"] = info.substr(ON_DATA_LENGTH);
+
+        int length = ToIntConvert(info.substr(ON_DATA_LENGTH));
+        printf("length%d\n", length);
+	printf("info.size:%d\n", info.size());
+        int tmp = 0;
+        char timeBuf[255] = {0};
+        struct tm *tm_time = (struct tm*)malloc(sizeof(struct tm));
+        time_t timer = time(NULL);       
+        string time = "";
+        CParam * param = CParam::GetInstance();
+        
+        strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d ", gmtime(&timer));
+
+        tmp = ToIntConvert(info.substr(ON_DATA_DATA01));
+        root["Data"]["Data01"] = info.substr(ON_DATA_DATA01);
+        time += (to_string(tmp)+":");
+        tmp = ToIntConvert(info.substr(ON_DATA_DATA02));
+        root["Data"]["Data02"] = info.substr(ON_DATA_DATA02);
+        time += (to_string(tmp)+":");
+        tmp = ToIntConvert(info.substr(ON_DATA_DATA03));
+        root["Data"]["Data03"] = info.substr(ON_DATA_DATA03);
+        time += (to_string(tmp));
+
+        strcat(timeBuf, time.c_str());
+        strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time);
+        time_t tt = mktime(tm_time);
+        printf("%d:%s\n", (int)tt, timeBuf);
+
+        length = info.size() - 56 - 4;
+        printf("real len:%d\n", length);
+        if ( param->getOnMeasureOpt() == 0x1 )
+        {
+                int batchNum = 4;
+                int batch = 4;
+                int index = 4;
+                string sIndex = "";
+                string dName = "";
+                for ( int i = 0; i < (length / batchNum / batch); i++ ) {
+                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        for ( int j = 0; j < batchNum; j++ ) {
+                                index = 4 + i * batchNum + j;
+                                //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
+                                root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
+                                switch(j)
+                                {
+                                case 0:
+                                        dName = "0_DcPotential";
+                                        break;
+                                case 1:
+                                        dName = "1_AcPotential";
+                                        break;
+                                case 2:
+                                        dName = "2_DcCurrent";
+                                        break;
+                                case 3:
+                                        dName = "3_AcCurrent";
+                                        break;
+                                }
+                                root["Spot"]["Points"+to_string(i)][dName] = info.substr(ON_DATA_DATA_(index));
+                        }
+                        tt += param->getOnSampleInterval();
+                        strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+                }
+        }
+        else if ( param->getOnMeasureOpt() == 0x2 )
+        {
+                int batchNum = 2;
+                int batch = 4;
+                int index = 4;
+                string sIndex = "";
+                string dName = "";
+                for ( int i = 0; i < (length / batchNum / batch); i++ ) {
+                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        for ( int j = 0; j < batchNum; j++ ) {
+                                index = 4 + i * batchNum + j;
+                                root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
+                                switch(j)
+                                {
+                                case 0:
+                                        dName = "2_DcCurrent";
+                                        break;
+                                case 1:
+                                        dName = "3_AcCurrent";
+                                        break;
+                                }
+                                
+                                root["Spot"]["Points"+to_string(i)][dName] = info.substr(ON_DATA_DATA_(index));                     
+           
+                        }
+                        tt += param->getOnSampleInterval();
+                        strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+                }
+        }
+        else if ( param->getOnMeasureOpt() == 0x3 )
+        {
+                int batchNum = 2;
+                int batch = 4;
+                int index = 4;
+                string sIndex = "";
+                string dName = "";
+                for ( int i = 0; i < (length / batchNum / batch); i++ ) {
+                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        for ( int j = 0; j < batchNum; j++ ) {
+                                index = 4 + i * batchNum + j;
+                                root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
+                                switch(j)
+                                {
+                                case 0:
+                                        dName = "0_DcPotential";
+                                        break;
+                                case 1:
+                                        dName = "1_AcPotential";
+                                        break;
+                                }
+                                
+                                root["Spot"]["Points"+to_string(i)][dName] = info.substr(ON_DATA_DATA_(index));                     
+                        }
+                        tt += param->getOnSampleInterval();
+                        strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+                }
+        }
+        
         
         cout << root.toStyledString() << endl;
         return 1;
@@ -369,6 +507,7 @@ int protocolUse :: handleOnData(string info)
 int protocolUse :: handleOffData(string info)
 {
         Json::Value root;
+/*
         root["Header"] = info.substr(0, 8);
         root["VID"] = info.substr(8, 4);
         root["PID"] = info.substr(12, 4);
@@ -390,7 +529,8 @@ int protocolUse :: handleOffData(string info)
         root["Data"]["Data11"] = info.substr(128, 8);
         root["Data"]["Data12"] = info.substr(136, 8);
         root["Trailer"] = info.substr(144, 4);
-
+*/
+        
         cout << root.toStyledString() << endl;
         return 1;
 }
@@ -537,9 +677,6 @@ int stringToInt(string str)
 
 int ToIntConvert(string theString)
 {
-        if (theString.size() != 4 || theString.size() != 2)
-                return 0;
-
         
         const char* E = theString.c_str();
         int n = 0;
@@ -547,7 +684,7 @@ int ToIntConvert(string theString)
 
         return n;
 }
-
+                                                                                          
 float ToFloatConvert(string theString, double prec)
 {
         if(theString.size()!=8)
@@ -562,7 +699,7 @@ float ToFloatConvert(string theString, double prec)
         
         const char * E = vert.c_str();
         //printf("E:%s\n",E);
-        long int n = 0;
+        unsigned int n = 0;
         sscanf(E, "%x", &n);
         
         float theFloat = *((float*)&n);
@@ -659,4 +796,10 @@ string ASCOperate(string stringIn)
         }
         cout<<"theTrueString = "<<out<<endl;
         return out;
+}
+
+string CtoString(const char * c)
+{
+        string ret(c);
+        return ret;
 }

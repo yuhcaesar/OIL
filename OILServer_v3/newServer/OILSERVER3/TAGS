@@ -1,0 +1,271 @@
+
+startOrRestartTomCat.sh,0
+
+Makefile,0
+
+monitor-20180725.sql,0
+
+autoRestartMysql.sh,0
+
+include/socketUse.h,1032
+#define __socketUse_H__ __socketUse_H__2,28
+#define CONNECT_NUM CONNECT_NUM14,232
+#define MAX_NUM MAX_NUM15,254
+class socketControllersocketController20,299
+        void InitTheSocketModule(int port)InitTheSocketModule23,332
+        void sendInformation(int clientSock,string information)sendInformation29,484
+        string getInformation(int clientSock)getInformation43,962
+        int acceptSocket()acceptSocket86,2614
+        void closeClient(int clientSock)closeClient91,2720
+        void closeServer()closeServer95,2817
+        struct sockaddr_in serverAddr;serverAddr104,2912
+        int port  =96768;port105,2951
+        int maxNumber =100;maxNumber106,2977
+        int connectNumber = 5;connectNumber107,3005
+        int serverSock=-1;serverSock108,3036
+        int clientSock=-1;clientSock109,3063
+        bool isStarted = false;isStarted110,3090
+        void makeLogShow(int type ,string theinformation)makeLogShow112,3128
+        void startTheServer(int port)startTheServer117,3252
+
+include/dataBaseUse.h,668
+#define __dataBaseUse_H__ __dataBaseUse_H__2,30
+class DBControllerDBController12,147
+        void InitTheDBModule( string hostIP,string user,string password,string database) InitTheDBModule16,177
+        void reStart()reStart37,974
+        void DBQuery(string sql)DBQuery54,1573
+        void DBSelect(string sql)  DBSelect67,2022
+        MYSQL connection;connection85,2614
+        const char* IpSave ;IpSave86,2640
+        const char* userSave ;userSave87,2669
+        const char* passwordSave ;passwordSave88,2700
+        const char* databaseSave ;databaseSave89,2735
+        void makeLogShow(int type,string theinformation)makeLogShow90,2770
+
+include/protocolUse.h,925
+#define __protocolUse_H__ __protocolUse_H__2,29
+const string LoginEvent = "30";LoginEvent12,214
+const string ExitEvent = "31";ExitEvent13,246
+const string UpIntervalEvent = "35";UpIntervalEvent14,277
+const string UpParamEvent = "3d";UpParamEvent15,314
+const string OnDataEvent = "43";OnDataEvent16,348
+const string OffDataEvent = "44";OffDataEvent17,381
+const string AssistDataEvent = "45";AssistDataEvent18,415
+class protocolUseprotocolUse20,453
+        DBController theDBC;theDBC30,603
+        int stringCount = 0;stringCount31,632
+        int saveCounter = 0;saveCounter32,661
+        int saveCounterMax = 10;saveCounterMax33,690
+        string saveStringUse = "INSERT INTO t_guid(data1,data2,data3,data4,data5,data6,gid,time)values";saveStringUse34,723
+        string theSaveString = "INSERT INTO t_guid (data1 , data2 , data3 , data4, data5,  data6, gid, time) values"; theSaveString35,828
+
+include/onData.h,634
+#define __onData_H____onData_H__2,21
+#define ON_DATA_HEADER ON_DATA_HEADER4,43
+#define ON_DATA_VID ON_DATA_VID5,70
+#define ON_DATA_PID ON_DATA_PID6,94
+#define ON_DATA_DID ON_DATA_DID7,119
+#define ON_DATA_OPERATION1 ON_DATA_OPERATION18,145
+#define ON_DATA_OPERATION2 ON_DATA_OPERATION29,177
+#define ON_DATA_OPERATION3 ON_DATA_OPERATION310,209
+#define ON_DATA_LENGTH ON_DATA_LENGTH11,241
+#define ON_DATA_DATA01 ON_DATA_DATA0113,270
+#define ON_DATA_DATA02 ON_DATA_DATA0214,298
+#define ON_DATA_DATA03 ON_DATA_DATA0315,326
+#define ON_DATA_DATA_(ON_DATA_DATA_16,354
+#define ON_DATA_TRAILER(ON_DATA_TRAILER18,393
+
+include/param.h,1446
+#define __param_H____param_H__2,20
+class CParamCParam6,80
+        static CParam* m_pInstance;m_pInstance10,122
+        int m_OnSampleInterval = 20;m_OnSampleInterval12,159
+        int m_OffSampleInterval = 12;m_OffSampleInterval13,196
+        int m_OffLatency = 500;m_OffLatency14,234
+        int m_DepolInterval = 1000;m_DepolInterval15,266
+        int m_PolInterval = 30;m_PolInterval16,302
+        int m_AsynInterval = 30;m_AsynInterval17,334
+        int m_AssiInterval = 2;m_AssiInterval18,367
+        int m_StabCount = 3;m_StabCount19,399
+        int m_StabErr = 10;m_StabErr20,428
+        int m_TiggThreshold = -850;m_TiggThreshold21,456
+        int m_OnMeasureOpt = 1;m_OnMeasureOpt22,492
+        int m_OffMeasureOpt = 1;m_OffMeasureOpt23,524
+        int m_RangeOpt;m_RangeOpt24,557
+        float m_dcPotentialK;m_dcPotentialK26,582
+        float m_dcPotentialB;m_dcPotentialB27,612
+        float m_acPotentialK;m_acPotentialK28,642
+        float m_acPotentialB;m_acPotentialB29,672
+        float m_acHiCurrentK;m_acHiCurrentK30,702
+        float m_acHiCurrentB;m_acHiCurrentB31,732
+        float m_dcHiCurrentK;m_dcHiCurrentK32,762
+        float m_dcHiCurrentB;m_dcHiCurrentB33,792
+        float m_acLoCurrentK;m_acLoCurrentK34,822
+        float m_acLoCurrentB;m_acLoCurrentB35,852
+        float m_dcLoCurrentK;m_dcLoCurrentK36,882
+        float m_dcLoCurrentB;m_dcLoCurrentB37,912
+
+include/upParam.h,1036
+#define __upParam_H____upParam_H__2,22
+#define UP_PARAM_HEADER UP_PARAM_HEADER4,45
+#define UP_PARAM_VID UP_PARAM_VID5,73
+#define UP_PARAM_PID UP_PARAM_PID6,98
+#define UP_PARAM_DID UP_PARAM_DID7,124
+#define UP_PARAM_OPERATION1 UP_PARAM_OPERATION18,151
+#define UP_PARAM_OPERATION2 UP_PARAM_OPERATION29,184
+#define UP_PARAM_LENGTH UP_PARAM_LENGTH10,217
+#define UP_PARAM_DATA01 UP_PARAM_DATA0111,246
+#define UP_PARAM_DATA02 UP_PARAM_DATA0212,275
+#define UP_PARAM_DATA03 UP_PARAM_DATA0313,304
+#define UP_PARAM_DATA04 UP_PARAM_DATA0414,333
+#define UP_PARAM_DATA05 UP_PARAM_DATA0515,362
+#define UP_PARAM_DATA06 UP_PARAM_DATA0616,391
+#define UP_PARAM_DATA07 UP_PARAM_DATA0717,420
+#define UP_PARAM_DATA08 UP_PARAM_DATA0818,449
+#define UP_PARAM_DATA09 UP_PARAM_DATA0919,479
+#define UP_PARAM_DATA10 UP_PARAM_DATA1020,509
+#define UP_PARAM_DATA11 UP_PARAM_DATA1121,539
+#define UP_PARAM_DATA12 UP_PARAM_DATA1222,569
+#define UP_PARAM_DATA(UP_PARAM_DATA23,599
+#define UP_PARAM_TRAILER(UP_PARAM_TRAILER24,637
+
+include/offData.h,668
+#define __offData_H____offData_H__2,22
+#define OFF_DATA_HEADER OFF_DATA_HEADER4,45
+#define OFF_DATA_VID OFF_DATA_VID5,73
+#define OFF_DATA_PID OFF_DATA_PID6,98
+#define OFF_DATA_DID OFF_DATA_DID7,124
+#define OFF_DATA_OPERATIOFF1 OFF_DATA_OPERATIOFF18,151
+#define OFF_DATA_OPERATIOFF2 OFF_DATA_OPERATIOFF29,185
+#define OFF_DATA_OPERATIOFF3 OFF_DATA_OPERATIOFF310,219
+#define OFF_DATA_LENGTH OFF_DATA_LENGTH11,253
+#define OFF_DATA_DATA01 OFF_DATA_DATA0113,283
+#define OFF_DATA_DATA02 OFF_DATA_DATA0214,312
+#define OFF_DATA_DATA03 OFF_DATA_DATA0315,341
+#define OFF_DATA_DATA_(OFF_DATA_DATA_16,370
+#define OFF_DATA_TRAILER(OFF_DATA_TRAILER18,410
+
+include/upInterval.h,1231
+#define __upInterval_H____upInterval_H__2,25
+#define UP_INTERVAL_HEADER UP_INTERVAL_HEADER4,51
+#define UP_INTERVAL_VID UP_INTERVAL_VID5,82
+#define UP_INTERVAL_PID UP_INTERVAL_PID6,110
+#define UP_INTERVAL_DID UP_INTERVAL_DID7,139
+#define UP_INTERVAL_OPERATION1 UP_INTERVAL_OPERATION18,169
+#define UP_INTERVAL_OPERATION2 UP_INTERVAL_OPERATION29,205
+#define UP_INTERVAL_LENGTH UP_INTERVAL_LENGTH10,241
+#define UP_INTERVAL_DATA01 UP_INTERVAL_DATA0111,273
+#define UP_INTERVAL_DATA02 UP_INTERVAL_DATA0212,305
+#define UP_INTERVAL_DATA03 UP_INTERVAL_DATA0313,337
+#define UP_INTERVAL_DATA04 UP_INTERVAL_DATA0414,369
+#define UP_INTERVAL_DATA05 UP_INTERVAL_DATA0515,401
+#define UP_INTERVAL_DATA06 UP_INTERVAL_DATA0616,433
+#define UP_INTERVAL_DATA07 UP_INTERVAL_DATA0717,465
+#define UP_INTERVAL_DATA08 UP_INTERVAL_DATA0818,497
+#define UP_INTERVAL_DATA09 UP_INTERVAL_DATA0919,529
+#define UP_INTERVAL_DATA10 UP_INTERVAL_DATA1020,561
+#define UP_INTERVAL_DATA11 UP_INTERVAL_DATA1121,593
+#define UP_INTERVAL_DATA12 UP_INTERVAL_DATA1222,625
+#define UP_INTERVAL_DATA13 UP_INTERVAL_DATA1323,657
+#define UP_INTERVAL_TRAILER_ UP_INTERVAL_TRAILER_24,689
+#define UP_INTERVAL_TRAILER(UP_INTERVAL_TRAILER25,723
+
+src/param.cpp,3054
+CParam::CParam()CParam6,75
+CParam* CParam::GetInstance()GetInstance9,96
+void CParam::setOnSampleInterval(int interval)setOnSampleInterval16,240
+void CParam::setOffSampleInterval(int interval)setOffSampleInterval21,337
+void CParam::setOffLatency(int latency)setOffLatency26,436
+void CParam::setDepolInterval(int interval)setDepolInterval31,519
+void CParam::setPolInterval(int interval)setPolInterval36,610
+void CParam::setAsynInterval(int interval)setAsynInterval41,697
+void CParam::setAssiInterval(int interval)setAssiInterval46,786
+void CParam::setStabCount(int count)setStabCount51,875
+void CParam::setStabErr(int err)setStabErr56,953
+void CParam::setTiggThreshold(int threshold)setTiggThreshold61,1022
+void CParam::setOnMeasureOpt(int opt)setOnMeasureOpt66,1115
+void CParam::setOffMeasureOpt(int opt)setOffMeasureOpt71,1194
+void CParam::setRangeOpt(int opt)setRangeOpt76,1275
+int CParam::getOnSampleInterval()getOnSampleInterval81,1346
+int CParam::getOffSampleInterval()getOffSampleInterval86,1426
+int CParam::getOffLatency()getOffLatency91,1508
+int CParam::getDepolInterval()getDepolInterval96,1576
+int CParam::getPolInterval()getPolInterval101,1650
+int CParam::getAsynInterval()getAsynInterval106,1720
+int CParam::getAssiInterval()getAssiInterval111,1792
+int CParam::getStabCount()getStabCount116,1864
+int CParam::getStabErr()getStabErr121,1930
+int CParam::getTiggThreshold()getTiggThreshold126,1992
+int CParam::getOnMeasureOpt()getOnMeasureOpt131,2066
+int CParam::getOffMeasureOpt()getOffMeasureOpt136,2138
+int CParam::getRangeOpt()getRangeOpt141,2212
+void CParam::setDcPotentialK(float K)setDcPotentialK146,2276
+void CParam::setDcPotentialB(float B)setDcPotentialB151,2353
+void CParam::setAcPotentialK(float K)setAcPotentialK156,2430
+void CParam::setAcPotentialB(float B)setAcPotentialB161,2507
+void CParam::setAcHiCurrentK(float K)setAcHiCurrentK166,2584
+void CParam::setAcHiCurrentB(float B)setAcHiCurrentB171,2661
+void CParam::setDcHiCurrentK(float K)setDcHiCurrentK176,2738
+void CParam::setDcHiCurrentB(float B)setDcHiCurrentB181,2815
+void CParam::setAcLoCurrentK(float K)setAcLoCurrentK186,2892
+void CParam::setAcLoCurrentB(float B)setAcLoCurrentB191,2969
+void CParam::setDcLoCurrentK(float K)setDcLoCurrentK196,3046
+void CParam::setDcLoCurrentB(float B)setDcLoCurrentB201,3123
+float CParam::getDcPotentialK()getDcPotentialK206,3200
+float CParam::getDcPotentialB()getDcPotentialB211,3268
+float CParam::getAcPotentialK()getAcPotentialK216,3336
+float CParam::getAcPotentialB()getAcPotentialB221,3404
+float CParam::getAcHiCurrentK()getAcHiCurrentK226,3472
+float CParam::getAcHiCurrentB()getAcHiCurrentB231,3540
+float CParam::getDcHiCurrentK()getDcHiCurrentK235,3607
+float CParam::getDcHiCurrentB()getDcHiCurrentB240,3675
+float CParam::getAcLoCurrentK()getAcLoCurrentK244,3742
+float CParam::getAcLoCurrentB()getAcLoCurrentB248,3809
+float CParam::getDcLoCurrentK()getDcLoCurrentK252,3876
+float CParam::getDcLoCurrentB()getDcLoCurrentB257,3944
+
+src/protocolUse.cpp,1877
+void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule18,323
+void protocolUse :: getString( string information )getString24,476
+void protocolUse :: ProtocolOperate(string  information)ProtocolOperate30,604
+int protocolUse :: handleLogin(string info)handleLogin104,2988
+int protocolUse :: handleExit(string info)handleExit121,3523
+int protocolUse :: handleUpInterval(string info)handleUpInterval138,4056
+int protocolUse :: handleUpParam(string info)handleUpParam256,9369
+int protocolUse :: handleOnData(string info)handleOnData345,13593
+int protocolUse :: handleOffData(string info)handleOffData507,21049
+int protocolUse :: handleAssistData(string info)handleAssistData538,22248
+void protocolUse :: data0x3D(string VID , string PID ,string DID,  string dataIn)data0x3D567,23436
+void protocolUse :: dataUse43(string VID , string PID ,string DID,  string dataIn)dataUse43579,23886
+void protocolUse :: saveStringForDemo(string getIn)saveStringForDemo607,25473
+void makeLogShow(int type,string theinformation)makeLogShow639,26469
+string intTo16(int i)intTo16645,26582
+int toIntValue(const char * IN)toIntValue652,26707
+string toString(int In)toString660,26865
+float stringToFloat(string str)stringToFloat666,26941
+int stringToInt(string str)stringToInt672,27046
+int ToIntConvert(string theString)ToIntConvert678,27132
+float ToFloatConvert(string theString, double prec)ToFloatConvert688,27381
+float changeToFloat(const char * a,const char * b,const char * c,const char * d)changeToFloat713,28124
+string* stringSplite(string information,char spliteChar)stringSplite736,28778
+int stringSplitCount(string information , char splitChar)stringSplitCount758,29398
+string getTime()getTime768,29654
+string ASCOperate(string stringIn)ASCOperate788,30501
+string CtoString(const char * c)CtoString801,30844
+
+src/operate.cpp,523
+DBController theDBC;theDBC8,115
+socketController theSocketC;theSocketC9,136
+protocolUse theprotocolUseC;theprotocolUseC10,165
+void makeLog(int type,string information)makeLog12,195
+int client_fd=0; client_fd17,275
+pthread_t tid;  tid18,293
+sockaddr_in client_addr;  client_addr19,310
+socklen_t socklen = sizeof(client_addr); socklen20,337
+unsigned client_port=0;  client_port21,379
+char client_ip[20]; client_ip22,405
+void *run(void *arg)run25,429
+void server()server45,1099
+int main()main65,1784
+
+start.sh,0

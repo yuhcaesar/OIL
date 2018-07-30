@@ -9,17 +9,18 @@ private:
         CParam();
         static CParam* m_pInstance;
 
-        int m_OnSampleInterval;
-        int m_OffSampleInterval;
-        int m_OffLatency;
-        int m_DepolInterval;
-        int m_PolInterval;
-        int m_AsynInterval;
-        int m_AssiInterval;
-        int m_StabCount;
-        int m_StabErr;
-        int m_TiggThreshold;
-        int m_MeasureOpt;
+        int m_OnSampleInterval = 20;
+        int m_OffSampleInterval = 12;
+        int m_OffLatency = 500;
+        int m_DepolInterval = 1000;
+        int m_PolInterval = 30;
+        int m_AsynInterval = 30;
+        int m_AssiInterval = 2;
+        int m_StabCount = 3;
+        int m_StabErr = 10;
+        int m_TiggThreshold = -850;
+        int m_OnMeasureOpt = 1;
+        int m_OffMeasureOpt = 1;
         int m_RangeOpt;
 
         float m_dcPotentialK;
@@ -48,7 +49,8 @@ public:
         void setStabCount(int count);
         void setStabErr(int err);
         void setTiggThreshold(int threshold);
-        void setMeasureOpt(int opt);
+        void setOnMeasureOpt(int opt);
+        void setOffMeasureOpt(int opt);
         void setRangeOpt(int opt);
 
         int getOnSampleInterval();
@@ -61,7 +63,8 @@ public:
         int getStabCount();
         int getStabErr();
         int getTiggThreshold();
-        int getMeasureOpt();
+        int getOnMeasureOpt();
+        int getOffMeasureOpt();
         int getRangeOpt();
 
         void setDcPotentialK(float K);

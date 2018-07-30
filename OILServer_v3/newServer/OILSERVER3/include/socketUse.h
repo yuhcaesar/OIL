@@ -102,7 +102,7 @@ public:
 private:
 
         struct sockaddr_in serverAddr;
-        int port  =10005;
+        int port  =96768;
         int maxNumber =100;
         int connectNumber = 5;
         int serverSock=-1;

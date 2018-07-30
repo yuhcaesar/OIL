@@ -63,9 +63,14 @@ void CParam::setTiggThreshold(int threshold)
         this->m_TiggThreshold = threshold;
 }
 
-void CParam::setMeasureOpt(int opt)
+void CParam::setOnMeasureOpt(int opt)
 {
-        this->m_MeasureOpt = opt;
+        this->m_OnMeasureOpt = opt;
+}
+
+void CParam::setOffMeasureOpt(int opt)
+{
+        this->m_OffMeasureOpt = opt;
 }
 
 void CParam::setRangeOpt(int opt)
@@ -123,9 +128,14 @@ int CParam::getTiggThreshold()
         return this->m_TiggThreshold;
 }
 
-int CParam::getMeasureOpt()
+int CParam::getOnMeasureOpt()
 {
-        return this->m_MeasureOpt;
+        return this->m_OnMeasureOpt;
+}
+
+int CParam::getOffMeasureOpt()
+{
+        return this->m_OffMeasureOpt;
 }
 
 int CParam::getRangeOpt()

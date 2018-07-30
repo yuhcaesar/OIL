@@ -83,6 +83,8 @@ string*  stringSplite(string information,char spliteChar);
 int stringSplitCount(string information , char splitChar);
 //获得时间字符串
 string getTime();
+
+string CtoString(const char * c);
  
 
 

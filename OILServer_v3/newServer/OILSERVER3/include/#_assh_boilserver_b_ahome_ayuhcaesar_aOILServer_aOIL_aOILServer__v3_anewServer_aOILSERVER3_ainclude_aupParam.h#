@@ -1,0 +1,26 @@
+#ifndef __upParam_H__
+#define __upParam_H__
+
+#define UP_PARAM_HEADER 0,8
+#define UP_PARAM_VID 8,4
+#define UP_PARAM_PID 12,4
+#define UP_PARAM_DID 16,24
+#define UP_PARAM_OPERATION1 40,2
+#define UP_PARAM_OPERATION2 42,2,
+#define UP_PARAM_LENGTH 44,4
+#define UP_PARAM_DATA01 48,8
+#define UP_PARAM_DATA02 56,8
+#define UP_PARAM_DATA03 64,8
+#define UP_PARAM_DATA04 72,8
+#define UP_PARAM_DATA05 80,8
+#define UP_PARAM_DATA06 88,8
+#define UP_PARAM_DATA07 96,8
+#define UP_PARAM_DATA08 104,8
+#define UP_PARAM_DATA09 112,8
+#define UP_PARAM_DATA10 120,8
+#define UP_PARAM_DATA11 128,8
+#define UP_PARAM_DATA12 136,8
+#define UP_PARAM_DATA(n) 48+(n-1)*8,8
+#define UP_PARAM_TRAILER(x) x-4,4
+
+#endif

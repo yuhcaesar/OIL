@@ -65,7 +65,7 @@ void server()
 int main()
 {
 	theDBC.InitTheDBModule("localhost","root","tree","monitor");
-	theSocketC.InitTheSocketModule(10005);
+	theSocketC.InitTheSocketModule(96768);
         theprotocolUseC.InitTheProtocolModule(theDBC);
         server();
         return 0;
