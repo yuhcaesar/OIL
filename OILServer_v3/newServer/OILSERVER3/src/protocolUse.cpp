@@ -446,8 +446,14 @@ int protocolUse :: handleOnData(string info)
                 }
         }
         
-        
         cout << root.toStyledString() << endl;
+        
+        Json :: StyledWriter sw;
+        ofstream os;
+        os.open("OnData_"+time+".json");
+        os << sw.write(root);
+        os.close();
+        
         return 1;
 }
 
@@ -546,6 +552,13 @@ int protocolUse :: handleOffData(string info)
         }
 
         cout << root.toStyledString() << endl;
+
+        Json :: StyledWriter sw;
+        ofstream os;
+        os.open("OffData_"+time+".json");
+        os << sw.write(root);
+        os.close();
+        
         return 1;
 }
 
@@ -621,6 +634,13 @@ int protocolUse :: handleAssistData(string info)
         }
 
         cout << root.toStyledString() << endl;
+        
+        Json :: StyledWriter sw;
+        ofstream os;
+        os.open("AssistData_"+time+".json");
+        os << sw.write(root);
+        os.close();
+        
         return 1;
 }
 
