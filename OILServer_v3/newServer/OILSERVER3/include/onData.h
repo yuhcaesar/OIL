@@ -15,7 +15,7 @@
 #define ON_DATA_DATA03 54,2
 #define ON_DATA_DATA_(n) 56+(n-4)*4,4
 
-#define ON_DATA_TRAILER(X) X-4,4
+#define ON_DATA_TAILER(X) X-4,4
 
 
 #endif

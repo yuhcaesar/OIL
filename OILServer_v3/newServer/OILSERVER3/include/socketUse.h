@@ -13,7 +13,7 @@
 
 #define CONNECT_NUM 5
 #define MAX_NUM 3000
-
+#define PORT 10005
 using namespace std;
 
 
@@ -102,7 +102,7 @@ public:
 private:
 
         struct sockaddr_in serverAddr;
-        int port  =96768;
+        int port  = PORT;
         int maxNumber =100;
         int connectNumber = 5;
         int serverSock=-1;

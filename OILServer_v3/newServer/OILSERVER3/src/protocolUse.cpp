@@ -87,6 +87,13 @@ int protocolUse :: handleLogin(string info)
         root["Trailer"] = info.substr(60,4);
 
         cout << root.toStyledString() << endl;
+        
+        Json :: StyledWriter sw;
+        ofstream os;
+        os.open("./json/Login.json");
+        os << sw.write(root);
+        os.close();
+        
         return 1;
 }
 
@@ -100,10 +107,17 @@ int protocolUse :: handleExit(string info)
         root["Operation1"] = info.substr(40,2);
         root["Operation2"] = info.substr(42,2);
         root["Length"] = info.substr(44,4);
-        root["Data"] = info.substr(44,0);
-        root["Trailer"] = info.substr(44,4);
+        root["Data"] = info.substr(48,0);
+        root["Trailer"] = info.substr(48,4);
 
         cout << root.toStyledString() << endl;
+        
+        Json :: StyledWriter sw;
+        ofstream os;
+        os.open("./json/Exit.json");
+        os << sw.write(root);
+        os.close();
+        
         return 1;
 }
 
@@ -162,6 +176,7 @@ int protocolUse :: handleUpInterval(string info)
         param->setStabCount(tmpData);
         root["Parameters"]["StableCount"] = to_string(param->getStabCount());
 
+        
         tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA09).c_str());
         root["Data"]["Data09"] = to_string(tmpData);
         param->setStabErr(tmpData);
@@ -191,7 +206,7 @@ int protocolUse :: handleUpInterval(string info)
         
         Json :: StyledWriter sw;
         ofstream os;
-        os.open("UpParam.json");
+        os.open("./json/UpParam.json");
         os << sw.write(root);
         os.close();
         
@@ -217,72 +232,72 @@ int protocolUse :: handleUpParam(string info)
         root["Trailer"] = info.substr(UP_PARAM_TRAILER(info.size()));
 
         float tmpData = 0;
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA01).c_str(), 2.0);
-        root["Data"]["Data01"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA01), 2.0);
+        root["Data"]["Data01"] = info.substr(UP_PARAM_DATA01);
         param->setDcPotentialK(tmpData);
-        root["Parameters"]["DcPotentialK"] = to_string(param->getDcPotentialK()).substr(0, 6);
+        root["Parameters"]["DcPotentialK"] = param->getDcPotentialK();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA02).c_str(), 2.0);
-        root["Data"]["Data02"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA02), 2.0);
+        root["Data"]["Data02"] = info.substr(UP_PARAM_DATA02);
         param->setDcPotentialB(tmpData);
-        root["Parameters"]["DcPotentialB"] = to_string(param->getDcPotentialB()).substr(0, 6);
+        root["Parameters"]["DcPotentialB"] = param->getDcPotentialB();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA03).c_str(), 2.0);
-        root["Data"]["Data03"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA03), 2.0);
+        root["Data"]["Data03"] = info.substr(UP_PARAM_DATA03);
         param->setAcPotentialK(tmpData);
-        root["Parameters"]["AcPotentialK"] = to_string(param->getAcPotentialK()).substr(0, 6);
+        root["Parameters"]["AcPotentialK"] = param->getAcPotentialK();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA04).c_str(), 2.0);
-        root["Data"]["Data04"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA04), 2.0);
+        root["Data"]["Data04"] = info.substr(UP_PARAM_DATA04);
         param->setAcPotentialB(tmpData);
-        root["Parameters"]["AcPotentialB"] = to_string(param->getAcPotentialB()).substr(0, 6);
+        root["Parameters"]["AcPotentialB"] = param->getAcPotentialB();
 
         
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA05).c_str(), 2.0);
-        root["Data"]["Data05"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA05), 2.0);
+        root["Data"]["Data05"] = info.substr(UP_PARAM_DATA05);
         param->setAcHiCurrentK(tmpData);
-        root["Parameters"]["AcHiCurrentK"] = to_string(param->getAcHiCurrentK()).substr(0, 6);
+        root["Parameters"]["AcHiCurrentK"] = param->getAcHiCurrentK();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA06).c_str(), 2.0);
-        root["Data"]["Data06"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA06), 2.0);
+        root["Data"]["Data06"] = info.substr(UP_PARAM_DATA06);
         param->setAcHiCurrentB(tmpData);
-        root["Parameters"]["AcHiCurrentB"] = to_string(param->getAcHiCurrentB()).substr(0, 6);
+        root["Parameters"]["AcHiCurrentB"] = param->getAcHiCurrentB();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA07).c_str(), 2.0);
-        root["Data"]["Data07"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA07), 2.0);
+        root["Data"]["Data07"] = info.substr(UP_PARAM_DATA07);
         param->setDcHiCurrentK(tmpData);
-        root["Parameters"]["DcHiCurrentK"] = to_string(param->getDcHiCurrentK()).substr(0, 6);
+        root["Parameters"]["DcHiCurrentK"] = param->getDcHiCurrentK();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA08).c_str(), 2.0);
-        root["Data"]["Data08"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA08), 2.0);
+        root["Data"]["Data08"] = info.substr(UP_PARAM_DATA08);
         param->setDcHiCurrentB(tmpData);
-        root["Parameters"]["DcHiCurrentB"] = to_string(param->getDcHiCurrentB()).substr(0, 6);
+        root["Parameters"]["DcHiCurrentB"] = param->getDcHiCurrentB();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA09).c_str(), 2.0);
-        root["Data"]["Data09"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA09), 2.0);
+        root["Data"]["Data09"] = info.substr(UP_PARAM_DATA09);
         param->setAcLoCurrentK(tmpData);
-        root["Parameters"]["AcLoCurrentK"] = to_string(param->getAcLoCurrentK()).substr(0, 6);
+        root["Parameters"]["AcLoCurrentK"] = param->getAcLoCurrentK();
         
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA10).c_str(), 2.0);
-        root["Data"]["Data10"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA10), 2.0);
+        root["Data"]["Data10"] = info.substr(UP_PARAM_DATA10);
         param->setAcLoCurrentB(tmpData);
-        root["Parameters"]["AcLoCurrentB"] = to_string(param->getAcLoCurrentB()).substr(0, 6);
+        root["Parameters"]["AcLoCurrentB"] = param->getAcLoCurrentB();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA11).c_str(), 2.0);
-        root["Data"]["Data11"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA11), 2.0);
+        root["Data"]["Data11"] = info.substr(UP_PARAM_DATA11);
         param->setDcLoCurrentK(tmpData);
-        root["Parameters"]["DcLoCurrentK"] = to_string(param->getDcLoCurrentK()).substr(0, 6);
+        root["Parameters"]["DcLoCurrentK"] = param->getDcLoCurrentK();
 
-        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA12).c_str(), 2.0);
-        root["Data"]["Data12"] = to_string(tmpData).substr(0, 6);
+        tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA12), 2.0);
+        root["Data"]["Data12"] = info.substr(UP_PARAM_DATA12);
         param->setDcLoCurrentB(tmpData);
-        root["Parameters"]["DcLoCurrentB"] = to_string(param->getDcLoCurrentB()).substr(0, 6);
+        root["Parameters"]["DcLoCurrentB"] = param->getDcLoCurrentB();
 
         cout << root.toStyledString() << endl;
         
         Json :: StyledWriter sw;
         ofstream os;
-        os.open("UpInterval.json");
+        os.open("./json/UpInterval.json");
         os << sw.write(root);
         os.close();
         
@@ -324,7 +339,7 @@ int protocolUse :: handleOnData(string info)
         root["Operation2"] = info.substr(ON_DATA_OPERATION2);
         root["Operation3"] = info.substr(ON_DATA_OPERATION3);
         root["Length"] = info.substr(ON_DATA_LENGTH);
-
+        root["Tailer"] = info.substr(ON_DATA_TAILER(info.size()));
         int length = ToIntConvert(info.substr(ON_DATA_LENGTH));
         printf("length%d\n", length);
 	printf("info.size:%d\n", info.size());
@@ -351,7 +366,8 @@ int protocolUse :: handleOnData(string info)
         strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time);
         time_t tt = mktime(tm_time);
         printf("%d:%s\n", (int)tt, timeBuf);
-
+        tt += 8 * 3600;
+        strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         length = info.size() - 56 - 4;
         printf("real len:%d\n", length);
         if ( param->getOnMeasureOpt() == 0x1 )
@@ -361,28 +377,44 @@ int protocolUse :: handleOnData(string info)
                 int index = 4;
                 string sIndex = "";
                 string dName = "";
+                float result;
+                int datum;
                 for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
                         for ( int j = 0; j < batchNum; j++ ) {
                                 index = 4 + i * batchNum + j;
                                 //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
+                                datum = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
                                 root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
                                 switch(j)
                                 {
                                 case 0:
                                         dName = "0_DcPotential";
+                                        result = 0 - datum * param->getDcPotentialK() - param->getDcPotentialB();
                                         break;
                                 case 1:
                                         dName = "1_AcPotential";
+                                        result = 0 - datum * param->getAcPotentialK() - param->getAcPotentialB();
                                         break;
                                 case 2:
+                                        if ( param->getRangeOpt() == 1 ) 
+                                                result = datum * param->getDcHiCurrentK() + param->getDcHiCurrentB();
+                                        else
+                                                result = datum * param->getDcLoCurrentK() + param->getDcLoCurrentB();
                                         dName = "2_DcCurrent";
                                         break;
                                 case 3:
+                                        if ( param->getRangeOpt() == 1 )
+                                                result = datum * param->getAcHiCurrentK() + param->getAcHiCurrentB();
+                                        else
+                                                result = datum * param->getAcLoCurrentK() + param->getAcLoCurrentB();
                                         dName = "3_AcCurrent";
                                         break;
                                 }
-                                root["Spot"]["Points"+to_string(i)][dName] = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
+                              
+                                root["Spot"]["Points_"+to_string(i)][dName+"_r"] = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
+                                root["Spot"]["Points_"+to_string(i)][dName] = result;
+                                
                         }
                         tt += param->getOnSampleInterval();
                         strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
@@ -395,17 +427,28 @@ int protocolUse :: handleOnData(string info)
                 int index = 4;
                 string sIndex = "";
                 string dName = "";
+                float result;
+                int datum;
                 for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        root["Spot"]["Points"+to_string(i)]["Time"] = CtoString(timeBuf);
                         for ( int j = 0; j < batchNum; j++ ) {
                                 index = 4 + i * batchNum + j;
-                                root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
+                                datum = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
+                                root["Data"]["Data"+to_string(index)] = datum;
                                 switch(j)
                                 {
                                 case 0:
+                                        if ( param->getRangeOpt() == 1 )
+                                                result = datum * param->getDcHiCurrentK() + param->getDcHiCurrentB();
+                                        else
+                                                result = datum * param->getDcLoCurrentK() + param->getDcLoCurrentB();
                                         dName = "2_DcCurrent";
                                         break;
                                 case 1:
+                                        if ( param->getRangeOpt() == 1 )
+                                                result = datum * param->getAcHiCurrentK() + param->getAcHiCurrentB();
+                                        else
+                                                result = datum * param->getAcLoCurrentK() + param->getAcLoCurrentB();
                                         dName = "3_AcCurrent";
                                         break;
                                 }
@@ -424,17 +467,22 @@ int protocolUse :: handleOnData(string info)
                 int index = 4;
                 string sIndex = "";
                 string dName = "";
+                float result;
+                int datum;
                 for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        root["Spot"]["Points"+to_string(i)]["Time"] = CtoString(timeBuf);
                         for ( int j = 0; j < batchNum; j++ ) {
                                 index = 4 + i * batchNum + j;
+                                datum = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
                                 root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
                                 switch(j)
                                 {
                                 case 0:
+                                        result = 0 - datum * param->getDcPotentialK() - param->getDcPotentialB();
                                         dName = "0_DcPotential";
                                         break;
                                 case 1:
+                                        result = 0 - datum * param->getAcPotentialK() - param->getAcPotentialB();
                                         dName = "1_AcPotential";
                                         break;
                                 }
@@ -450,7 +498,7 @@ int protocolUse :: handleOnData(string info)
         
         Json :: StyledWriter sw;
         ofstream os;
-        os.open("OnData_"+time+".json");
+        os.open("./json/OnData_"+time+".json");
         os << sw.write(root);
         os.close();
         
@@ -507,7 +555,7 @@ int protocolUse :: handleOffData(string info)
                 string sIndex = "";
                 string dName = "";
                 for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        root["Spot"]["Points"+to_string(i)]["Time"] = CtoString(timeBuf);
                         for ( int j = 0; j < batchNum; j++ ) {
                                 index = 4 + i * batchNum + j;
                                 //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
@@ -532,7 +580,7 @@ int protocolUse :: handleOffData(string info)
                 string sIndex = "";
                 string dName = "";
                 for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        root["Spot"]["Points"+to_string(i)]["Time"] = CtoString(timeBuf);
                         for ( int j = 0; j < batchNum; j++ ) {
                                 index = 4 + i * batchNum + j;
                                 root["Data"]["Data"+to_string(index)] = info.substr(OFF_DATA_DATA_(index));
@@ -555,7 +603,7 @@ int protocolUse :: handleOffData(string info)
 
         Json :: StyledWriter sw;
         ofstream os;
-        os.open("OffData_"+time+".json");
+        os.open("./json/OffData_"+time+".json");
         os << sw.write(root);
         os.close();
         
@@ -612,7 +660,7 @@ int protocolUse :: handleAssistData(string info)
                 string sIndex = "";
                 string dName = "";
                 for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-                        root["Spot"]["Points"+to_string(i)]["UTC"] = CtoString(timeBuf);
+                        root["Spot"]["Points"+to_string(i)]["Time"] = CtoString(timeBuf);
                         for ( int j = 0; j < batchNum; j++ ) {
                                 index = 4 + i * batchNum + j;
                                 //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
@@ -637,7 +685,7 @@ int protocolUse :: handleAssistData(string info)
         
         Json :: StyledWriter sw;
         ofstream os;
-        os.open("AssistData_"+time+".json");
+        os.open("./json/AssistData_"+time+".json");
         os << sw.write(root);
         os.close();
         
@@ -654,7 +702,7 @@ int ToIntConvert(string theString)
 {
         
         const char* E = theString.c_str();
-        int n = 0;
+        short n = 0;
         sscanf(E, "%x", &n);
 
         return n;
@@ -664,24 +712,35 @@ float ToFloatConvert(string theString, double prec)
 {
         if(theString.size()!=8)
                 return 0;
-     
+
         string A = theString.substr(0,2);
         string B = theString.substr(2,2);
         string C = theString.substr(4,2);
         string D = theString.substr(6,2);
         string vert = D+C+B+A;
         //vert = A+B +C+D;
-        
+
         const char * E = vert.c_str();
         //printf("E:%s\n",E);
         unsigned int n = 0;
         sscanf(E, "%x", &n);
         
         float theFloat = *((float*)&n);
-        
+
+/*
+        cout <<"convert1:"<< theString <<"->" << theFloat << endl;
         float intergerPart =  floor(theFloat);
         theFloat -= intergerPart;
         theFloat = intergerPart + ( floor(theFloat * pow(10.0, prec) + 0.5) / pow(10.0, prec) );
+
+        float theFloat;
+        stringstream ss;
+        ss << std::hex << vert;
+        
+        ss >> theFloat;
+*/
+        cout <<"convert:"<< theString <<"->" << theFloat << endl;
+        
         return theFloat;
 }
 string CtoString(const char * c)

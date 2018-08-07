@@ -3,6 +3,7 @@
 #include <time.h>
 using namespace std;
 
+
 class CParam
 {
 private:
@@ -21,20 +22,20 @@ private:
         int m_TiggThreshold = -850;
         int m_OnMeasureOpt = 1;
         int m_OffMeasureOpt = 1;
-        int m_RangeOpt;
+        int m_RangeOpt = 1;
 
-        float m_dcPotentialK;
-        float m_dcPotentialB;
-        float m_acPotentialK;
-        float m_acPotentialB;
-        float m_acHiCurrentK;
-        float m_acHiCurrentB;
-        float m_dcHiCurrentK;
-        float m_dcHiCurrentB;
-        float m_acLoCurrentK;
-        float m_acLoCurrentB;
-        float m_dcLoCurrentK;
-        float m_dcLoCurrentB;
+        float m_dcPotentialK = 1.0;
+        float m_dcPotentialB = 0.0;
+        float m_acPotentialK = 1.0;
+        float m_acPotentialB = 0.0;
+        float m_acHiCurrentK = 1.0;
+        float m_acHiCurrentB = 0.0;
+        float m_dcHiCurrentK = 1.0;
+        float m_dcHiCurrentB = 0.0;
+        float m_acLoCurrentK = 1.0;
+        float m_acLoCurrentB = 0.0;
+        float m_dcLoCurrentK = 1.0;
+        float m_dcLoCurrentB = 0.0;
         
 public:
         static CParam* GetInstance();

@@ -195,7 +195,7 @@ void CParam::setAcLoCurrentB(float B)
 
 void CParam::setDcLoCurrentK(float K)
 {
-        this->m_dcPotentialK = K;
+        this->m_dcLoCurrentK = K;
 }
 
 void CParam::setDcLoCurrentB(float B)

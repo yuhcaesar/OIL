@@ -65,8 +65,11 @@ void server()
 int main()
 {
 	theDBC.InitTheDBModule("localhost","root","tree","monitor");
-	theSocketC.InitTheSocketModule(96768);
+	theSocketC.InitTheSocketModule(PORT);
         theprotocolUseC.InitTheProtocolModule(theDBC);
+        makeLog(1,"--test info--");
+        ToFloatConvert("70b2fc3a",2.0);
+        makeLog(1,"-------------");
         server();
         return 0;
 }
