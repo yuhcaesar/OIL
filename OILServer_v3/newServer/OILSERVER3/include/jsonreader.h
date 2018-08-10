@@ -6,5 +6,6 @@ using namespace std;
 class JsonReader
 {
 public:
-        
+  void read();
+  
 }

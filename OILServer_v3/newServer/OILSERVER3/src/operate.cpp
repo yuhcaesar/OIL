@@ -11,7 +11,7 @@ protocolUse theprotocolUseC;
 
 void makeLog(int type,string information)
 {
-        cout<<information<<endl;
+    cout<<information<<endl;
 }
 
 int client_fd=0; 
@@ -24,52 +24,49 @@ char client_ip[20];
  
 void *run(void *arg)
 {
-        int client_fd = *((int*)&arg);  
-        bool canRun =true;
-        while(canRun)
+    int client_fd = *((int*)&arg);  
+    bool canRun =true;
+    while(canRun)
+    {
+        string receiveString = theSocketC.getInformation(client_fd);
+        if(receiveString ==""||receiveString =="Quit" ||receiveString == "quit")
         {
-                string receiveString = theSocketC.getInformation(client_fd);
-                if(receiveString ==""||receiveString =="Quit" ||receiveString == "quit")
-                {
-                        theSocketC. closeClient(client_fd);
-                        canRun = false;
-                        break;
-                }
-                //cout<<"receive :"<<receiveString<<endl;
-                theprotocolUseC.getString(receiveString);
-                theSocketC.sendInformation(client_fd, "information" ); 
-            
+            theSocketC. closeClient(client_fd);
+            canRun = false;
+            break;
         }
+        //cout<<"receive :"<<receiveString<<endl;
+        theprotocolUseC.getString(receiveString);
+        theSocketC.sendInformation(client_fd, "information" ); 
+
+    }
 }
 
 void server()
 {
-        makeLog(1,"server is opened......");
-        cout<<"-----------------------------------------------------------"<<endl;
-        while(1)  
+    makeLog(1,"server is opened......");
+    cout<<"-----------------------------------------------------------"<<endl;
+    while(1)  
+    {  
+        //client_fd = accept(fd,(struct sockaddr *)&client_addr,&socklen);
+        client_fd = theSocketC.acceptSocket();
+        if(client_fd<0)  
         {  
-                //client_fd = accept(fd,(struct sockaddr *)&client_addr,&socklen);
-                client_fd = theSocketC.acceptSocket();
-                if(client_fd<0)  
-                {  
-                        makeLog(4,"server open failed");
-                        theSocketC.closeServer(); 
-                        return;  
-                }  
-                pthread_create(&tid,NULL,run,(void *)client_fd);  
-                pthread_detach(tid);  
+            makeLog(4,"server open failed");
+            theSocketC.closeServer(); 
+            return;  
         }  
-        theSocketC.closeServer(); 
+        pthread_create(&tid,NULL,run,(void *)client_fd);  
+        pthread_detach(tid);  
+    }  
+    theSocketC.closeServer(); 
 }
 
 int main()
 {
-	theDBC.InitTheDBModule("localhost","root","tree","monitor");
-	theSocketC.InitTheSocketModule(PORT);
-        theprotocolUseC.InitTheProtocolModule(theDBC);
-        makeLog(1,"--test info--");
-        ToFloatConvert("70b2fc3a",2.0);
-        makeLog(1,"-------------");
-        server();
-        return 0;
+    theDBC.InitTheDBModule("localhost","root","tree","monitor");
+    theSocketC.InitTheSocketModule(PORT);
+    theprotocolUseC.InitTheProtocolModule(theDBC);
+    server();
+    return 0;
 }

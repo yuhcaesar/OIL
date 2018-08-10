@@ -28,11 +28,6 @@ public:
 private:
     
         DBController theDBC;
-        int stringCount = 0;
-        int saveCounter = 0;
-        int saveCounterMax = 10;
-        string saveStringUse = "INSERT INTO t_guid(data1,data2,data3,data4,data5,data6,gid,time)values";
-        string theSaveString = "INSERT INTO t_guid (data1 , data2 , data3 , data4, data5,  data6, gid, time) values"; 
 
         //更复杂的协议处理
         void ProtocolOperate(string  information);
@@ -46,8 +41,6 @@ private:
         int handleOnData(string info);
         int handleOffData(string info);
         int handleAssistData(string info);
-        void data0x3D(string VID , string PID ,string DID,  string dataIn);
-       	void dataUse43(string VID , string PID ,string DID,  string dataIn);
         //----------------------------------------------------------------------------------------//
         //作为示例存在的处理方式
         void saveStringForDemo(string getIn);

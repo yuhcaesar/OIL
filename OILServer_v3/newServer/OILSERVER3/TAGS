@@ -45,7 +45,7 @@ class DBControllerDBController12,147
         const char* databaseSave ;databaseSave90,2736
         void makeLogShow(int type,string theinformation)makeLogShow91,2771
 
-include/protocolUse.h,925
+include/protocolUse.h,508
 #define __protocolUse_H__ __protocolUse_H__2,29
 const string LoginEvent = "30";LoginEvent12,214
 const string ExitEvent = "31";ExitEvent13,246
@@ -56,11 +56,6 @@ const string OffDataEvent = "44";OffDataEvent17,381
 const string AssistDataEvent = "45";AssistDataEvent18,415
 class protocolUseprotocolUse20,453
         DBController theDBC;theDBC30,603
-        int stringCount = 0;stringCount31,632
-        int saveCounter = 0;saveCounter32,661
-        int saveCounterMax = 10;saveCounterMax33,690
-        string saveStringUse = "INSERT INTO t_guid(data1,data2,data3,data4,data5,data6,gid,time)values";saveStringUse34,723
-        string theSaveString = "INSERT INTO t_guid (data1 , data2 , data3 , data4, data5,  data6, gid, time) values"; theSaveString35,828
 
 include/onData.h,632
 #define __onData_H____onData_H__2,21
@@ -107,6 +102,9 @@ class CParamCParam7,81
         float m_acLoCurrentB = 0.0;m_acLoCurrentB36,911
         float m_dcLoCurrentK = 1.0;m_dcLoCurrentK37,947
         float m_dcLoCurrentB = 0.0;m_dcLoCurrentB38,983
+
+include/jsonreader.h,33
+class JsonReaderJsonReader6,68
 
 include/upParam.h,1036
 #define __upParam_H____upParam_H__2,22
@@ -244,34 +242,36 @@ float CParam::getDcLoCurrentK()getDcLoCurrentK252,3876
 float CParam::getDcLoCurrentB()getDcLoCurrentB257,3944
 
 src/protocolUse.cpp,989
-void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule19,347
-void protocolUse :: getString( string information )getString25,500
-void protocolUse :: ProtocolOperate(string  information)ProtocolOperate31,628
-int protocolUse :: handleLogin(string info)handleLogin76,1934
-int protocolUse :: handleExit(string info)handleExit100,2629
-int protocolUse :: handleUpInterval(string info)handleUpInterval124,3321
-int protocolUse :: handleUpParam(string info)handleUpParam218,7529
-int protocolUse :: handleOnData(string info)handleOnData307,11340
-int protocolUse :: handleOffData(string info)handleOffData508,21463
-int protocolUse :: handleAssistData(string info)handleAssistData613,26028
-void makeLogShow(int type,string theinformation)makeLogShow696,29578
-int ToIntConvert(string theString)ToIntConvert701,29694
-float ToFloatConvert(string theString, double prec)ToFloatConvert711,29945
-string CtoString(const char * c)CtoString746,30929
+void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule20,366
+void protocolUse :: getString( string information )getString26,511
+void protocolUse :: ProtocolOperate(string  information)ProtocolOperate32,635
+int protocolUse :: handleLogin(string info)handleLogin77,1740
+int protocolUse :: handleExit(string info)handleExit102,2356
+int protocolUse :: handleUpInterval(string info)handleUpInterval126,2964
+int protocolUse :: handleUpParam(string info)handleUpParam221,6901
+int protocolUse :: handleOnData(string info)handleOnData310,10448
+int protocolUse :: handleOffData(string info)handleOffData491,18372
+int protocolUse :: handleAssistData(string info)handleAssistData608,22657
+void makeLogShow(int type,string theinformation)makeLogShow696,25930
+int ToIntConvert(string theString)ToIntConvert701,26042
+float ToFloatConvert(string theString, double prec)ToFloatConvert711,26286
+string CtoString(const char * c)CtoString746,27198
 
-src/operate.cpp,523
+src/jsonreader.cpp,0
+
+src/operate.cpp,522
 DBController theDBC;theDBC8,115
 socketController theSocketC;theSocketC9,136
 protocolUse theprotocolUseC;theprotocolUseC10,165
 void makeLog(int type,string information)makeLog12,195
-int client_fd=0; client_fd17,275
-pthread_t tid;  tid18,293
-sockaddr_in client_addr;  client_addr19,310
-socklen_t socklen = sizeof(client_addr); socklen20,337
-unsigned client_port=0;  client_port21,379
-char client_ip[20]; client_ip22,405
-void *run(void *arg)run25,429
-void server()server45,1099
-int main()main65,1784
+int client_fd=0; client_fd17,271
+pthread_t tid;  tid18,289
+sockaddr_in client_addr;  client_addr19,306
+socklen_t socklen = sizeof(client_addr); socklen20,333
+unsigned client_port=0;  client_port21,375
+char client_ip[20]; client_ip22,401
+void *run(void *arg)run25,425
+void server()server45,971
+int main()main65,1540
 
 start.sh,0
