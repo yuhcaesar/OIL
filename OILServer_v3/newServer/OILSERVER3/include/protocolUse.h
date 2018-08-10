@@ -7,7 +7,6 @@
 #include "dataBaseUse.h"
 using namespace std;
 
-
 //typedef unsigned int Event;
 const string LoginEvent = "30";
 const string ExitEvent = "31";
@@ -19,21 +18,14 @@ const string AssistDataEvent = "45";
 
 class protocolUse
 {
-
 public:
         void InitTheProtocolModule( DBController theDBCIn );
-
         void getString(string information);
-
 private:
-    
         DBController theDBC;
-
         //更复杂的协议处理
         void ProtocolOperate(string  information);
-    
         //-----------------------------------协议处理--------------------------------------------------//
-
         int handleLogin(string info);
         int handleExit(string info);
         int handleUpInterval(string info);
@@ -47,11 +39,9 @@ private:
 };
 
 void makeLogShow(int type,string theinformation);
-
 int ToIntConvert(string theString);
-
 float ToFloatConvert(string theString, double prec);
-
+string ToStringConvert(string theString);
 string CtoString(const char * c);
 
-#endif     
+#endif

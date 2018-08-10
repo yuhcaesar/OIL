@@ -469,11 +469,12 @@ int protocolUse :: handleOnData(string info)
     }
 
 
-    cout << root.toStyledString() << endl;
+    //cout << root.toStyledString() << endl;
+    // Support for DB INSERTING... naive way
     for ( int i = 0; i < (length / batchNum / batch); i++ ) {
         stringstream ss;
         ss << fixed << setprecision(2);
-        ss << "INSERT INTO `t_guid` VALUES ( NULL, '" << root["Spot"]["Points_"+to_string(i)]["0_DcPotential"].asFloat()  << "', '" <<root["Spot"]["Points_"+to_string(i)]["1_AcPotential"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["2_DcCurrent"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["3_AcCurrent"].asFloat() <<"', '0.00', '0.00', '" << info.substr(ON_DATA_PID) << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
+        ss << "INSERT INTO `t_guid` VALUES ( NULL, '" << root["Spot"]["Points_"+to_string(i)]["0_DcPotential"].asFloat()  << "', '" <<root["Spot"]["Points_"+to_string(i)]["1_AcPotential"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["2_DcCurrent"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["3_AcCurrent"].asFloat() <<"', '0.00', '0.00', '" << ToStringConvert(info.substr(ON_DATA_DID)) << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
         cout << ss.str();
         this->theDBC.DBQuery(ss.str());
 
@@ -529,16 +530,19 @@ int protocolUse :: handleOffData(string info)
 
     length = info.size() - 56 - 4;
     printf("real len:%d\n", length);
+    int batchNum = 1;
+    int batch = 4;
+    int index = 4;
+    string sIndex = "";
+    string dName = "";
+    int datum = 0;
+    float result = 0;
+
     if ( param->getOffMeasureOpt() == 0x1 )
     {
-        int batchNum = 1;
-        int batch = 4;
-        int index = 4;
-        string sIndex = "";
-        string dName = "";
-        int datum;
-        float result;
-
+        batchNum = 1;
+        batch = 4;
+        index = 4;
         for ( int i = 0; i < (length / batchNum / batch); i++ ) {
             root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
             for ( int j = 0; j < batchNum; j++ ) {
@@ -561,13 +565,9 @@ int protocolUse :: handleOffData(string info)
     }
     else if ( param->getOffMeasureOpt() == 0x2 )
     {
-        int batchNum = 1;
-        int batch = 4;
-        int index = 4;
-        string sIndex = "";
-        string dName = "";
-        int datum = 0;
-        float result = 0;
+        batchNum = 1;
+        batch = 4;
+        index = 4;
         for ( int i = 0; i < (length / batchNum / batch); i++ ) {
             root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
             for ( int j = 0; j < batchNum; j++ ) {
@@ -592,8 +592,20 @@ int protocolUse :: handleOffData(string info)
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
         }
     }
+    if ( param->getOffMeasureOpt() == 0x1 ) {
+        dName = "0_DcPotential";
+    } else if ( param->getOffMeasureOpt() == 0x2 ) {
+        dName = "0_DcCurrent";
+    }
+    for ( int i = 0; i < (length / batchNum / batch); i++ ) {
+        stringstream ss;
+        ss << fixed << setprecision(2);
+        ss << "INSERT INTO `t_guid` VALUES ( NULL, '" << info.substr(ON_DATA_DID)  << "', '" << root["Spot"]["Points_"+to_string(i)][dName].asFloat() << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
+        cout << ss.str();
+        this->theDBC.DBQuery(ss.str());
 
-    cout << root.toStyledString() << endl;
+    }
+    //cout << root.toStyledString() << endl;
 
     Json :: StyledWriter sw;
     ofstream os;
@@ -699,14 +711,28 @@ void makeLogShow(int type,string theinformation)
 
 int ToIntConvert(string theString)
 {
-        
+ 
     const char* E = theString.c_str();
     unsigned short n = 0;
     sscanf(E, "%x", &n);
 
     return n;
 }
-                                                                                          
+
+string ToStringConvert(string theString)
+{
+    string hex = theString;
+    long len = hex.length();
+    string newString;
+    for(long i=0; i< len; i+=2)
+    {
+        string byte = hex.substr(i,2);
+        char chr = (char) (int)strtol(byte.c_str(), NULL, 16);
+        newString.push_back(chr);
+    }
+    return newString;
+}
+
 float ToFloatConvert(string theString, double prec)
 {
     if(theString.size()!=8)
