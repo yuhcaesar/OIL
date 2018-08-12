@@ -28,17 +28,13 @@ void protocolUse :: getString( string information )
     this->ProtocolOperate(information);
 }
 
-//更复杂的协议处理
-void protocolUse :: ProtocolOperate(string  information)
+int protocolUse :: EventHandler(string information)
 {
-    int lengthAll =  information.size();
-    if(lengthAll < 48)
-        return;
-    int ret = -1;
-    string operate2 = information.substr(42,2);
+    short ret = -1;
+    string operate2 = information.substr(IdxOp2, 2);
     if ( operate2 == LoginEvent )
     {
-        ret = this->handleLogin(information);                
+        ret = this->handleLogin(information);
     }
     else if ( operate2 == ExitEvent )
     {
@@ -64,11 +60,57 @@ void protocolUse :: ProtocolOperate(string  information)
     {
         ret = this->handleAssistData(information);
     }
+    return ret;
+}
+//更复杂的协议处理
+void protocolUse :: ProtocolOperate(string  information)
+{
+    int lengthAll =  information.size();
+    int ret = -1;
+    string operate2;
+    string sub_info;
+    int head_idx;
+    int tail_idx;
+    long sub_len; // subinfo length from <DATA> to <TAIL> 
+    long sub_idx_len; // index of len for subinfo
 
+    if(lengthAll < 48)
+        return;
+
+    for ( int i = 0; i < lengthAll; i++ ) {
+        if ( information.substr(i, LenHead) == Header ) {
+            cout << endl;
+            cout << "head " << information.substr(i, LenHead) << endl;
+            head_idx = i;
+            operate2 = information.substr(head_idx + IdxOp2, 2);
+            if ( operate2 == OnDataEvent ||
+                 operate2 == OffDataEvent ||
+                 operate2 == AssistDataEvent
+                )
+                sub_idx_len = IdxLen_D;
+            else
+                sub_idx_len = IdxLen_O;
+
+            sub_len = ToIntConvert(information.substr(head_idx + sub_idx_len, LenLength)) * 2;
+            cout << "sub_len " << sub_len << ":" << information.substr(head_idx + sub_idx_len, LenLength) << endl;
+            tail_idx = head_idx + sub_idx_len + LenLength + sub_len - LenTail;
+            cout << "tail "<<information.substr(tail_idx, LenTail) << " idx " << tail_idx << endl;
+            if (tail_idx > lengthAll) {
+                makeLogShow(4,"tail_idx overflow");
+                return;
+            }
+            if ( information.substr(tail_idx, LenTail) ==  Tailer ) {
+                ret = this->EventHandler(information.substr(head_idx, tail_idx + LenTail));
+            }
+            else {
+                makeLogShow(4, "broken package");
+            }
+            i = tail_idx + LenTail - 1;
+        }
+    }
     if ( ret < 0 ) {
         makeLogShow(4,"handle event failed");
     }
-
 
 }
 
@@ -236,63 +278,63 @@ int protocolUse :: handleUpParam(string info)
 
     float tmpData = 0;
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA01), 2.0);
-    root["Data"]["Data01"] = info.substr(UP_PARAM_DATA01);
+    //root["Data"]["Data01"] = info.substr(UP_PARAM_DATA01);
     param->setDcPotentialK(tmpData);
     root["Parameters"]["DcPotentialK"] = param->getDcPotentialK();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA02), 2.0);
-    root["Data"]["Data02"] = info.substr(UP_PARAM_DATA02);
+    //root["Data"]["Data02"] = info.substr(UP_PARAM_DATA02);
     param->setDcPotentialB(tmpData);
     root["Parameters"]["DcPotentialB"] = param->getDcPotentialB();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA03), 2.0);
-    root["Data"]["Data03"] = info.substr(UP_PARAM_DATA03);
+    //root["Data"]["Data03"] = info.substr(UP_PARAM_DATA03);
     param->setAcPotentialK(tmpData);
     root["Parameters"]["AcPotentialK"] = param->getAcPotentialK();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA04), 2.0);
-    root["Data"]["Data04"] = info.substr(UP_PARAM_DATA04);
+    //root["Data"]["Data04"] = info.substr(UP_PARAM_DATA04);
     param->setAcPotentialB(tmpData);
     root["Parameters"]["AcPotentialB"] = param->getAcPotentialB();
 
         
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA05), 2.0);
-    root["Data"]["Data05"] = info.substr(UP_PARAM_DATA05);
+    //root["Data"]["Data05"] = info.substr(UP_PARAM_DATA05);
     param->setAcHiCurrentK(tmpData);
     root["Parameters"]["AcHiCurrentK"] = param->getAcHiCurrentK();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA06), 2.0);
-    root["Data"]["Data06"] = info.substr(UP_PARAM_DATA06);
+    //root["Data"]["Data06"] = info.substr(UP_PARAM_DATA06);
     param->setAcHiCurrentB(tmpData);
     root["Parameters"]["AcHiCurrentB"] = param->getAcHiCurrentB();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA07), 2.0);
-    root["Data"]["Data07"] = info.substr(UP_PARAM_DATA07);
+    //root["Data"]["Data07"] = info.substr(UP_PARAM_DATA07);
     param->setDcHiCurrentK(tmpData);
     root["Parameters"]["DcHiCurrentK"] = param->getDcHiCurrentK();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA08), 2.0);
-    root["Data"]["Data08"] = info.substr(UP_PARAM_DATA08);
+    //root["Data"]["Data08"] = info.substr(UP_PARAM_DATA08);
     param->setDcHiCurrentB(tmpData);
     root["Parameters"]["DcHiCurrentB"] = param->getDcHiCurrentB();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA09), 2.0);
-    root["Data"]["Data09"] = info.substr(UP_PARAM_DATA09);
+    //root["Data"]["Data09"] = info.substr(UP_PARAM_DATA09);
     param->setAcLoCurrentK(tmpData);
     root["Parameters"]["AcLoCurrentK"] = param->getAcLoCurrentK();
         
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA10), 2.0);
-    root["Data"]["Data10"] = info.substr(UP_PARAM_DATA10);
+    //root["Data"]["Data10"] = info.substr(UP_PARAM_DATA10);
     param->setAcLoCurrentB(tmpData);
     root["Parameters"]["AcLoCurrentB"] = param->getAcLoCurrentB();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA11), 2.0);
-    root["Data"]["Data11"] = info.substr(UP_PARAM_DATA11);
+    //root["Data"]["Data11"] = info.substr(UP_PARAM_DATA11);
     param->setDcLoCurrentK(tmpData);
     root["Parameters"]["DcLoCurrentK"] = param->getDcLoCurrentK();
 
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA12), 2.0);
-    root["Data"]["Data12"] = info.substr(UP_PARAM_DATA12);
+    //root["Data"]["Data12"] = info.substr(UP_PARAM_DATA12);
     param->setDcLoCurrentB(tmpData);
     root["Parameters"]["DcLoCurrentB"] = param->getDcLoCurrentB();
 
@@ -397,7 +439,7 @@ int protocolUse :: handleOnData(string info)
                 //root["Spot"]["Points_"+to_string(i)][dName+"_r"] = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
                 tt += param->getOnSampleInterval();
-                strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+                strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
             }
         }
     }
@@ -434,7 +476,7 @@ int protocolUse :: handleOnData(string info)
             root["Spot"]["Points_"+to_string(i)]["0_DcPotential"] = 0;
             root["Spot"]["Points_"+to_string(i)]["1_AcPotential"] = 0;
             tt += param->getOnSampleInterval();
-            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
     else if ( param->getOnMeasureOpt() == 0x3 )
@@ -464,7 +506,7 @@ int protocolUse :: handleOnData(string info)
             root["Spot"]["Points_"+to_string(i)]["2_DcCurrent"] = 0;
             root["Spot"]["Points_"+to_string(i)]["3_AcCurent"] = 0;
             tt += param->getOnSampleInterval();
-            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
 
@@ -507,10 +549,10 @@ int protocolUse :: handleOffData(string info)
     int tmp = 0;
     char timeBuf[255] = {0};
     struct tm *tm_time = (struct tm*)malloc(sizeof(struct tm));
-    time_t timer = time(NULL);       
+    time_t timer = time(NULL);
     string time = "";
     CParam * param = CParam::GetInstance();
-        
+
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d ", gmtime(&timer));
 
     tmp = ToIntConvert(info.substr(OFF_DATA_DATA01));
@@ -522,11 +564,12 @@ int protocolUse :: handleOffData(string info)
     tmp = ToIntConvert(info.substr(OFF_DATA_DATA03));
     root["Data"]["Data03"] = info.substr(OFF_DATA_DATA03);
     time += (to_string(tmp));
-
     strcat(timeBuf, time.c_str());
-    strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time);
+    strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time); // tm_time,tt is UTC time
     time_t tt = mktime(tm_time);
     printf("%d:%s\n", (int)tt, timeBuf);
+    tt += 8 * 3600; // Change to UTC+8
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
 
     length = info.size() - 56 - 4;
     printf("real len:%d\n", length);
@@ -559,7 +602,7 @@ int protocolUse :: handleOffData(string info)
                 }
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
             }
-            tt += param->getOffSampleInterval();
+            tt += param->getOffSampleInterval() * 3600;
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
         }
     }
@@ -588,7 +631,7 @@ int protocolUse :: handleOffData(string info)
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
 
             }
-            tt += param->getOffSampleInterval();
+            tt += param->getOffSampleInterval() *3600;
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
         }
     }
@@ -600,7 +643,7 @@ int protocolUse :: handleOffData(string info)
     for ( int i = 0; i < (length / batchNum / batch); i++ ) {
         stringstream ss;
         ss << fixed << setprecision(2);
-        ss << "INSERT INTO `t_guid` VALUES ( NULL, '" << info.substr(ON_DATA_DID)  << "', '" << root["Spot"]["Points_"+to_string(i)][dName].asFloat() << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
+        ss << "INSERT INTO `t_power_off_data` VALUES ( NULL, '" << ToStringConvert(info.substr(ON_DATA_DID))  << "', '" << root["Spot"]["Points_"+to_string(i)][dName].asFloat() << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
         cout << ss.str();
         this->theDBC.DBQuery(ss.str());
 
@@ -654,6 +697,8 @@ int protocolUse :: handleAssistData(string info)
     strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time);
     time_t tt = mktime(tm_time);
     printf("%d:%s\n", (int)tt, timeBuf);
+    tt += 8 * 3600; // Change to UTC+8
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
 
     length = info.size() - 56 - 4;
     printf("real len:%d\n", length);

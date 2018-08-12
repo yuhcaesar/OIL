@@ -45,7 +45,7 @@ class DBControllerDBController12,147
         const char* databaseSave ;databaseSave90,2736
         void makeLogShow(int type,string theinformation)makeLogShow91,2771
 
-include/protocolUse.h,508
+include/protocolUse.h,909
 #define __protocolUse_H__ __protocolUse_H__2,29
 const string LoginEvent = "30";LoginEvent11,213
 const string ExitEvent = "31";ExitEvent12,245
@@ -54,8 +54,16 @@ const string UpParamEvent = "3d";UpParamEvent14,313
 const string OnDataEvent = "43";OnDataEvent15,347
 const string OffDataEvent = "44";OffDataEvent16,380
 const string AssistDataEvent = "45";AssistDataEvent17,414
-class protocolUseprotocolUse19,452
-        DBController theDBC;theDBC25,594
+const string Header = "21233c3c";Header19,452
+const string Tailer = "3e3e";Tailer20,486
+const short LenHead = 8;LenHead21,516
+const short LenTail = 4;LenTail22,541
+const short LenLength = 4;LenLength23,566
+const short IdxOp2 = 42;IdxOp224,593
+const short IdxLen_O = 44; // Ordinary package LENTH indexIdxLen_O25,618
+const short IdxLen_D = 46; // Data package LENTH indexIdxLen_D26,677
+class protocolUseprotocolUse28,733
+        DBController theDBC;theDBC34,875
 
 include/onData.h,632
 #define __onData_H____onData_H__2,21
@@ -241,22 +249,23 @@ float CParam::getAcLoCurrentB()getAcLoCurrentB248,3809
 float CParam::getDcLoCurrentK()getDcLoCurrentK252,3876
 float CParam::getDcLoCurrentB()getDcLoCurrentB257,3944
 
-src/protocolUse.cpp,1056
+src/protocolUse.cpp,1130
 void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule20,366
 void protocolUse :: getString( string information )getString26,511
-void protocolUse :: ProtocolOperate(string  information)ProtocolOperate32,635
-int protocolUse :: handleLogin(string info)handleLogin77,1740
-int protocolUse :: handleExit(string info)handleExit102,2356
-int protocolUse :: handleUpInterval(string info)handleUpInterval126,2964
-int protocolUse :: handleUpParam(string info)handleUpParam221,6901
-int protocolUse :: handleOnData(string info)handleOnData310,10448
-int protocolUse :: handleOffData(string info)handleOffData491,18430
-int protocolUse :: handleAssistData(string info)handleAssistData619,23246
-void makeLogShow(int type,string theinformation)makeLogShow707,26519
-int ToIntConvert(string theString)ToIntConvert712,26631
-string ToStringConvert(string theString)ToStringConvert722,26778
-float ToFloatConvert(string theString, double prec)ToFloatConvert736,27105
-string CtoString(const char * c)CtoString771,28017
+int protocolUse :: EventHandler(string information)EventHandler31,608
+void protocolUse :: ProtocolOperate(string  information)ProtocolOperate66,1482
+int protocolUse :: handleLogin(string info)handleLogin119,3381
+int protocolUse :: handleExit(string info)handleExit144,3997
+int protocolUse :: handleUpInterval(string info)handleUpInterval168,4605
+int protocolUse :: handleUpParam(string info)handleUpParam263,8542
+int protocolUse :: handleOnData(string info)handleOnData352,12113
+int protocolUse :: handleOffData(string info)handleOffData533,20104
+int protocolUse :: handleAssistData(string info)handleAssistData662,25086
+void makeLogShow(int type,string theinformation)makeLogShow752,28475
+int ToIntConvert(string theString)ToIntConvert757,28587
+string ToStringConvert(string theString)ToStringConvert767,28734
+float ToFloatConvert(string theString, double prec)ToFloatConvert781,29061
+string CtoString(const char * c)CtoString816,29973
 
 src/jsonreader.cpp,0
 
