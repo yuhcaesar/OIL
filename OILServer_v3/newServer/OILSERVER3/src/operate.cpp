@@ -1,18 +1,16 @@
-#include "dataBaseUse.h" 
+#include <unistd.h>
+#include "operate.h"
+#include "dataBaseUse.h"
 #include "socketUse.h"
 #include "protocolUse.h"
 #include "param.h"
-#include <unistd.h>
+#include "log.h"
 
+using namespace std;
 
 DBController theDBC;
 socketController theSocketC;
 protocolUse theprotocolUseC;
-
-void makeLog(int type,string information)
-{
-    cout<<information<<endl;
-}
 
 int client_fd=0; 
 pthread_t tid;  
@@ -35,24 +33,26 @@ void *run(void *arg)
             canRun = false;
             break;
         }
+
         //cout<<"receive :"<<receiveString<<endl;
         theprotocolUseC.getString(receiveString);
-        theSocketC.sendInformation(client_fd, "information" ); 
+        //theSocketC.sendInformation(client_fd, "information" ); 
 
     }
 }
 
 void server()
 {
-    makeLog(1,"server is opened......");
-    cout<<"-----------------------------------------------------------"<<endl;
+    LOG(LOG_MSG,"server is opened......");
+    LOG(LOG_MSG,"-------------------------------");
+
     while(1)  
     {  
         //client_fd = accept(fd,(struct sockaddr *)&client_addr,&socklen);
         client_fd = theSocketC.acceptSocket();
         if(client_fd<0)  
         {  
-            makeLog(4,"server open failed");
+            LOG(LOG_ERR,"server open failed");
             theSocketC.closeServer(); 
             return;  
         }  
@@ -64,9 +64,13 @@ void server()
 
 int main()
 {
+    //freopen("log.txt", "a", stderr);
+    LogUp("log.txt");
     theDBC.InitTheDBModule("localhost","root","tree","monitor");
     theSocketC.InitTheSocketModule(PORT);
     theprotocolUseC.InitTheProtocolModule(theDBC);
     server();
+    //fclose(stderr);
+    LogDown();
     return 0;
 }

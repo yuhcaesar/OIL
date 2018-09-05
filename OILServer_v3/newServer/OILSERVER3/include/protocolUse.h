@@ -47,8 +47,6 @@ private:
         //作为示例存在的处理方式
         void saveStringForDemo(string getIn);
 };
-
-void makeLogShow(int type,string theinformation);
 int ToIntConvert(string theString);
 float ToFloatConvert(string theString, double prec);
 string ToStringConvert(string theString);

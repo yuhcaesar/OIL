@@ -3,7 +3,9 @@
 #include <time.h>
 using namespace std;
 
-
+const int MaxDepolLen = 6000000; // 10 * 60 * 1000ms
+const int PreDepolLen = 120000; // 2 * 60 * 1000ms
+const int RearDepolInterval = 30000; // 30 *1000ms
 class CParam
 {
 private:
@@ -36,10 +38,10 @@ private:
         float m_acLoCurrentB = 0.0;
         float m_dcLoCurrentK = 1.0;
         float m_dcLoCurrentB = 0.0;
-        
+
 public:
         static CParam* GetInstance();
-                        
+
         void setOnSampleInterval(int interval);
         void setOffSampleInterval(int interval);
         void setOffLatency(int latency);

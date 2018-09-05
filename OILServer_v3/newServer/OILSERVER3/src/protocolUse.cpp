@@ -14,13 +14,14 @@
 #include "onData.h"
 #include "offData.h"
 #include "assistData.h"
+#include "log.h"
 
 using namespace std;
 
 void protocolUse :: InitTheProtocolModule( DBController theDBCIn )
 {
     this->theDBC = theDBCIn;
-    makeLogShow(1,"protocoluse is opened");
+    LOG(LOG_MSG,"protocoluse is opened");
 }
 
 void protocolUse :: getString( string information )
@@ -71,7 +72,7 @@ void protocolUse :: ProtocolOperate(string  information)
     string sub_info;
     int head_idx;
     int tail_idx;
-    long sub_len; // subinfo length from <DATA> to <TAIL> 
+    long sub_len; // subinfo length from <DATA> to <TAIL>
     long sub_idx_len; // index of len for subinfo
 
     if(lengthAll < 48)
@@ -79,8 +80,9 @@ void protocolUse :: ProtocolOperate(string  information)
 
     for ( int i = 0; i < lengthAll; i++ ) {
         if ( information.substr(i, LenHead) == Header ) {
-            cout << endl;
-            cout << "head " << information.substr(i, LenHead) << endl;
+            //cout << endl;
+            //cout << "head " << information.substr(i, LenHead) << endl;
+            LOG(LOG_DBG,"head "+information.substr(i, LenHead));
             head_idx = i;
             operate2 = information.substr(head_idx + IdxOp2, 2);
             if ( operate2 == OnDataEvent ||
@@ -91,25 +93,31 @@ void protocolUse :: ProtocolOperate(string  information)
             else
                 sub_idx_len = IdxLen_O;
 
+            LOG(LOG_DBG, "len_idx:"+to_string(head_idx+sub_len) + ":" + to_string(LenLength));
             sub_len = ToIntConvert(information.substr(head_idx + sub_idx_len, LenLength)) * 2;
-            cout << "sub_len " << sub_len << ":" << information.substr(head_idx + sub_idx_len, LenLength) << endl;
+            LOG(LOG_DBG, "sub_len:" + to_string(sub_len));
+            //cout << "sub_len " << sub_len << ":" << information.substr(head_idx + sub_idx_len, LenLength) << endl;
+
             tail_idx = head_idx + sub_idx_len + LenLength + sub_len - LenTail;
-            cout << "tail "<<information.substr(tail_idx, LenTail) << " idx " << tail_idx << endl;
-            if (tail_idx > lengthAll) {
-                makeLogShow(4,"tail_idx overflow");
+            LOG(LOG_DBG, "tail_idx:"+to_string(tail_idx)+":"+to_string(lengthAll));
+
+            //cout << "tail "<<information.substr(tail_idx, LenTail) << " idx " << tail_idx << " len "<< lengthAll << endl;
+            if (tail_idx >= lengthAll) {
+                LOG(LOG_ERR,"tail_idx overflow");
                 return;
             }
+            LOG(LOG_DBG, "tail "+information.substr(tail_idx, LenTail));
             if ( information.substr(tail_idx, LenTail) ==  Tailer ) {
                 ret = this->EventHandler(information.substr(head_idx, tail_idx + LenTail));
             }
             else {
-                makeLogShow(4, "broken package");
+                LOG(LOG_ERR, "broken package");
             }
             i = tail_idx + LenTail - 1;
         }
     }
     if ( ret < 0 ) {
-        makeLogShow(4,"handle event failed");
+        LOG(LOG_ERR,"handle event failed");
     }
 
 }
@@ -129,14 +137,14 @@ int protocolUse :: handleLogin(string info)
     root["Data"] = info.substr(48,12);
     root["Trailer"] = info.substr(60,4);
 
-    cout << root.toStyledString() << endl;
-
+    //cout << root.toStyledString() << endl;
+    LOG(LOG_DBG,root.toStyledString());
     Json :: StyledWriter sw;
     ofstream os;
     os.open("./json/Login.json");
     os << sw.write(root);
     os.close();
-    
+
 
     return 1;
 }
@@ -154,8 +162,8 @@ int protocolUse :: handleExit(string info)
     root["Data"] = info.substr(48,0);
     root["Trailer"] = info.substr(48,4);
 
-    cout << root.toStyledString() << endl;
-
+    //cout << root.toStyledString() << endl;
+    LOG(LOG_DBG,root.toStyledString());
     Json :: StyledWriter sw;
     ofstream os;
     os.open("./json/Exit.json");
@@ -190,7 +198,7 @@ int protocolUse :: handleUpInterval(string info)
     param->setOffSampleInterval(tmpData);
     root["Parameters"]["OfflineSampleInterval"] = to_string(param->getOffSampleInterval());
 
-        
+
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA03).c_str());
     root["Data"]["Data03"] = to_string(tmpData * 100);
     param->setOffLatency(tmpData);
@@ -200,7 +208,7 @@ int protocolUse :: handleUpInterval(string info)
     root["Data"]["Data04"] = to_string(tmpData * 100);
     param->setDepolInterval(tmpData);
     root["Parameters"]["DepolarizationInterval"] = to_string(param->getDepolInterval());
-        
+
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA05).c_str());
     root["Data"]["Data05"] = to_string(tmpData);
     param->setPolInterval(tmpData);
@@ -221,12 +229,12 @@ int protocolUse :: handleUpInterval(string info)
     param->setStabCount(tmpData);
     root["Parameters"]["StableCount"] = to_string(param->getStabCount());
 
-        
+
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA09).c_str());
     root["Data"]["Data09"] = to_string(tmpData);
     param->setStabErr(tmpData);
     root["Parameters"]["StableError"] = to_string(param->getStabErr());
-        
+
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA10).c_str());
     root["Data"]["Data10"] = to_string(tmpData * -1);
     param->setTiggThreshold(tmpData);
@@ -247,14 +255,14 @@ int protocolUse :: handleUpInterval(string info)
     param->setRangeOpt(tmpData);
     root["Parameters"]["RangeOption"] = to_string(param->getRangeOpt());
 
-    cout << root.toStyledString() << endl;
-        
+    //cout << root.toStyledString() << endl;
+    LOG(LOG_DBG,root.toStyledString());
     Json :: StyledWriter sw;
     ofstream os;
     os.open("./json/UpParam.json");
     os << sw.write(root);
     os.close();
-        
+
     return 1;
 }
 
@@ -264,7 +272,7 @@ int protocolUse :: handleUpParam(string info)
 {
 
     Json::Value root;
-        
+
     CParam* param = CParam::GetInstance();
     root["Header"] = info.substr(UP_PARAM_HEADER);
     root["VID"] = info.substr(UP_PARAM_VID);
@@ -322,7 +330,7 @@ int protocolUse :: handleUpParam(string info)
     //root["Data"]["Data09"] = info.substr(UP_PARAM_DATA09);
     param->setAcLoCurrentK(tmpData);
     root["Parameters"]["AcLoCurrentK"] = param->getAcLoCurrentK();
-        
+
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA10), 2.0);
     //root["Data"]["Data10"] = info.substr(UP_PARAM_DATA10);
     param->setAcLoCurrentB(tmpData);
@@ -338,14 +346,14 @@ int protocolUse :: handleUpParam(string info)
     param->setDcLoCurrentB(tmpData);
     root["Parameters"]["DcLoCurrentB"] = param->getDcLoCurrentB();
 
-    cout << root.toStyledString() << endl;
-        
+    LOG(LOG_DBG,root.toStyledString());
+
     Json :: StyledWriter sw;
     ofstream os;
     os.open("./json/UpInterval.json");
     os << sw.write(root);
     os.close();
-        
+
     return 1;
 }
 
@@ -362,35 +370,36 @@ int protocolUse :: handleOnData(string info)
     root["Length"] = info.substr(ON_DATA_LENGTH);
     root["Tailer"] = info.substr(ON_DATA_TAILER(info.size()));
     int length = ToIntConvert(info.substr(ON_DATA_LENGTH));
-    printf("length%d\n", length);
-    printf("info.size:%d\n", info.size());
+    //printf("length%d\n", length);
+    //intf("info.size:%d\n", info.size());
     int tmp = 0;
     char timeBuf[255] = {0};
     struct tm *tm_time = (struct tm*)malloc(sizeof(struct tm));
     time_t timer = time(NULL);
-    string time = "";
+    string time_s = "";
     CParam * param = CParam::GetInstance();
 
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d ", gmtime(&timer));
 
     tmp = ToIntConvert(info.substr(ON_DATA_DATA01));
     root["Data"]["Data01"] = info.substr(ON_DATA_DATA01);
-    time += (to_string(tmp)+":");
+    time_s += (to_string(tmp)+":");
     tmp = ToIntConvert(info.substr(ON_DATA_DATA02));
     root["Data"]["Data02"] = info.substr(ON_DATA_DATA02);
-    time += (to_string(tmp)+":");
+    time_s += (to_string(tmp)+":");
     tmp = ToIntConvert(info.substr(ON_DATA_DATA03));
     root["Data"]["Data03"] = info.substr(ON_DATA_DATA03);
-    time += (to_string(tmp));
+    time_s += (to_string(tmp));
 
-    strcat(timeBuf, time.c_str());
+    strcat(timeBuf, time_s.c_str());
     strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time);
     time_t tt = mktime(tm_time);
-    printf("%d:%s\n", (int)tt, timeBuf);
+    //printf("%d:%s\n", (int)tt, timeBuf);
+    LOG(LOG_DBG,string(timeBuf));
     tt += 8 * 3600;
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
     length = info.size() - 56 - 4;
-    printf("real len:%d\n", length);
+    //printf("real len:%d\n", length);
     int batchNum = 4;
     int batch = 4;
     int index = 4;
@@ -408,7 +417,7 @@ int protocolUse :: handleOnData(string info)
             root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
             for ( int j = 0; j < batchNum; j++ ) {
                 index = 4 + i * batchNum + j;
-                //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
+                 //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
                 datum = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
                 //root["Data"]["Data"+to_string(index)] = info.substr(ON_DATA_DATA_(index));
                 switch(j)
@@ -438,9 +447,10 @@ int protocolUse :: handleOnData(string info)
                 }
                 //root["Spot"]["Points_"+to_string(i)][dName+"_r"] = ToIntConvert(info.substr(ON_DATA_DATA_(index)));
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
-                tt += param->getOnSampleInterval();
-                strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
+                //LOG(LOG_DBG, to_string(i)+" "+(timeBuf));
             }
+            tt += param->getOnSampleInterval();
+            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
     else if ( param->getOnMeasureOpt() == 0x2 )
@@ -511,20 +521,26 @@ int protocolUse :: handleOnData(string info)
     }
 
 
+    LOG(LOG_DBG, "interval:"+to_string(param->getOnSampleInterval()));
     //cout << root.toStyledString() << endl;
     // Support for DB INSERTING... naive way
     for ( int i = 0; i < (length / batchNum / batch); i++ ) {
         stringstream ss;
         ss << fixed << setprecision(2);
-        ss << "INSERT INTO `t_guid` VALUES ( NULL, '" << root["Spot"]["Points_"+to_string(i)]["0_DcPotential"].asFloat()  << "', '" <<root["Spot"]["Points_"+to_string(i)]["1_AcPotential"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["2_DcCurrent"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["3_AcCurrent"].asFloat() <<"', '0.00', '0.00', '" << ToStringConvert(info.substr(ON_DATA_DID)) << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
-        cout << ss.str();
+        ss << "INSERT INTO `t_guid` VALUES ( NULL, '" << root["Spot"]["Points_"+to_string(i)]["0_DcPotential"].asFloat()  << "', '" <<root["Spot"]["Points_"+to_string(i)]["1_AcPotential"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["2_DcCurrent"].asFloat()  << "', '" << root["Spot"]["Points_"+to_string(i)]["3_AcCurrent"].asFloat() <<"', '0.00', '0.00', '" << ToStringConvert(info.substr(ON_DATA_DID)) << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');"<<endl;
+        LOG(LOG_DBG, " [ONLDATA] " + ss.str());
+#ifndef TEST
         this->theDBC.DBQuery(ss.str());
+#endif
 
     }
 
     Json :: StyledWriter sw;
     ofstream os;
-    os.open("./json/OnData_"+time+".json");
+
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&timer));
+    time_s = string(timeBuf);
+    os.open("./json/OnData_"+time_s+".json");
     os << sw.write(root);
     os.close();
     return 1;
@@ -550,21 +566,21 @@ int protocolUse :: handleOffData(string info)
     char timeBuf[255] = {0};
     struct tm *tm_time = (struct tm*)malloc(sizeof(struct tm));
     time_t timer = time(NULL);
-    string time = "";
+    string time_s = "";
     CParam * param = CParam::GetInstance();
 
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d ", gmtime(&timer));
 
     tmp = ToIntConvert(info.substr(OFF_DATA_DATA01));
     root["Data"]["Data01"] = info.substr(OFF_DATA_DATA01);
-    time += (to_string(tmp)+":");
+    time_s += (to_string(tmp)+":");
     tmp = ToIntConvert(info.substr(OFF_DATA_DATA02));
     root["Data"]["Data02"] = info.substr(OFF_DATA_DATA02);
-    time += (to_string(tmp)+":");
+    time_s += (to_string(tmp)+":");
     tmp = ToIntConvert(info.substr(OFF_DATA_DATA03));
     root["Data"]["Data03"] = info.substr(OFF_DATA_DATA03);
-    time += (to_string(tmp));
-    strcat(timeBuf, time.c_str());
+    time_s += (to_string(tmp));
+    strcat(timeBuf, time_s.c_str());
     strptime(timeBuf, "%Y-%m-%d %H:%M:%S", tm_time); // tm_time,tt is UTC time
     time_t tt = mktime(tm_time);
     printf("%d:%s\n", (int)tt, timeBuf);
@@ -586,8 +602,11 @@ int protocolUse :: handleOffData(string info)
         batchNum = 1;
         batch = 4;
         index = 4;
+        long long tt_ms = 0;
+        int tt_ms_part = 0;
+        string time_ms = CtoString(timeBuf)+".000";
         for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-            root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
+            root["Spot"]["Points_"+to_string(i)]["Time"] = time_ms;
             for ( int j = 0; j < batchNum; j++ ) {
                 index = 4 + i * batchNum + j;
                 //sIndex = (index<10)?"Data0"+to_string(index):"Data"+to_string(index);
@@ -602,8 +621,22 @@ int protocolUse :: handleOffData(string info)
                 }
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
             }
-            tt += param->getOffSampleInterval() * 3600;
+            //
+            tt_ms = tt * 1000;
+            tt_ms_part = 0; // tt_ms microsecond part (without second part)
+            if ( i < PreDepolLen / param->getDepolInterval() ) { // prev 120,000 ms
+                tt_ms += param->getDepolInterval();
+            } else {
+                tt_ms += RearDepolInterval;
+            }
+            tt = (time_t)round(tt_ms / 1000);
+            tt_ms_part = (int)(tt_ms - tt * 1000);
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+
+            stringstream ss;
+            ss << setfill('0') << setw(3) << to_string(tt_ms_part);
+            time_ms = CtoString(timeBuf) + "." + ss.str();
+ 
         }
     }
     else if ( param->getOffMeasureOpt() == 0x2 )
@@ -611,8 +644,11 @@ int protocolUse :: handleOffData(string info)
         batchNum = 1;
         batch = 4;
         index = 4;
+        long long tt_ms = 0;
+        int tt_ms_part = 0;
+        string time_ms = CtoString(timeBuf)+".000";
         for ( int i = 0; i < (length / batchNum / batch); i++ ) {
-            root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
+            root["Spot"]["Points_"+to_string(i)]["Time"] = time_ms;
             for ( int j = 0; j < batchNum; j++ ) {
                 index = 4 + i * batchNum + j;
                 //root["Data"]["Data"+to_string(index)] = info.substr(OFF_DATA_DATA_(index));
@@ -631,8 +667,19 @@ int protocolUse :: handleOffData(string info)
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
 
             }
-            tt += param->getOffSampleInterval() *3600;
+            tt_ms = tt * 1000;
+            tt_ms_part = 0; // tt_ms microsecond part (without second part)
+            if ( i < PreDepolLen / param->getDepolInterval() ) { // ms
+                tt_ms += param->getDepolInterval();
+            } else {
+                tt_ms += RearDepolInterval;
+            }
+            tt = (time_t)round(tt_ms / 1000);
+            tt_ms_part = (int)(tt_ms - tt * 1000);
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+            stringstream ss;
+            ss << setfill('0') << setw(3) << to_string(tt_ms_part);
+            time_ms = CtoString(timeBuf) + "." + ss.str();
         }
     }
     if ( param->getOffMeasureOpt() == 0x1 ) {
@@ -644,15 +691,18 @@ int protocolUse :: handleOffData(string info)
         stringstream ss;
         ss << fixed << setprecision(2);
         ss << "INSERT INTO `t_power_off_data` VALUES ( NULL, '" << ToStringConvert(info.substr(ON_DATA_DID))  << "', '" << root["Spot"]["Points_"+to_string(i)][dName].asFloat() << "', '" << root["Spot"]["Points_"+to_string(i)]["Time"].asString() << "');" << endl;
-        cout << ss.str();
+        LOG(LOG_DBG," [OFFLDATA] " + ss.str());
+#ifndef TEST
         this->theDBC.DBQuery(ss.str());
-
+#endif
     }
     //cout << root.toStyledString() << endl;
 
     Json :: StyledWriter sw;
     ofstream os;
-    os.open("./json/OffData_"+time+".json");
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&timer));
+    time_s = string(timeBuf);
+    os.open("./json/OnData_"+time_s+".json");
     os << sw.write(root);
     os.close();
 
@@ -737,7 +787,8 @@ int protocolUse :: handleAssistData(string info)
         }
     }
 
-    cout << root.toStyledString() << endl;
+    LOG(LOG_DBG, root.toStyledString());
+    //cout << root.toStyledString() << endl;
 
     Json :: StyledWriter sw;
     ofstream os;
@@ -748,11 +799,6 @@ int protocolUse :: handleAssistData(string info)
     return 1;
 }
 
-//其实就是输出Log等会再说
-void makeLogShow(int type,string theinformation)
-{
-    cout<<"["+to_string(type)+"]"<<theinformation<<endl; 
-}
 
 int ToIntConvert(string theString)
 {
@@ -809,8 +855,8 @@ float ToFloatConvert(string theString, double prec)
         
       ss >> theFloat;
     */
-    cout <<"convert:"<< theString <<"->" << theFloat << endl;
-        
+    //cout <<"convert:"<< theString <<"->" << theFloat << endl;
+    
     return theFloat;
 }
 string CtoString(const char * c)
