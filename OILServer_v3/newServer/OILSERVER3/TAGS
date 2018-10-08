@@ -31,6 +31,30 @@ class socketControllersocketController26,379
     bool isStarted = false;isStarted116,2573
     void startTheServer(int port)startTheServer118,2606
 
+include/downParam.h,1125
+#define __downParam_H____downParam_H__2,24
+#define DOWN_PARAM_HEADER DOWN_PARAM_HEADER4,49
+#define DOWN_PARAM_VID DOWN_PARAM_VID5,79
+#define DOWN_PARAM_PID DOWN_PARAM_PID6,106
+#define DOWN_PARAM_DID DOWN_PARAM_DID7,134
+#define DOWN_PARAM_OPERATION1 DOWN_PARAM_OPERATION18,163
+#define DOWN_PARAM_OPERATION2 DOWN_PARAM_OPERATION29,198
+#define DOWN_PARAM_LENGTH DOWN_PARAM_LENGTH10,233
+#define DOWN_PARAM_DATA01 DOWN_PARAM_DATA0111,264
+#define DOWN_PARAM_DATA02 DOWN_PARAM_DATA0212,295
+#define DOWN_PARAM_DATA03 DOWN_PARAM_DATA0313,326
+#define DOWN_PARAM_DATA04 DOWN_PARAM_DATA0414,357
+#define DOWN_PARAM_DATA05 DOWN_PARAM_DATA0515,388
+#define DOWN_PARAM_DATA06 DOWN_PARAM_DATA0616,419
+#define DOWN_PARAM_DATA07 DOWN_PARAM_DATA0717,450
+#define DOWN_PARAM_DATA08 DOWN_PARAM_DATA0818,481
+#define DOWN_PARAM_DATA09 DOWN_PARAM_DATA0919,513
+#define DOWN_PARAM_DATA10 DOWN_PARAM_DATA1020,545
+#define DOWN_PARAM_DATA11 DOWN_PARAM_DATA1121,577
+#define DOWN_PARAM_DATA12 DOWN_PARAM_DATA1222,609
+#define DOWN_PARAM_DATA(DOWN_PARAM_DATA23,641
+#define DOWN_PARAM_TRAILER(DOWN_PARAM_TRAILER24,681
+
 include/dataBaseUse.h,555
 #define __dataBaseUse_H__ __dataBaseUse_H__2,30
 class DBControllerDBController12,163
@@ -80,38 +104,39 @@ include/onData.h,632
 #define ON_DATA_DATA_(ON_DATA_DATA_16,354
 #define ON_DATA_TAILER(ON_DATA_TAILER18,393
 
-include/param.h,1741
+include/param.h,1802
 #define __param_H____param_H__2,20
-const int MaxDepolLen = 6000000; // 10 * 60 * 1000msMaxDepolLen6,80
-const int PreDepolLen = 120000; // 2 * 60 * 1000msPreDepolLen7,133
-const int RearDepolInterval = 30000; // 30 *1000msRearDepolInterval8,184
-class CParamCParam9,235
-        static CParam* m_pInstance;m_pInstance13,277
-        int m_OnSampleInterval = 20;m_OnSampleInterval15,314
-        int m_OffSampleInterval = 12;m_OffSampleInterval16,351
-        int m_OffLatency = 500;m_OffLatency17,389
-        int m_DepolInterval = 1000;m_DepolInterval18,421
-        int m_PolInterval = 30;m_PolInterval19,457
-        int m_AsynInterval = 30;m_AsynInterval20,489
-        int m_AssiInterval = 2;m_AssiInterval21,522
-        int m_StabCount = 3;m_StabCount22,554
-        int m_StabErr = 10;m_StabErr23,583
-        int m_TiggThreshold = -850;m_TiggThreshold24,611
-        int m_OnMeasureOpt = 1;m_OnMeasureOpt25,647
-        int m_OffMeasureOpt = 1;m_OffMeasureOpt26,679
-        int m_RangeOpt = 1;m_RangeOpt27,712
-        float m_dcPotentialK = 1.0;m_dcPotentialK29,741
-        float m_dcPotentialB = 0.0;m_dcPotentialB30,777
-        float m_acPotentialK = 1.0;m_acPotentialK31,813
-        float m_acPotentialB = 0.0;m_acPotentialB32,849
-        float m_acHiCurrentK = 1.0;m_acHiCurrentK33,885
-        float m_acHiCurrentB = 0.0;m_acHiCurrentB34,921
-        float m_dcHiCurrentK = 1.0;m_dcHiCurrentK35,957
-        float m_dcHiCurrentB = 0.0;m_dcHiCurrentB36,993
-        float m_acLoCurrentK = 1.0;m_acLoCurrentK37,1029
-        float m_acLoCurrentB = 0.0;m_acLoCurrentB38,1065
-        float m_dcLoCurrentK = 1.0;m_dcLoCurrentK39,1101
-        float m_dcLoCurrentB = 0.0;m_dcLoCurrentB40,1137
+const int MaxDepolLen = 6000000; // 10 * 60 * 1000msMaxDepolLen7,95
+const int PreDepolLen = 120000; // 2 * 60 * 1000msPreDepolLen8,148
+const int RearDepolInterval = 30000; // 30 *1000msRearDepolInterval9,199
+class CParamCParam10,250
+        static CParam* m_pInstance;m_pInstance14,292
+        int m_OnSampleInterval = 20;m_OnSampleInterval16,329
+        int m_OffSampleInterval = 12;m_OffSampleInterval17,366
+        int m_OffLatency = 500;m_OffLatency18,404
+        int m_DepolInterval = 1000;m_DepolInterval19,436
+        int m_PolInterval = 30;m_PolInterval20,472
+        int m_AsynInterval = 30;m_AsynInterval21,504
+        int m_AssiInterval = 2;m_AssiInterval22,537
+        int m_StabCount = 3;m_StabCount23,569
+        int m_StabErr = 10;m_StabErr24,598
+        int m_TiggThreshold = -850;m_TiggThreshold25,626
+        int m_OnMeasureOpt = 1;m_OnMeasureOpt26,662
+        int m_OffMeasureOpt = 1;m_OffMeasureOpt27,694
+        int m_RangeOpt = 1;m_RangeOpt28,727
+        float m_dcPotentialK = 1.0;m_dcPotentialK30,756
+        float m_dcPotentialB = 0.0;m_dcPotentialB31,792
+        float m_acPotentialK = 1.0;m_acPotentialK32,828
+        float m_acPotentialB = 0.0;m_acPotentialB33,864
+        float m_acHiCurrentK = 1.0;m_acHiCurrentK34,900
+        float m_acHiCurrentB = 0.0;m_acHiCurrentB35,936
+        float m_dcHiCurrentK = 1.0;m_dcHiCurrentK36,972
+        float m_dcHiCurrentB = 0.0;m_dcHiCurrentB37,1008
+        float m_acLoCurrentK = 1.0;m_acLoCurrentK38,1044
+        float m_acLoCurrentB = 0.0;m_acLoCurrentB39,1080
+        float m_dcLoCurrentK = 1.0;m_dcLoCurrentK40,1116
+        float m_dcLoCurrentB = 0.0;m_dcLoCurrentB41,1152
+static map<string, CParam> ParamArray;ParamArray102,3062
 
 include/jsonreader.h,33
 class JsonReaderJsonReader6,68
@@ -174,7 +199,7 @@ include/assistData.h,771
 
 include/operate.h,69
 #define __operate_H____operate_H__2,22
-#define LOGMOD LOGMOD7,76
+#define LOGMOD LOGMOD7,78
 
 include/upInterval.h,1231
 #define __upInterval_H____upInterval_H__2,25
@@ -203,100 +228,100 @@ include/upInterval.h,1231
 
 include/log.h,185
 #define __LOG_H____LOG_H__2,18
-const int LOG_RAW = 1;LOG_RAW11,137
-const int LOG_ERR = 2;LOG_ERR12,160
-const int LOG_MSG = 3;LOG_MSG13,183
-const int LOG_DBG = 4;LOG_DBG14,206
+const int LOG_RAW = 1;LOG_RAW12,158
+const int LOG_ERR = 2;LOG_ERR13,181
+const int LOG_MSG = 3;LOG_MSG14,204
+const int LOG_DBG = 4;LOG_DBG15,227
 
 src/param.cpp,3054
 CParam::CParam()CParam6,75
 CParam* CParam::GetInstance()GetInstance9,96
-void CParam::setOnSampleInterval(int interval)setOnSampleInterval16,240
-void CParam::setOffSampleInterval(int interval)setOffSampleInterval21,337
-void CParam::setOffLatency(int latency)setOffLatency26,436
-void CParam::setDepolInterval(int interval)setDepolInterval31,519
-void CParam::setPolInterval(int interval)setPolInterval36,610
-void CParam::setAsynInterval(int interval)setAsynInterval41,697
-void CParam::setAssiInterval(int interval)setAssiInterval46,786
-void CParam::setStabCount(int count)setStabCount51,875
-void CParam::setStabErr(int err)setStabErr56,953
-void CParam::setTiggThreshold(int threshold)setTiggThreshold61,1022
-void CParam::setOnMeasureOpt(int opt)setOnMeasureOpt66,1115
-void CParam::setOffMeasureOpt(int opt)setOffMeasureOpt71,1194
-void CParam::setRangeOpt(int opt)setRangeOpt76,1275
-int CParam::getOnSampleInterval()getOnSampleInterval81,1346
-int CParam::getOffSampleInterval()getOffSampleInterval86,1426
-int CParam::getOffLatency()getOffLatency91,1508
-int CParam::getDepolInterval()getDepolInterval96,1576
-int CParam::getPolInterval()getPolInterval101,1650
-int CParam::getAsynInterval()getAsynInterval106,1720
-int CParam::getAssiInterval()getAssiInterval111,1792
-int CParam::getStabCount()getStabCount116,1864
-int CParam::getStabErr()getStabErr121,1930
-int CParam::getTiggThreshold()getTiggThreshold126,1992
-int CParam::getOnMeasureOpt()getOnMeasureOpt131,2066
-int CParam::getOffMeasureOpt()getOffMeasureOpt136,2138
-int CParam::getRangeOpt()getRangeOpt141,2212
-void CParam::setDcPotentialK(float K)setDcPotentialK146,2276
-void CParam::setDcPotentialB(float B)setDcPotentialB151,2353
-void CParam::setAcPotentialK(float K)setAcPotentialK156,2430
-void CParam::setAcPotentialB(float B)setAcPotentialB161,2507
-void CParam::setAcHiCurrentK(float K)setAcHiCurrentK166,2584
-void CParam::setAcHiCurrentB(float B)setAcHiCurrentB171,2661
-void CParam::setDcHiCurrentK(float K)setDcHiCurrentK176,2738
-void CParam::setDcHiCurrentB(float B)setDcHiCurrentB181,2815
-void CParam::setAcLoCurrentK(float K)setAcLoCurrentK186,2892
-void CParam::setAcLoCurrentB(float B)setAcLoCurrentB191,2969
-void CParam::setDcLoCurrentK(float K)setDcLoCurrentK196,3046
-void CParam::setDcLoCurrentB(float B)setDcLoCurrentB201,3123
-float CParam::getDcPotentialK()getDcPotentialK206,3200
-float CParam::getDcPotentialB()getDcPotentialB211,3268
-float CParam::getAcPotentialK()getAcPotentialK216,3336
-float CParam::getAcPotentialB()getAcPotentialB221,3404
-float CParam::getAcHiCurrentK()getAcHiCurrentK226,3472
-float CParam::getAcHiCurrentB()getAcHiCurrentB231,3540
-float CParam::getDcHiCurrentK()getDcHiCurrentK235,3607
-float CParam::getDcHiCurrentB()getDcHiCurrentB240,3675
-float CParam::getAcLoCurrentK()getAcLoCurrentK244,3742
-float CParam::getAcLoCurrentB()getAcLoCurrentB248,3809
-float CParam::getDcLoCurrentK()getDcLoCurrentK252,3876
-float CParam::getDcLoCurrentB()getDcLoCurrentB257,3944
+void CParam::setOnSampleInterval(int interval)setOnSampleInterval16,232
+void CParam::setOffSampleInterval(int interval)setOffSampleInterval21,329
+void CParam::setOffLatency(int latency)setOffLatency26,428
+void CParam::setDepolInterval(int interval)setDepolInterval31,511
+void CParam::setPolInterval(int interval)setPolInterval36,602
+void CParam::setAsynInterval(int interval)setAsynInterval41,689
+void CParam::setAssiInterval(int interval)setAssiInterval46,778
+void CParam::setStabCount(int count)setStabCount51,867
+void CParam::setStabErr(int err)setStabErr56,945
+void CParam::setTiggThreshold(int threshold)setTiggThreshold61,1014
+void CParam::setOnMeasureOpt(int opt)setOnMeasureOpt66,1107
+void CParam::setOffMeasureOpt(int opt)setOffMeasureOpt71,1186
+void CParam::setRangeOpt(int opt)setRangeOpt76,1267
+int CParam::getOnSampleInterval()getOnSampleInterval81,1338
+int CParam::getOffSampleInterval()getOffSampleInterval86,1418
+int CParam::getOffLatency()getOffLatency91,1500
+int CParam::getDepolInterval()getDepolInterval96,1568
+int CParam::getPolInterval()getPolInterval101,1642
+int CParam::getAsynInterval()getAsynInterval106,1712
+int CParam::getAssiInterval()getAssiInterval111,1784
+int CParam::getStabCount()getStabCount116,1856
+int CParam::getStabErr()getStabErr121,1922
+int CParam::getTiggThreshold()getTiggThreshold126,1984
+int CParam::getOnMeasureOpt()getOnMeasureOpt131,2058
+int CParam::getOffMeasureOpt()getOffMeasureOpt136,2130
+int CParam::getRangeOpt()getRangeOpt141,2204
+void CParam::setDcPotentialK(float K)setDcPotentialK146,2268
+void CParam::setDcPotentialB(float B)setDcPotentialB151,2345
+void CParam::setAcPotentialK(float K)setAcPotentialK156,2422
+void CParam::setAcPotentialB(float B)setAcPotentialB161,2499
+void CParam::setAcHiCurrentK(float K)setAcHiCurrentK166,2576
+void CParam::setAcHiCurrentB(float B)setAcHiCurrentB171,2653
+void CParam::setDcHiCurrentK(float K)setDcHiCurrentK176,2730
+void CParam::setDcHiCurrentB(float B)setDcHiCurrentB181,2807
+void CParam::setAcLoCurrentK(float K)setAcLoCurrentK186,2884
+void CParam::setAcLoCurrentB(float B)setAcLoCurrentB191,2961
+void CParam::setDcLoCurrentK(float K)setDcLoCurrentK196,3038
+void CParam::setDcLoCurrentB(float B)setDcLoCurrentB201,3115
+float CParam::getDcPotentialK()getDcPotentialK206,3192
+float CParam::getDcPotentialB()getDcPotentialB210,3259
+float CParam::getAcPotentialK()getAcPotentialK215,3327
+float CParam::getAcPotentialB()getAcPotentialB220,3395
+float CParam::getAcHiCurrentK()getAcHiCurrentK225,3463
+float CParam::getAcHiCurrentB()getAcHiCurrentB230,3531
+float CParam::getDcHiCurrentK()getDcHiCurrentK234,3598
+float CParam::getDcHiCurrentB()getDcHiCurrentB239,3666
+float CParam::getAcLoCurrentK()getAcLoCurrentK243,3733
+float CParam::getAcLoCurrentB()getAcLoCurrentB247,3800
+float CParam::getDcLoCurrentK()getDcLoCurrentK251,3867
+float CParam::getDcLoCurrentB()getDcLoCurrentB256,3935
 
 src/protocolUse.cpp,1059
 void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule21,383
 void protocolUse :: getString( string information )getString27,526
 int protocolUse :: EventHandler(string information)EventHandler32,623
 void protocolUse :: ProtocolOperate(string  information)ProtocolOperate67,1497
-int protocolUse :: handleLogin(string info)handleLogin127,3799
-int protocolUse :: handleExit(string info)handleExit152,4452
-int protocolUse :: handleUpInterval(string info)handleUpInterval176,5101
-int protocolUse :: handleUpParam(string info)handleUpParam271,9031
-int protocolUse :: handleOnData(string info)handleOnData360,12567
-int protocolUse :: handleOffData(string info)handleOffData549,20885
-int protocolUse :: handleAssistData(string info)handleAssistData712,27266
-int ToIntConvert(string theString)ToIntConvert803,30663
-string ToStringConvert(string theString)ToStringConvert813,30810
-float ToFloatConvert(string theString, double prec)ToFloatConvert827,31137
-string CtoString(const char * c)CtoString862,32047
+int protocolUse :: handleLogin(string info)handleLogin125,3801
+int protocolUse :: handleExit(string info)handleExit149,4453
+int protocolUse :: handleUpInterval(string info)handleUpInterval173,5102
+int protocolUse :: handleUpParam(string info)handleUpParam268,9044
+int protocolUse :: handleOnData(string info)handleOnData356,12563
+int protocolUse :: handleOffData(string info)handleOffData545,20881
+int protocolUse :: handleAssistData(string info)handleAssistData712,27471
+int ToIntConvert(string theString)ToIntConvert803,30868
+string ToStringConvert(string theString)ToStringConvert813,31015
+float ToFloatConvert(string theString, double prec)ToFloatConvert827,31342
+string CtoString(const char * c)CtoString862,32232
 
 src/jsonreader.cpp,0
 
-src/operate.cpp,432
+src/operate.cpp,423
 socketController theSocketC;theSocketC12,194
 protocolUse theprotocolUseC;theprotocolUseC13,223
-int client_fd=0; client_fd15,253
-pthread_t tid;  tid16,271
-sockaddr_in client_addr;  client_addr17,288
-socklen_t socklen = sizeof(client_addr); socklen18,315
-unsigned client_port=0;  client_port19,357
-char client_ip[20]; client_ip20,383
-void *run(void *arg)run23,407
-void server()server44,956
-int main()main65,1503
+int client_fd=0;client_fd15,253
+pthread_t tid;tid16,270
+sockaddr_in client_addr;client_addr17,285
+socklen_t socklen = sizeof(client_addr);socklen18,310
+unsigned client_port=0;client_port19,351
+char client_ip[20];client_ip20,375
+void *run(void *arg)run23,397
+void server()server44,943
+int main()main65,1470
 
 src/log.cpp,120
-void LogUp(char * file)LogUp10,153
-void LogDown()LogDown17,235
-void LOG(int type, string theinformation)LOG24,331
+void LogUp(char * file)LogUp11,176
+void LogDown()LogDown18,258
+void LOG(int type, string theinformation)LOG25,354
 
 start.sh,0

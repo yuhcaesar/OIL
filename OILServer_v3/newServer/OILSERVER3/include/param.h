@@ -1,6 +1,7 @@
 #ifndef __param_H__
 #define __param_H__
 #include <time.h>
+#include <map>
 using namespace std;
 
 const int MaxDepolLen = 6000000; // 10 * 60 * 1000ms
@@ -98,4 +99,6 @@ public:
 
         
 };
+static map<string, CParam> ParamArray;
 #endif
+  

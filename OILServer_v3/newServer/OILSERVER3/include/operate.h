@@ -3,8 +3,8 @@
 
 //#define TEST 1
 
-#ifndef TEST
+//#ifndef TEST
 #define LOGMOD 1
-#endif
+//#endif
 
 #endif

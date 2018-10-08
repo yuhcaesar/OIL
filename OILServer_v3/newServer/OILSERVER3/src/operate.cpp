@@ -12,17 +12,17 @@ DBController theDBC;
 socketController theSocketC;
 protocolUse theprotocolUseC;
 
-int client_fd=0; 
-pthread_t tid;  
-sockaddr_in client_addr;  
-socklen_t socklen = sizeof(client_addr); 
-unsigned client_port=0;  
-char client_ip[20]; 
+int client_fd=0;
+pthread_t tid;
+sockaddr_in client_addr;
+socklen_t socklen = sizeof(client_addr);
+unsigned client_port=0;
+char client_ip[20];
 
- 
+
 void *run(void *arg)
 {
-    int client_fd = *((int*)&arg);  
+    int client_fd = *((int*)&arg);
     bool canRun =true;
     while(canRun)
     {
@@ -36,7 +36,7 @@ void *run(void *arg)
 
         //cout<<"receive :"<<receiveString<<endl;
         theprotocolUseC.getString(receiveString);
-        //theSocketC.sendInformation(client_fd, "information" ); 
+        //theSocketC.sendInformation(client_fd, "information" );
 
     }
 }
@@ -46,25 +46,28 @@ void server()
     LOG(LOG_MSG,"server is opened......");
     LOG(LOG_MSG,"-------------------------------");
 
-    while(1)  
-    {  
+    while(1)
+    {
         //client_fd = accept(fd,(struct sockaddr *)&client_addr,&socklen);
         client_fd = theSocketC.acceptSocket();
-        if(client_fd<0)  
-        {  
+        if(client_fd<0)
+        {
             LOG(LOG_ERR,"server open failed");
-            theSocketC.closeServer(); 
-            return;  
-        }  
-        pthread_create(&tid,NULL,run,(void *)client_fd);  
-        pthread_detach(tid);  
-    }  
-    theSocketC.closeServer(); 
+            theSocketC.closeServer();
+            return;
+        }
+        pthread_create(&tid,NULL,run,(void *)client_fd);
+        pthread_detach(tid);
+    }
+    theSocketC.closeServer();
 }
 
 int main()
 {
     //freopen("log.txt", "a", stderr);
+#ifdef LOGMOD
+    LOG(LOG_MSG,"Log mod is active.");
+#endif
     LogUp("log.txt");
     theDBC.InitTheDBModule("localhost","root","tree","monitor");
     theSocketC.InitTheSocketModule(PORT);

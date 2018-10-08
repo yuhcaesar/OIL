@@ -78,7 +78,7 @@ void protocolUse :: ProtocolOperate(string  information)
     if(lengthAll < 48)
         return;
 
-    for ( int i = 0; i < lengthAll; i++ ) {
+    for ( int i = 0; i < lengthAll; i++ ) { // 
         if ( information.substr(i, LenHead) == Header ) {
             //cout << endl;
             //cout << "head " << information.substr(i, LenHead) << endl;
@@ -119,9 +119,7 @@ void protocolUse :: ProtocolOperate(string  information)
     if ( ret < 0 ) {
         LOG(LOG_ERR,"handle event failed");
     }
-
 }
-
 //-----------------------------------协议处理--------------------------------------------------//
 
 int protocolUse :: handleLogin(string info)
@@ -144,7 +142,6 @@ int protocolUse :: handleLogin(string info)
     os.open("./json/Login.json");
     os << sw.write(root);
     os.close();
-
 
     return 1;
 }
@@ -201,12 +198,12 @@ int protocolUse :: handleUpInterval(string info)
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA03).c_str());
     root["Data"]["Data03"] = to_string(tmpData * 100);
-    param->setOffLatency(tmpData);
+    param->setOffLatency(tmpData * 100);
     root["Parameters"]["OfflineSampleLantency"] = to_string(param->getOffLatency());
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA04).c_str());
     root["Data"]["Data04"] = to_string(tmpData * 100);
-    param->setDepolInterval(tmpData);
+    param->setDepolInterval(tmpData * 100);
     root["Parameters"]["DepolarizationInterval"] = to_string(param->getDepolInterval());
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA05).c_str());
@@ -281,7 +278,7 @@ int protocolUse :: handleUpParam(string info)
     root["Operation1"] = info.substr(UP_PARAM_OPERATION1);
     root["Operation2"] = info.substr(UP_PARAM_OPERATION2);
     root["Length"] = info.substr(UP_PARAM_LENGTH);
-        
+
     root["Trailer"] = info.substr(UP_PARAM_TRAILER(info.size()));
 
     float tmpData = 0;
@@ -305,7 +302,6 @@ int protocolUse :: handleUpParam(string info)
     param->setAcPotentialB(tmpData);
     root["Parameters"]["AcPotentialB"] = param->getAcPotentialB();
 
-        
     tmpData = ToFloatConvert(info.substr(UP_PARAM_DATA05), 2.0);
     //root["Data"]["Data05"] = info.substr(UP_PARAM_DATA05);
     param->setAcHiCurrentK(tmpData);
@@ -568,7 +564,7 @@ int protocolUse :: handleOffData(string info)
     time_t timer = time(NULL);
     string time_s = "";
     CParam * param = CParam::GetInstance();
-
+    //CParam * para
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d ", gmtime(&timer));
 
     tmp = ToIntConvert(info.substr(OFF_DATA_DATA01));
@@ -605,6 +601,7 @@ int protocolUse :: handleOffData(string info)
         long long tt_ms = 0;
         int tt_ms_part = 0;
         string time_ms = CtoString(timeBuf)+".000";
+        tt_ms = tt * 1000;
         for ( int i = 0; i < (length / batchNum / batch); i++ ) {
             root["Spot"]["Points_"+to_string(i)]["Time"] = time_ms;
             for ( int j = 0; j < batchNum; j++ ) {
@@ -622,7 +619,6 @@ int protocolUse :: handleOffData(string info)
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
             }
             //
-            tt_ms = tt * 1000;
             tt_ms_part = 0; // tt_ms microsecond part (without second part)
             if ( i < PreDepolLen / param->getDepolInterval() ) { // prev 120,000 ms
                 tt_ms += param->getDepolInterval();
@@ -631,12 +627,16 @@ int protocolUse :: handleOffData(string info)
             }
             tt = (time_t)round(tt_ms / 1000);
             tt_ms_part = (int)(tt_ms - tt * 1000);
-            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+
+            LOG(LOG_DBG, to_string(tt));
+            LOG(LOG_DBG, to_string(tt_ms_part));
+            LOG(LOG_DBG, to_string(param->getDepolInterval()));
+            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
 
             stringstream ss;
             ss << setfill('0') << setw(3) << to_string(tt_ms_part);
             time_ms = CtoString(timeBuf) + "." + ss.str();
- 
+            LOG(LOG_DBG, time_ms);
         }
     }
     else if ( param->getOffMeasureOpt() == 0x2 )
@@ -676,7 +676,7 @@ int protocolUse :: handleOffData(string info)
             }
             tt = (time_t)round(tt_ms / 1000);
             tt_ms_part = (int)(tt_ms - tt * 1000);
-            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
             stringstream ss;
             ss << setfill('0') << setw(3) << to_string(tt_ms_part);
             time_ms = CtoString(timeBuf) + "." + ss.str();
@@ -840,7 +840,7 @@ float ToFloatConvert(string theString, double prec)
     //printf("E:%s\n",E);
     unsigned int n = 0;
     sscanf(E, "%x", &n);
-        
+
     float theFloat = *((float*)&n);
 
     /*
@@ -852,11 +852,11 @@ float ToFloatConvert(string theString, double prec)
       float theFloat;
       stringstream ss;
       ss << std::hex << vert;
-        
+
       ss >> theFloat;
     */
     //cout <<"convert:"<< theString <<"->" << theFloat << endl;
-    
+
     return theFloat;
 }
 string CtoString(const char * c)

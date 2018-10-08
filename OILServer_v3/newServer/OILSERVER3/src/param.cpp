@@ -12,7 +12,7 @@ CParam* CParam::GetInstance()
                 m_pInstance = new CParam();
         return m_pInstance;
 }
-        
+
 void CParam::setOnSampleInterval(int interval)
 {
         this->m_OnSampleInterval = interval;
@@ -207,7 +207,6 @@ float CParam::getDcPotentialK()
 {
         return m_dcPotentialK;
 }
-
 float CParam::getDcPotentialB()
 {
         return m_dcPotentialB;
