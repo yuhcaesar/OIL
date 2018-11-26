@@ -59,6 +59,7 @@ int protocolUse :: EventHandler(string information)
     }
     else if ( operate2 == AssistDataEvent )
     {
+        LOG(LOG_DBG,"handle assist data...");
         ret = this->handleAssistData(information);
     }
     return ret;
@@ -253,10 +254,16 @@ int protocolUse :: handleUpInterval(string info)
     root["Parameters"]["RangeOption"] = to_string(param->getRangeOpt());
 
     //cout << root.toStyledString() << endl;
-    LOG(LOG_DBG,root.toStyledString());
+    LOG(LOG_DBG," [UP_INTERVAL] "+root.toStyledString());
     Json :: StyledWriter sw;
     ofstream os;
-    os.open("./json/UpParam.json");
+    char timeBuf[255] = {0};
+    time_t timer = time(NULL);
+    string time_s = "";
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&timer));
+    time_s = string(timeBuf);
+
+    os.open("./json/UpInterval_"+time_s+".json");
     os << sw.write(root);
     os.close();
 
@@ -342,11 +349,17 @@ int protocolUse :: handleUpParam(string info)
     param->setDcLoCurrentB(tmpData);
     root["Parameters"]["DcLoCurrentB"] = param->getDcLoCurrentB();
 
-    LOG(LOG_DBG,root.toStyledString());
+    LOG(LOG_DBG," [UP_PARAM]"+root.toStyledString());
 
     Json :: StyledWriter sw;
     ofstream os;
-    os.open("./json/UpInterval.json");
+    char timeBuf[255] = {0};
+    time_t timer = time(NULL);
+    string time_s = "";
+    strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&timer));
+    time_s = string(timeBuf);
+
+    os.open("./json/UpParam_"+time_s+".json");
     os << sw.write(root);
     os.close();
 
@@ -749,18 +762,21 @@ int protocolUse :: handleAssistData(string info)
     printf("%d:%s\n", (int)tt, timeBuf);
     tt += 8 * 3600; // Change to UTC+8
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
-
     length = info.size() - 56 - 4;
     printf("real len:%d\n", length);
+
+    int batchNum = 2;
+    int batch = 4;
+    int index = 4;
+    string sIndex = "";
+    string dName = "";
+    float result = 0;
+    int datum = 0;
     if ( param->getOffMeasureOpt() == 0x1 )
     {
-        int batchNum = 2;
-        int batch = 4;
-        int index = 4;
-        string sIndex = "";
-        string dName = "";
-        float result = 0;
-        int datum = 0;
+        batchNum = 2;
+        batch = 4;
+        index = 4;
         for ( int i = 0; i < (length / batchNum / batch); i++ ) {
             root["Spot"]["Points_"+to_string(i)]["Time"] = CtoString(timeBuf);
             for ( int j = 0; j < batchNum; j++ ) {
@@ -773,23 +789,43 @@ int protocolUse :: handleAssistData(string info)
                 {
                 case 0:
                     dName = "0_Temperature";
-                    result = 0.00042 * datum - 13.75;
+                    result = 0.01 * datum - 367.78;
+                    LOG(LOG_DBG, "[ass-tem-datum] " + to_string(datum));
+                    LOG(LOG_DBG, "[ass-tem-datum-str] " + info.substr(ASSIST_DATA_DATA_(index)));
                     break;
                 case 1:
                     dName = "1_BatteryLife";
-                    result = 0.01 * datum - 367.78;
+                    result = 0.00042 * datum - 13.75;
+                    LOG(LOG_DBG, "[ass-bat-datum] " + to_string(datum));
+                    LOG(LOG_DBG, "[ass-bat-datum-str] " + info.substr(ASSIST_DATA_DATA_(index)));
                     break;
                 }
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
             }
             tt += param->getOffSampleInterval();
-            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&tt));
+            strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
 
     LOG(LOG_DBG, root.toStyledString());
     //cout << root.toStyledString() << endl;
-
+    for ( int i = 0; i < (length / batchNum / batch); i++ ) {
+      stringstream ss;
+      ss << fixed << setprecision(2);
+      ss << "INSERT INTO `t_aux_data` VALUES ( NULL, '"
+         << ToStringConvert(info.substr(ASSIST_DATA_DID))
+         << "', '"
+         << root["Spot"]["Points_"+to_string(i)]["0_Temperature"].asFloat()
+         << "', '"
+         << root["Spot"]["Points_"+to_string(i)]["Time"].asString()
+         << "', '"
+         << root["Spot"]["Points_"+to_string(i)]["1_BatteryLife"].asFloat()
+         << "');" << endl;
+      LOG(LOG_DBG," [ASSISTDATA] " + ss.str());
+#ifndef TEST
+      this->theDBC.DBQuery(ss.str());
+#endif
+    }
     Json :: StyledWriter sw;
     ofstream os;
     os.open("./json/AssistData_"+time+".json");

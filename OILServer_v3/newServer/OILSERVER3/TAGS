@@ -104,7 +104,7 @@ include/onData.h,632
 #define ON_DATA_DATA_(ON_DATA_DATA_16,354
 #define ON_DATA_TAILER(ON_DATA_TAILER18,393
 
-include/param.h,1802
+include/param.h,1868
 #define __param_H____param_H__2,20
 const int MaxDepolLen = 6000000; // 10 * 60 * 1000msMaxDepolLen7,95
 const int PreDepolLen = 120000; // 2 * 60 * 1000msPreDepolLen8,148
@@ -124,19 +124,19 @@ class CParamCParam10,250
         int m_OnMeasureOpt = 1;m_OnMeasureOpt26,662
         int m_OffMeasureOpt = 1;m_OffMeasureOpt27,694
         int m_RangeOpt = 1;m_RangeOpt28,727
-        float m_dcPotentialK = 1.0;m_dcPotentialK30,756
-        float m_dcPotentialB = 0.0;m_dcPotentialB31,792
-        float m_acPotentialK = 1.0;m_acPotentialK32,828
-        float m_acPotentialB = 0.0;m_acPotentialB33,864
-        float m_acHiCurrentK = 1.0;m_acHiCurrentK34,900
-        float m_acHiCurrentB = 0.0;m_acHiCurrentB35,936
-        float m_dcHiCurrentK = 1.0;m_dcHiCurrentK36,972
-        float m_dcHiCurrentB = 0.0;m_dcHiCurrentB37,1008
-        float m_acLoCurrentK = 1.0;m_acLoCurrentK38,1044
-        float m_acLoCurrentB = 0.0;m_acLoCurrentB39,1080
-        float m_dcLoCurrentK = 1.0;m_dcLoCurrentK40,1116
-        float m_dcLoCurrentB = 0.0;m_dcLoCurrentB41,1152
-static map<string, CParam> ParamArray;ParamArray102,3062
+        float m_dcPotentialK = 0.00077936;m_dcPotentialK30,756
+        float m_dcPotentialB = -25.53793;m_dcPotentialB31,799
+        float m_acPotentialK = 0.00079597;m_acPotentialK32,841
+        float m_acPotentialB = -26.08252;m_acPotentialB33,884
+        float m_acHiCurrentK = 0.009270;m_acHiCurrentK34,926
+        float m_acHiCurrentB = -303.686;m_acHiCurrentB35,967
+        float m_dcHiCurrentK = 0.009270;m_dcHiCurrentK36,1008
+        float m_dcHiCurrentB = -303.686;m_dcHiCurrentB37,1049
+        float m_acLoCurrentK = 0.001850;m_acLoCurrentK38,1090
+        float m_acLoCurrentB = -60.7370;m_acLoCurrentB39,1131
+        float m_dcLoCurrentK = 0.001850;m_dcLoCurrentK40,1172
+        float m_dcLoCurrentB = -60.737;m_dcLoCurrentB41,1213
+static map<string, CParam> ParamArray;ParamArray102,3127
 
 include/jsonreader.h,33
 class JsonReaderJsonReader6,68
@@ -291,18 +291,18 @@ src/protocolUse.cpp,1059
 void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule21,383
 void protocolUse :: getString( string information )getString27,526
 int protocolUse :: EventHandler(string information)EventHandler32,623
-void protocolUse :: ProtocolOperate(string  information)ProtocolOperate67,1497
-int protocolUse :: handleLogin(string info)handleLogin125,3801
-int protocolUse :: handleExit(string info)handleExit149,4453
-int protocolUse :: handleUpInterval(string info)handleUpInterval173,5102
-int protocolUse :: handleUpParam(string info)handleUpParam268,9044
-int protocolUse :: handleOnData(string info)handleOnData356,12563
-int protocolUse :: handleOffData(string info)handleOffData545,20881
-int protocolUse :: handleAssistData(string info)handleAssistData712,27471
-int ToIntConvert(string theString)ToIntConvert803,30868
-string ToStringConvert(string theString)ToStringConvert813,31015
-float ToFloatConvert(string theString, double prec)ToFloatConvert827,31342
-string CtoString(const char * c)CtoString862,32232
+void protocolUse :: ProtocolOperate(string  information)ProtocolOperate68,1543
+int protocolUse :: handleLogin(string info)handleLogin126,3847
+int protocolUse :: handleExit(string info)handleExit150,4499
+int protocolUse :: handleUpInterval(string info)handleUpInterval174,5148
+int protocolUse :: handleUpParam(string info)handleUpParam275,9317
+int protocolUse :: handleOnData(string info)handleOnData369,13053
+int protocolUse :: handleOffData(string info)handleOffData558,21371
+int protocolUse :: handleAssistData(string info)handleAssistData725,27961
+int ToIntConvert(string theString)ToIntConvert839,32387
+string ToStringConvert(string theString)ToStringConvert849,32534
+float ToFloatConvert(string theString, double prec)ToFloatConvert863,32861
+string CtoString(const char * c)CtoString898,33751
 
 src/jsonreader.cpp,0
 

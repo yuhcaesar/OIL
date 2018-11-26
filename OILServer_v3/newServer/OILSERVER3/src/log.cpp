@@ -26,7 +26,8 @@ void LOG(int type, string theinformation)
 {
     time_t timer = time(NULL);
     string stime = "";
-    char timeBuf[255] = {0};
+
+char timeBuf[255] = {0};
     string stype ="";
     switch(type)
     {

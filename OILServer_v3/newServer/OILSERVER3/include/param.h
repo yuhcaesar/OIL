@@ -27,18 +27,18 @@ private:
         int m_OffMeasureOpt = 1;
         int m_RangeOpt = 1;
 
-        float m_dcPotentialK = 1.0;
-        float m_dcPotentialB = 0.0;
-        float m_acPotentialK = 1.0;
-        float m_acPotentialB = 0.0;
-        float m_acHiCurrentK = 1.0;
-        float m_acHiCurrentB = 0.0;
-        float m_dcHiCurrentK = 1.0;
-        float m_dcHiCurrentB = 0.0;
-        float m_acLoCurrentK = 1.0;
-        float m_acLoCurrentB = 0.0;
-        float m_dcLoCurrentK = 1.0;
-        float m_dcLoCurrentB = 0.0;
+        float m_dcPotentialK = 0.00077936;
+        float m_dcPotentialB = -25.53793;
+        float m_acPotentialK = 0.00079597;
+        float m_acPotentialB = -26.08252;
+        float m_acHiCurrentK = 0.009270;
+        float m_acHiCurrentB = -303.686;
+        float m_dcHiCurrentK = 0.009270;
+        float m_dcHiCurrentB = -303.686;
+        float m_acLoCurrentK = 0.001850;
+        float m_acLoCurrentB = -60.7370;
+        float m_dcLoCurrentK = 0.001850;
+        float m_dcLoCurrentB = -60.737;
 
 public:
         static CParam* GetInstance();
