@@ -18,13 +18,17 @@ public:
 
         mysql_init(&connection);
         LOG(LOG_MSG,"try to start DB");
-        IpSave = hostIP.c_str();
-        userSave = user.c_str();
-        passwordSave = password.c_str();
-        databaseSave =database.c_str();
+        strIp = hostIP;
+        strUser = user;
+        strPasswd = password;
+        strDb = database;
+        IpSave = strIp.c_str();
+        userSave = strUser.c_str();
+        passwordSave = strPasswd.c_str();
+        databaseSave = strDb.c_str();
 
         if(mysql_real_connect(&connection,IpSave,userSave,passwordSave,databaseSave,0,NULL,0))
-        { 
+        {
             LOG(LOG_MSG,"DB linked");
         }
         else
@@ -40,7 +44,7 @@ public:
         mysql_init(&connection);
         LOG(LOG_MSG,"try to start DB");
         if(mysql_real_connect(&connection,IpSave,userSave,passwordSave,databaseSave,0,NULL,0))
-        { 
+        {
             LOG(LOG_MSG,"DB linked");
         }
         else
@@ -50,7 +54,7 @@ public:
         }
         LOG(LOG_MSG,"DB opened");
     }
-      
+
     void DBQuery(string sql)
     {
         if(mysql_query(&connection, sql.c_str()))
@@ -88,7 +92,10 @@ private:
 
     const char* passwordSave ;
     const char* databaseSave ;
-
+    string strIp;
+    string strUser;
+    string strPasswd;
+    string strDb;
     
 };
 

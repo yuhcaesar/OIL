@@ -241,7 +241,7 @@ int protocolUse :: handleUpInterval(string info)
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA11).c_str());
     root["Data"]["Data11"] = to_string(tmpData);
     param->setOnMeasureOpt(tmpData);
-    root["Parameters"]["OnlineMeasureOption"] = to_string(param->getOffMeasureOpt());
+    root["Parameters"]["OnlineMeasureOption"] = to_string(param->getOnMeasureOpt());
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA12).c_str());
     root["Data"]["Data12"] = to_string(tmpData);
@@ -772,7 +772,7 @@ int protocolUse :: handleAssistData(string info)
     string dName = "";
     float result = 0;
     int datum = 0;
-    if ( param->getOffMeasureOpt() == 0x1 )
+    if ( 1 )
     {
         batchNum = 2;
         batch = 4;

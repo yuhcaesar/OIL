@@ -55,18 +55,22 @@ include/downParam.h,1125
 #define DOWN_PARAM_DATA(DOWN_PARAM_DATA23,641
 #define DOWN_PARAM_TRAILER(DOWN_PARAM_TRAILER24,681
 
-include/dataBaseUse.h,555
+include/dataBaseUse.h,695
 #define __dataBaseUse_H__ __dataBaseUse_H__2,30
 class DBControllerDBController12,163
     void InitTheDBModule( string hostIP,string user,string password,string database) InitTheDBModule16,193
-    void reStart()reStart37,828
-    void DBQuery(string sql)DBQuery54,1289
-    void DBSelect(string sql)  DBSelect67,1624
-    MYSQL connection;connection85,2084
-    const char* IpSave ;IpSave86,2106
-    const char* userSave ;userSave87,2131
-    const char* passwordSave ;passwordSave89,2159
-    const char* databaseSave ;databaseSave90,2190
+    void reStart()reStart41,932
+    void DBQuery(string sql)DBQuery58,1386
+    void DBSelect(string sql)  DBSelect71,1721
+    MYSQL connection;connection89,2181
+    const char* IpSave ;IpSave90,2203
+    const char* userSave ;userSave91,2228
+    const char* passwordSave ;passwordSave93,2256
+    const char* databaseSave ;databaseSave94,2287
+    string strIp;strIp95,2318
+    string strUser;strUser96,2336
+    string strPasswd;strPasswd97,2356
+    string strDb;strDb98,2378
 
 include/protocolUse.h,909
 #define __protocolUse_H__ __protocolUse_H__2,29
@@ -295,14 +299,14 @@ void protocolUse :: ProtocolOperate(string  information)ProtocolOperate68,1543
 int protocolUse :: handleLogin(string info)handleLogin126,3847
 int protocolUse :: handleExit(string info)handleExit150,4499
 int protocolUse :: handleUpInterval(string info)handleUpInterval174,5148
-int protocolUse :: handleUpParam(string info)handleUpParam275,9317
-int protocolUse :: handleOnData(string info)handleOnData369,13053
-int protocolUse :: handleOffData(string info)handleOffData558,21371
-int protocolUse :: handleAssistData(string info)handleAssistData725,27961
-int ToIntConvert(string theString)ToIntConvert839,32387
-string ToStringConvert(string theString)ToStringConvert849,32534
-float ToFloatConvert(string theString, double prec)ToFloatConvert863,32861
-string CtoString(const char * c)CtoString898,33751
+int protocolUse :: handleUpParam(string info)handleUpParam275,9316
+int protocolUse :: handleOnData(string info)handleOnData369,13052
+int protocolUse :: handleOffData(string info)handleOffData558,21370
+int protocolUse :: handleAssistData(string info)handleAssistData725,27960
+int ToIntConvert(string theString)ToIntConvert839,32355
+string ToStringConvert(string theString)ToStringConvert849,32502
+float ToFloatConvert(string theString, double prec)ToFloatConvert863,32829
+string CtoString(const char * c)CtoString898,33719
 
 src/jsonreader.cpp,0
 
