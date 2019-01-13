@@ -9,7 +9,7 @@ autoRestartMysql.sh,0
 
 monitor-20180731卢春江.sql,0
 
-include/socketUse.h,950
+include/socketUse.h,953
 #define __socketUse_H__ __socketUse_H__2,28
 #define CONNECT_NUM CONNECT_NUM14,248
 #define MAX_NUM MAX_NUM15,270
@@ -18,79 +18,86 @@ include/socketUse.h,950
 class socketControllersocketController26,379
     void InitTheSocketModule(int port)InitTheSocketModule29,412
     void sendInformation(int clientSock,string information)sendInformation35,533
-    string getInformation(int clientSock)getInformation49,891
-    int acceptSocket()acceptSocket92,2181
-    void closeClient(int clientSock)closeClient97,2267
-    void closeServer()closeServer101,2344
-    struct sockaddr_in serverAddr;serverAddr110,2419
-    int port  = PORT;port111,2454
-    int maxNumber =100;maxNumber112,2476
-    int connectNumber = 5;connectNumber113,2500
-    int serverSock=-1;serverSock114,2527
-    int clientSock=-1;clientSock115,2550
-    bool isStarted = false;isStarted116,2573
-    void startTheServer(int port)startTheServer118,2606
+    string getInformation(int clientSock)getInformation59,1345
+    int acceptSocket()acceptSocket102,2635
+    void closeClient(int clientSock)closeClient106,2715
+    void closeServer()closeServer110,2791
+    struct sockaddr_in serverAddr;serverAddr119,2866
+    int port  = PORT;port120,2901
+    int maxNumber =100;maxNumber121,2923
+    int connectNumber = 5;connectNumber122,2947
+    int serverSock=-1;serverSock123,2974
+    int clientSock=-1;clientSock124,2997
+    bool isStarted = false;isStarted125,3020
+    void startTheServer(int port)startTheServer127,3049
 
-include/downParam.h,1125
+include/downParam.h,1132
 #define __downParam_H____downParam_H__2,24
 #define DOWN_PARAM_HEADER DOWN_PARAM_HEADER4,49
 #define DOWN_PARAM_VID DOWN_PARAM_VID5,79
 #define DOWN_PARAM_PID DOWN_PARAM_PID6,106
 #define DOWN_PARAM_DID DOWN_PARAM_DID7,134
-#define DOWN_PARAM_OPERATION1 DOWN_PARAM_OPERATION18,163
-#define DOWN_PARAM_OPERATION2 DOWN_PARAM_OPERATION29,198
-#define DOWN_PARAM_LENGTH DOWN_PARAM_LENGTH10,233
-#define DOWN_PARAM_DATA01 DOWN_PARAM_DATA0111,264
-#define DOWN_PARAM_DATA02 DOWN_PARAM_DATA0212,295
-#define DOWN_PARAM_DATA03 DOWN_PARAM_DATA0313,326
-#define DOWN_PARAM_DATA04 DOWN_PARAM_DATA0414,357
-#define DOWN_PARAM_DATA05 DOWN_PARAM_DATA0515,388
-#define DOWN_PARAM_DATA06 DOWN_PARAM_DATA0616,419
-#define DOWN_PARAM_DATA07 DOWN_PARAM_DATA0717,450
-#define DOWN_PARAM_DATA08 DOWN_PARAM_DATA0818,481
-#define DOWN_PARAM_DATA09 DOWN_PARAM_DATA0919,513
-#define DOWN_PARAM_DATA10 DOWN_PARAM_DATA1020,545
-#define DOWN_PARAM_DATA11 DOWN_PARAM_DATA1121,577
-#define DOWN_PARAM_DATA12 DOWN_PARAM_DATA1222,609
-#define DOWN_PARAM_DATA(DOWN_PARAM_DATA23,641
-#define DOWN_PARAM_TRAILER(DOWN_PARAM_TRAILER24,681
+#define DOWN_PARAM_BIGHEAD DOWN_PARAM_BIGHEAD8,163
+#define DOWN_PARAM_OPERATION1 DOWN_PARAM_OPERATION110,196
+#define DOWN_PARAM_OPERATION2 DOWN_PARAM_OPERATION211,231
+#define DOWN_PARAM_LENGTH DOWN_PARAM_LENGTH12,266
+#define DOWN_PARAM_DATA01 DOWN_PARAM_DATA0113,297
+#define DOWN_PARAM_DATA02 DOWN_PARAM_DATA0214,330
+#define DOWN_PARAM_DATA03 DOWN_PARAM_DATA0315,363
+#define DOWN_PARAM_DATA04 DOWN_PARAM_DATA0416,396
+#define DOWN_PARAM_DATA05 DOWN_PARAM_DATA0517,429
+#define DOWN_PARAM_DATA06 DOWN_PARAM_DATA0618,462
+#define DOWN_PARAM_DATA07 DOWN_PARAM_DATA0719,495
+#define DOWN_PARAM_DATA08 DOWN_PARAM_DATA0820,528
+#define DOWN_PARAM_DATA09 DOWN_PARAM_DATA0921,561
+#define DOWN_PARAM_DATA10 DOWN_PARAM_DATA1022,594
+#define DOWN_PARAM_DATA11 DOWN_PARAM_DATA1123,627
+#define DOWN_PARAM_DATA12 DOWN_PARAM_DATA1224,660
+#define DOWN_PARAM_TRAILER(DOWN_PARAM_TRAILER25,693
 
-include/dataBaseUse.h,695
+include/dataBaseUse.h,754
 #define __dataBaseUse_H__ __dataBaseUse_H__2,30
 class DBControllerDBController12,163
     void InitTheDBModule( string hostIP,string user,string password,string database) InitTheDBModule16,193
-    void reStart()reStart41,932
-    void DBQuery(string sql)DBQuery58,1386
-    void DBSelect(string sql)  DBSelect71,1721
-    MYSQL connection;connection89,2181
-    const char* IpSave ;IpSave90,2203
-    const char* userSave ;userSave91,2228
-    const char* passwordSave ;passwordSave93,2256
-    const char* databaseSave ;databaseSave94,2287
-    string strIp;strIp95,2318
-    string strUser;strUser96,2336
-    string strPasswd;strPasswd97,2356
-    string strDb;strDb98,2378
+    void reStart()reStart42,971
+    void DBQuery(string sql)DBQuery59,1425
+    string strDBSelectItem(string sql)strDBSelectItem89,2204
+    void DBclose()DBclose122,3243
+    MYSQL connection;connection127,3323
+    const char* IpSave ;IpSave128,3345
+    const char* userSave ;userSave129,3370
+    const char* passwordSave ;passwordSave131,3398
+    const char* databaseSave ;databaseSave132,3429
+    string strIp;strIp133,3460
+    string strUser;strUser134,3478
+    string strPasswd;strPasswd135,3498
+    string strDb;strDb136,3520
 
-include/protocolUse.h,909
-#define __protocolUse_H__ __protocolUse_H__2,29
-const string LoginEvent = "30";LoginEvent11,213
-const string ExitEvent = "31";ExitEvent12,245
-const string UpIntervalEvent = "35";UpIntervalEvent13,276
-const string UpParamEvent = "3d";UpParamEvent14,313
-const string OnDataEvent = "43";OnDataEvent15,347
-const string OffDataEvent = "44";OffDataEvent16,380
-const string AssistDataEvent = "45";AssistDataEvent17,414
-const string Header = "21233c3c";Header19,452
-const string Tailer = "3e3e";Tailer20,486
-const short LenHead = 8;LenHead21,516
-const short LenTail = 4;LenTail22,541
-const short LenLength = 4;LenLength23,566
-const short IdxOp2 = 42;IdxOp224,593
-const short IdxLen_O = 44; // Ordinary package LENTH indexIdxLen_O25,618
-const short IdxLen_D = 46; // Data package LENTH indexIdxLen_D26,677
-class protocolUseprotocolUse28,733
-        DBController theDBC;theDBC34,875
+include/protocolUse.h,1253
+#define __protocolUse_H____protocolUse_H__2,26
+const string LoginEvent = "30";LoginEvent11,206
+const string ExitEvent = "31";ExitEvent12,238
+const string UpIntervalEvent = "35";UpIntervalEvent13,269
+const string UpParamEvent = "3d";UpParamEvent14,306
+const string OnDataEvent = "43";OnDataEvent15,340
+const string OffDataEvent = "44";OffDataEvent16,373
+const string AssistDataEvent = "45";AssistDataEvent17,407
+const string InfoEndFlag = "55";InfoEndFlag19,445
+const string InfoNoEndFlag = "aa";InfoNoEndFlag20,478
+const string Header = "21233c3c";Header22,514
+const string Tailer = "3e3e";Tailer23,548
+const short LenHead = 8;LenHead24,578
+const short LenTail = 4;LenTail25,603
+const short LenLength = 4;LenLength26,628
+const short IdxOp2 = 42; // op2's index in an info messageIdxOp227,655
+const short IdxOp3 = 44; // op3's indexIdxOp328,714
+const short IdxLen_O = 44; // Ordinary package LENTH indexIdxLen_O29,754
+const short IdxLen_D = 46; // Data package LENTH indexIdxLen_D30,813
+class protocolUseprotocolUse32,869
+    DBController theDBC;theDBC40,1067
+    bool isIntervalUpdated = false;isIntervalUpdated57,1887
+    bool isInfoEnd = false;isInfoEnd58,1923
+    string strInterval;strInterval59,1951
 
 include/onData.h,632
 #define __onData_H____onData_H__2,21
@@ -205,7 +212,7 @@ include/operate.h,69
 #define __operate_H____operate_H__2,22
 #define LOGMOD LOGMOD7,78
 
-include/upInterval.h,1231
+include/upInterval.h,1177
 #define __upInterval_H____upInterval_H__2,25
 #define UP_INTERVAL_HEADER UP_INTERVAL_HEADER4,51
 #define UP_INTERVAL_VID UP_INTERVAL_VID5,82
@@ -226,9 +233,8 @@ include/upInterval.h,1231
 #define UP_INTERVAL_DATA10 UP_INTERVAL_DATA1020,561
 #define UP_INTERVAL_DATA11 UP_INTERVAL_DATA1121,593
 #define UP_INTERVAL_DATA12 UP_INTERVAL_DATA1222,625
-#define UP_INTERVAL_DATA13 UP_INTERVAL_DATA1323,657
-#define UP_INTERVAL_TRAILER_ UP_INTERVAL_TRAILER_24,689
-#define UP_INTERVAL_TRAILER(UP_INTERVAL_TRAILER25,723
+#define UP_INTERVAL_TRAILER_ UP_INTERVAL_TRAILER_23,657
+#define UP_INTERVAL_TRAILER(UP_INTERVAL_TRAILER24,691
 
 include/log.h,185
 #define __LOG_H____LOG_H__2,18
@@ -291,26 +297,29 @@ float CParam::getAcLoCurrentB()getAcLoCurrentB247,3800
 float CParam::getDcLoCurrentK()getDcLoCurrentK251,3867
 float CParam::getDcLoCurrentB()getDcLoCurrentB256,3935
 
-src/protocolUse.cpp,1059
-void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule21,383
-void protocolUse :: getString( string information )getString27,526
-int protocolUse :: EventHandler(string information)EventHandler32,623
-void protocolUse :: ProtocolOperate(string  information)ProtocolOperate68,1543
-int protocolUse :: handleLogin(string info)handleLogin126,3847
-int protocolUse :: handleExit(string info)handleExit150,4499
-int protocolUse :: handleUpInterval(string info)handleUpInterval174,5148
-int protocolUse :: handleUpParam(string info)handleUpParam275,9316
-int protocolUse :: handleOnData(string info)handleOnData369,13052
-int protocolUse :: handleOffData(string info)handleOffData558,21370
-int protocolUse :: handleAssistData(string info)handleAssistData725,27960
-int ToIntConvert(string theString)ToIntConvert839,32355
-string ToStringConvert(string theString)ToStringConvert849,32502
-float ToFloatConvert(string theString, double prec)ToFloatConvert863,32829
-string CtoString(const char * c)CtoString898,33719
+src/protocolUse.cpp,1284
+void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtocolModule22,406
+void protocolUse :: getString( string information )getString28,549
+bool protocolUse :: checkIntervalReady()checkIntervalReady35,712
+int protocolUse :: EventHandler(string information)EventHandler43,954
+void protocolUse :: ProtocolOperate(string  information)ProtocolOperate101,2567
+int protocolUse :: handleLogin(string info)handleLogin159,4871
+int protocolUse :: handleExit(string info)handleExit183,5523
+int protocolUse :: handleDownInterval(string info)handleDownInterval206,6171
+string protocolUse :: getStrDownInterval()getStrDownInterval336,10672
+int protocolUse :: handleUpInterval(string info)handleUpInterval343,10816
+int protocolUse :: handleUpParam(string info)handleUpParam440,14985
+int protocolUse :: handleOnData(string info)handleOnData534,18721
+int protocolUse :: handleOffData(string info)handleOffData723,27039
+int protocolUse :: handleAssistData(string info)handleAssistData890,33630
+int ToIntConvert(string theString)ToIntConvert1004,38025
+string ToStringConvert(string theString)ToStringConvert1014,38172
+float ToFloatConvert(string theString, double prec)ToFloatConvert1028,38499
+string CtoString(const char * c)CtoString1063,39389
 
 src/jsonreader.cpp,0
 
-src/operate.cpp,423
+src/operate.cpp,424
 socketController theSocketC;theSocketC12,194
 protocolUse theprotocolUseC;theprotocolUseC13,223
 int client_fd=0;client_fd15,253
@@ -320,8 +329,8 @@ socklen_t socklen = sizeof(client_addr);socklen18,310
 unsigned client_port=0;client_port19,351
 char client_ip[20];client_ip20,375
 void *run(void *arg)run23,397
-void server()server44,943
-int main()main65,1470
+void server()server51,1178
+int main()main72,1705
 
 src/log.cpp,120
 void LogUp(char * file)LogUp11,176

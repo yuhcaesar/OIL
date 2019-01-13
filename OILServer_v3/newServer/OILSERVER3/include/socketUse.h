@@ -34,14 +34,24 @@ public:
 
     void sendInformation(int clientSock,string information)
     {
+        //string info = "21233c3c3c3c31315368656e59616e672d30303131350012000502050a00000f0203000c845301013e3e";
+        string info = information;
+        unsigned char *pcInfo = (unsigned char*)malloc( sizeof(unsigned char) * info.size() / 2);
+        for ( int i = 0; i < info.size(); i = i + 2 ) {
+            const char * E = info.substr(i,2).c_str();
+            unsigned char c = 0;
+            sscanf(E, "%02x", &c);
+            pcInfo[i/2] = c;
+        }
+
         if(isStarted)
         {
-            if(write(clientSock,information.c_str(),MAX_NUM)==-1)//sizeof(information.c_str())
+            if( write( clientSock, pcInfo, sizeof(unsigned char) * info.size() / 2) == -1 )
             {
                 LOG(LOG_ERR,"socked send fail");
                 return;
             }
-            LOG(LOG_ERR,"send "+information);
+            LOG(LOG_DBG,"send "+info);
         }
     }
 
@@ -93,11 +103,10 @@ public:
     {
         return accept(serverSock,NULL,NULL);
     }
-     
     void closeClient(int clientSock)
     {
         close(clientSock);
-    } 
+    }
     void closeServer()
     {
         close(serverSock);
@@ -114,7 +123,7 @@ private:
     int serverSock=-1;
     int clientSock=-1;
     bool isStarted = false;
-    
+
     void startTheServer(int port)
     {
         serverSock=-1;

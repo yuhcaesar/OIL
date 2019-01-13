@@ -11,6 +11,7 @@
 #include "param.h"
 #include "upParam.h"
 #include "upInterval.h"
+#include "downParam.h"
 #include "onData.h"
 #include "offData.h"
 #include "assistData.h"
@@ -26,13 +27,24 @@ void protocolUse :: InitTheProtocolModule( DBController theDBCIn )
 
 void protocolUse :: getString( string information )
 {
+    this->isIntervalUpdated = false;
+    this->isInfoEnd = false;
     this->ProtocolOperate(information);
 }
 
+bool protocolUse :: checkIntervalReady()
+{
+    LOG(LOG_DBG, "checkingIntervalReady...");
+    if (this->isIntervalUpdated && this->isInfoEnd) {
+        LOG(LOG_DBG, "yeeesss!");
+    }
+    return (this->isIntervalUpdated && this->isInfoEnd);
+}
 int protocolUse :: EventHandler(string information)
 {
     short ret = -1;
     string operate2 = information.substr(IdxOp2, 2);
+    string operate3 = information.substr(IdxOp3, 2);
     if ( operate2 == LoginEvent )
     {
         ret = this->handleLogin(information);
@@ -61,6 +73,27 @@ int protocolUse :: EventHandler(string information)
     {
         LOG(LOG_DBG,"handle assist data...");
         ret = this->handleAssistData(information);
+    }
+
+    if ( operate2 == OnDataEvent ||
+         operate2 == OffDataEvent ||
+         operate2 == AssistDataEvent )
+    {
+        LOG(LOG_DBG, "checking operate3 ... " + operate3);
+        if ( operate3 == InfoEndFlag )
+        {
+            LOG(LOG_DBG, "operate3 is EndFlag... " + operate3);
+            this->isInfoEnd = true;
+            ret = this->handleDownInterval(information);
+        }
+        else if ( operate3 == InfoNoEndFlag )
+        {
+            this->isInfoEnd = false;
+        }
+        else {
+            LOG(LOG_ERR, "Operate3 is an unexpected number: " + operate3);
+            this->isInfoEnd = false;
+        }
     }
     return ret;
 }
@@ -170,7 +203,143 @@ int protocolUse :: handleExit(string info)
 
     return 1;
 }
+int protocolUse :: handleDownInterval(string info)
+{
+    CParam* param = CParam::GetInstance();
+    string strDownInterval = "";
+    this->isIntervalUpdated = false;
+    this->strInterval = "";
+    LOG(LOG_DBG,"handleDownInerval...");
+    strDownInterval = info.substr(DOWN_PARAM_BIGHEAD) +
+        "30" + "35" + "0012";
+    char c[8];
+    //select threshold from t_aux_set where gid = "ShenYang-003" && id = ( select max(id) from t_aux_set);
+    //LOG(LOG_DBG,"sql test: "+this->theDBC.strDBSelectItem("select threshold from t_aux_set where gid = \"ShenYang-003\" "));
+    string gid = ToStringConvert(info.substr(ASSIST_DATA_DID));
+    string strSQL = "select onInterval from t_power_on_set where gid='" + gid + "'";
+    string strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    int datum = 0;
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA01, datum);
+    strDownInterval += c;
+    strSQL = "select offInterval from t_power_off_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA02, datum);
+    strDownInterval += c;
+    strSQL = "select delayTime from t_power_off_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA03, datum/100);
+    strDownInterval += c;
+    strSQL = "select depolarInterval from t_power_off_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA04, datum/100);
+    strDownInterval += c;
+    strSQL = "select polarizationTime from t_power_on_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA05, datum);
+    strDownInterval += c;
+    strSQL = "select uploadInterval from t_aux_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA06, datum);
+    strDownInterval += c;
+    strSQL = "select auxSampleInterval from t_aux_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA07, datum);
+    strDownInterval += c;
+    strSQL = "select stableTime from t_power_off_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA08, datum);
+    strDownInterval += c;
+    strSQL = "select stableError from t_power_off_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA09, datum);
+    strDownInterval += c;
+// 协议用正数表示负数，实际传递时用全的是无符号的正数。
+    strSQL = "select threshold from t_aux_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA10, datum * -1);
+    strDownInterval += c;
+    strSQL = "select sampleSet from t_power_on_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA11, datum);
+    strDownInterval += c;
+    strSQL = "select poweroffSet from t_power_off_set where gid='" + gid + "'";
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA12, datum);
+    strDownInterval += c;
 
+    strDownInterval += "3e3e";
+
+    this->isIntervalUpdated = true;
+    this->strInterval = strDownInterval;
+    return 1;
+}
+string protocolUse :: getStrDownInterval()
+{
+    if ( this->isIntervalUpdated )
+        return this->strInterval;
+    else
+        return "";
+}
 int protocolUse :: handleUpInterval(string info)
 {
     Json::Value root;
@@ -195,7 +364,6 @@ int protocolUse :: handleUpInterval(string info)
     root["Data"]["Data02"] = to_string(tmpData);
     param->setOffSampleInterval(tmpData);
     root["Parameters"]["OfflineSampleInterval"] = to_string(param->getOffSampleInterval());
-
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA03).c_str());
     root["Data"]["Data03"] = to_string(tmpData * 100);
@@ -227,7 +395,6 @@ int protocolUse :: handleUpInterval(string info)
     param->setStabCount(tmpData);
     root["Parameters"]["StableCount"] = to_string(param->getStabCount());
 
-
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA09).c_str());
     root["Data"]["Data09"] = to_string(tmpData);
     param->setStabErr(tmpData);
@@ -235,7 +402,7 @@ int protocolUse :: handleUpInterval(string info)
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA10).c_str());
     root["Data"]["Data10"] = to_string(tmpData * -1);
-    param->setTiggThreshold(tmpData);
+    param->setTiggThreshold(tmpData * -1);
     root["Parameters"]["TiggerThreshold"] = to_string(param->getTiggThreshold());
 
     tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA11).c_str());
@@ -269,8 +436,6 @@ int protocolUse :: handleUpInterval(string info)
 
     return 1;
 }
-
-
 
 int protocolUse :: handleUpParam(string info)
 {
@@ -715,7 +880,7 @@ int protocolUse :: handleOffData(string info)
     ofstream os;
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", gmtime(&timer));
     time_s = string(timeBuf);
-    os.open("./json/OnData_"+time_s+".json");
+    os.open("./json/OffData_"+time_s+".json");
     os << sw.write(root);
     os.close();
 

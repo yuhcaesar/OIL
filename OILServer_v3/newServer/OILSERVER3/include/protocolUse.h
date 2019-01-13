@@ -1,9 +1,9 @@
-#ifndef __protocolUse_H__   
-#define __protocolUse_H__   
+#ifndef __protocolUse_H__
+#define __protocolUse_H__
 #include <string.h>
 #include <iostream>
 #include <sstream>
-#include <time.h> 
+#include <time.h>
 #include "dataBaseUse.h"
 using namespace std;
 
@@ -16,36 +16,47 @@ const string OnDataEvent = "43";
 const string OffDataEvent = "44";
 const string AssistDataEvent = "45";
 
+const string InfoEndFlag = "55";
+const string InfoNoEndFlag = "aa";
+
 const string Header = "21233c3c";
 const string Tailer = "3e3e";
 const short LenHead = 8;
 const short LenTail = 4;
 const short LenLength = 4;
-const short IdxOp2 = 42;
+const short IdxOp2 = 42; // op2's index in an info message
+const short IdxOp3 = 44; // op3's index
 const short IdxLen_O = 44; // Ordinary package LENTH index
 const short IdxLen_D = 46; // Data package LENTH index
 
 class protocolUse
 {
 public:
-        void InitTheProtocolModule( DBController theDBCIn );
-        void getString(string information);
+    void InitTheProtocolModule( DBController theDBCIn );
+    void getString(string information);
+    bool checkIntervalReady();
+    string getStrDownInterval();
 private:
-        DBController theDBC;
-        //更复杂的协议处理
-        void ProtocolOperate(string  information);
-        int EventHandler(string information);
-        //-----------------------------------协议处理--------------------------------------------------//
-        int handleLogin(string info);
-        int handleExit(string info);
-        int handleUpInterval(string info);
-        int handleUpParam(string info);
-        int handleOnData(string info);
-        int handleOffData(string info);
-        int handleAssistData(string info);
-        //----------------------------------------------------------------------------------------//
-        //作为示例存在的处理方式
-        void saveStringForDemo(string getIn);
+    DBController theDBC;
+    //更复杂的协议处理
+    void ProtocolOperate(string  information);
+    int EventHandler(string information);
+    //-----------------------------------协议处理--------------------------------------------------//
+    int handleLogin(string info);
+    int handleExit(string info);
+    int handleUpInterval(string info);
+    int handleUpParam(string info);
+    int handleOnData(string info);
+    int handleOffData(string info);
+    int handleAssistData(string info);
+    int handleDownInterval(string info);
+    //----------------------------------------------------------------------------------------//
+    //作为示例存在的处理方式
+    void saveStringForDemo(string getIn);
+    //----------------------------------------------------------------------------------------//
+    bool isIntervalUpdated = false;
+    bool isInfoEnd = false;
+    string strInterval;
 };
 int ToIntConvert(string theString);
 float ToFloatConvert(string theString, double prec);

@@ -17,6 +17,7 @@ public:
     {
 
         mysql_init(&connection);
+        //&connect = mysql_init(NULL);
         LOG(LOG_MSG,"try to start DB");
         strIp = hostIP;
         strUser = user;
@@ -64,27 +65,64 @@ public:
             if(!mysql_ping(&connection))
                 reStart();
         }
-        else 
+        else
             LOG(LOG_MSG,"DB operate over");
     }
-
-    void DBSelect(string sql)  
-    {  
+/*
+    void DBSelect(string sql)
+    {
         mysql_query(&connection, sql.c_str());
-        MYSQL_RES *result;  
-        MYSQL_ROW row; 
-        result = mysql_use_result(&connection); 
+        MYSQL_RES *result;
+        MYSQL_ROW row;
+        result = mysql_use_result(&connection);
         while(row = mysql_fetch_row(result))
-        {  
+        {
             for(int j=0; j < mysql_num_fields(result); j++)
-            {  
+            {
                 cout << row[j] << " ";
-            }  
-            cout << endl;  
+            }
+            cout << endl;
         }
-		mysql_free_result(result);
+        mysql_free_result(result);
     }
-
+*/
+    string strDBSelectItem(string sql)
+    {
+        MYSQL_RES *result;
+        string s = "";
+        //LOG(LOG_DBG,"sql select querying... ");
+        if (mysql_query(&this->connection, sql.c_str())) {
+            LOG(LOG_DBG,"DB operate fail");
+            LOG(LOG_ERR , mysql_error(&connection));
+            if(!mysql_ping(&connection))
+                reStart();
+        }
+        else {
+          MYSQL_ROW row;
+          result = mysql_use_result(&connection);
+          if (mysql_num_fields(result) > 1) {
+              //printf("i:%i\n",mysql_num_fields(result));
+              LOG(LOG_ERR,"Multi-fields are not support.");
+          }
+          else {
+              row = mysql_fetch_row(result);
+              if (row!=NULL) {
+                  s = row[0];
+              }
+              else {
+                  LOG(LOG_ERR,"Empty set: "+sql);
+              }
+          }
+          //int i = stoi(row[0]);
+          mysql_free_result(result);
+        }
+        LOG(LOG_DBG,"sql select querying... "+s);
+        return s;
+    }
+    void DBclose()
+    {
+        mysql_close(&this->connection);
+    }
 private:
     MYSQL connection;
     const char* IpSave ;
@@ -96,7 +134,6 @@ private:
     string strUser;
     string strPasswd;
     string strDb;
-    
 };
 
 
