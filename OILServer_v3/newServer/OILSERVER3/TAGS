@@ -31,7 +31,7 @@ class socketControllersocketController26,379
     bool isStarted = false;isStarted125,3020
     void startTheServer(int port)startTheServer127,3049
 
-include/downParam.h,1132
+include/downParam.h,1184
 #define __downParam_H____downParam_H__2,24
 #define DOWN_PARAM_HEADER DOWN_PARAM_HEADER4,49
 #define DOWN_PARAM_VID DOWN_PARAM_VID5,79
@@ -53,25 +53,26 @@ include/downParam.h,1132
 #define DOWN_PARAM_DATA10 DOWN_PARAM_DATA1022,594
 #define DOWN_PARAM_DATA11 DOWN_PARAM_DATA1123,627
 #define DOWN_PARAM_DATA12 DOWN_PARAM_DATA1224,660
-#define DOWN_PARAM_TRAILER(DOWN_PARAM_TRAILER25,693
+#define DOWN_PARAM_DATA13 DOWN_PARAM_DATA1325,693
+#define DOWN_PARAM_TRAILER(DOWN_PARAM_TRAILER26,726
 
 include/dataBaseUse.h,754
 #define __dataBaseUse_H__ __dataBaseUse_H__2,30
 class DBControllerDBController12,163
     void InitTheDBModule( string hostIP,string user,string password,string database) InitTheDBModule16,193
-    void reStart()reStart42,971
-    void DBQuery(string sql)DBQuery59,1425
-    string strDBSelectItem(string sql)strDBSelectItem89,2204
-    void DBclose()DBclose122,3243
-    MYSQL connection;connection127,3323
-    const char* IpSave ;IpSave128,3345
-    const char* userSave ;userSave129,3370
-    const char* passwordSave ;passwordSave131,3398
-    const char* databaseSave ;databaseSave132,3429
-    string strIp;strIp133,3460
-    string strUser;strUser134,3478
-    string strPasswd;strPasswd135,3498
-    string strDb;strDb136,3520
+    void reStart()reStart42,984
+    void DBQuery(string sql)DBQuery59,1454
+    string strDBSelectItem(string sql)strDBSelectItem89,2247
+    void DBclose()DBclose122,3297
+    MYSQL connection;connection127,3377
+    const char* IpSave ;IpSave128,3399
+    const char* userSave ;userSave129,3424
+    const char* passwordSave ;passwordSave131,3452
+    const char* databaseSave ;databaseSave132,3483
+    string strIp;strIp133,3514
+    string strUser;strUser134,3532
+    string strPasswd;strPasswd135,3552
+    string strDb;strDb136,3574
 
 include/protocolUse.h,1253
 #define __protocolUse_H____protocolUse_H__2,26
@@ -212,7 +213,7 @@ include/operate.h,69
 #define __operate_H____operate_H__2,22
 #define LOGMOD LOGMOD7,78
 
-include/upInterval.h,1177
+include/upInterval.h,1231
 #define __upInterval_H____upInterval_H__2,25
 #define UP_INTERVAL_HEADER UP_INTERVAL_HEADER4,51
 #define UP_INTERVAL_VID UP_INTERVAL_VID5,82
@@ -233,8 +234,9 @@ include/upInterval.h,1177
 #define UP_INTERVAL_DATA10 UP_INTERVAL_DATA1020,561
 #define UP_INTERVAL_DATA11 UP_INTERVAL_DATA1121,593
 #define UP_INTERVAL_DATA12 UP_INTERVAL_DATA1222,625
-#define UP_INTERVAL_TRAILER_ UP_INTERVAL_TRAILER_23,657
-#define UP_INTERVAL_TRAILER(UP_INTERVAL_TRAILER24,691
+#define UP_INTERVAL_DATA13 UP_INTERVAL_DATA1323,657
+#define UP_INTERVAL_TRAILER_ UP_INTERVAL_TRAILER_24,689
+#define UP_INTERVAL_TRAILER(UP_INTERVAL_TRAILER25,723
 
 include/log.h,185
 #define __LOG_H____LOG_H__2,18
@@ -302,20 +304,20 @@ void protocolUse :: InitTheProtocolModule( DBController theDBCIn )InitTheProtoc
 void protocolUse :: getString( string information )getString28,549
 bool protocolUse :: checkIntervalReady()checkIntervalReady35,712
 int protocolUse :: EventHandler(string information)EventHandler43,954
-void protocolUse :: ProtocolOperate(string  information)ProtocolOperate101,2567
-int protocolUse :: handleLogin(string info)handleLogin159,4871
-int protocolUse :: handleExit(string info)handleExit183,5523
-int protocolUse :: handleDownInterval(string info)handleDownInterval206,6171
-string protocolUse :: getStrDownInterval()getStrDownInterval336,10672
-int protocolUse :: handleUpInterval(string info)handleUpInterval343,10816
-int protocolUse :: handleUpParam(string info)handleUpParam440,14985
-int protocolUse :: handleOnData(string info)handleOnData534,18721
-int protocolUse :: handleOffData(string info)handleOffData723,27039
-int protocolUse :: handleAssistData(string info)handleAssistData890,33630
-int ToIntConvert(string theString)ToIntConvert1004,38025
-string ToStringConvert(string theString)ToStringConvert1014,38172
-float ToFloatConvert(string theString, double prec)ToFloatConvert1028,38499
-string CtoString(const char * c)CtoString1063,39389
+void protocolUse :: ProtocolOperate(string  information)ProtocolOperate104,2729
+int protocolUse :: handleLogin(string info)handleLogin162,5033
+int protocolUse :: handleExit(string info)handleExit186,5685
+int protocolUse :: handleDownInterval(string info)handleDownInterval209,6333
+string protocolUse :: getStrDownInterval()getStrDownInterval347,11152
+int protocolUse :: handleUpInterval(string info)handleUpInterval354,11296
+int protocolUse :: handleUpParam(string info)handleUpParam451,15465
+int protocolUse :: handleOnData(string info)handleOnData545,19201
+int protocolUse :: handleOffData(string info)handleOffData750,27935
+int protocolUse :: handleAssistData(string info)handleAssistData929,34830
+int ToIntConvert(string theString)ToIntConvert1051,39417
+string ToStringConvert(string theString)ToStringConvert1061,39564
+float ToFloatConvert(string theString, double prec)ToFloatConvert1075,39891
+string CtoString(const char * c)CtoString1110,40781
 
 src/jsonreader.cpp,0
 

@@ -59,7 +59,10 @@ int protocolUse :: EventHandler(string information)
     }
     else if ( operate2 == UpParamEvent )
     {
+        LOG(LOG_DBG,"UP_Param event is triggered. No InfoEnd Flag needed.");
         ret = this->handleUpParam(information);
+        this->isInfoEnd = true;
+        ret = this->handleDownInterval(information);
     }
     else if ( operate2 == OnDataEvent )
     {
@@ -211,7 +214,7 @@ int protocolUse :: handleDownInterval(string info)
     this->strInterval = "";
     LOG(LOG_DBG,"handleDownInerval...");
     strDownInterval = info.substr(DOWN_PARAM_BIGHEAD) +
-        "30" + "35" + "0012";
+        "30" + "36" + "0013";
     char c[8];
     //select threshold from t_aux_set where gid = "ShenYang-003" && id = ( select max(id) from t_aux_set);
     //LOG(LOG_DBG,"sql test: "+this->theDBC.strDBSelectItem("select threshold from t_aux_set where gid = \"ShenYang-003\" "));
@@ -326,7 +329,15 @@ int protocolUse :: handleDownInterval(string info)
     }
     sprintf(c, DOWN_PARAM_DATA12, datum);
     strDownInterval += c;
-
+    strSQL = "select sapmleRangeSet from t_power_on_set where gid='" + gid + "'"; // YES, sapmle
+    strSQLItem = this->theDBC.strDBSelectItem(strSQL);
+    if (strSQLItem != "") {
+        datum = stoi(strSQLItem);
+    } else {
+        return 0;
+    }
+    sprintf(c, DOWN_PARAM_DATA13, datum);
+    strDownInterval += c;
     strDownInterval += "3e3e";
 
     this->isIntervalUpdated = true;
@@ -415,8 +426,8 @@ int protocolUse :: handleUpInterval(string info)
     param->setOffMeasureOpt(tmpData);
     root["Parameters"]["OfflineMeasureOption"] = to_string(param->getOffMeasureOpt());
 
-    tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA12).c_str());
-    root["Data"]["Data12"] = to_string(tmpData);
+    tmpData = ToIntConvert(info.substr(UP_INTERVAL_DATA13).c_str());
+    root["Data"]["Data13"] = to_string(tmpData);
     param->setRangeOpt(tmpData);
     root["Parameters"]["RangeOption"] = to_string(param->getRangeOpt());
 
@@ -571,6 +582,10 @@ int protocolUse :: handleOnData(string info)
     //printf("%d:%s\n", (int)tt, timeBuf);
     LOG(LOG_DBG,string(timeBuf));
     tt += 8 * 3600;
+    // date fixed
+    if ( tt > timer + 3600 ) {
+        tt -= 24 * 3600;
+    }
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
     length = info.size() - 56 - 4;
     //printf("real len:%d\n", length);
@@ -624,6 +639,10 @@ int protocolUse :: handleOnData(string info)
                 //LOG(LOG_DBG, to_string(i)+" "+(timeBuf));
             }
             tt += param->getOnSampleInterval();
+            // date fixed
+            if ( tt > timer + 3600 ) {
+                tt -= 24 * 3600;
+            }
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
@@ -660,6 +679,10 @@ int protocolUse :: handleOnData(string info)
             root["Spot"]["Points_"+to_string(i)]["0_DcPotential"] = 0;
             root["Spot"]["Points_"+to_string(i)]["1_AcPotential"] = 0;
             tt += param->getOnSampleInterval();
+            // date fixed
+            if ( tt > timer + 3600 ) {
+                tt -= 24 * 3600;
+            }
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
@@ -690,6 +713,10 @@ int protocolUse :: handleOnData(string info)
             root["Spot"]["Points_"+to_string(i)]["2_DcCurrent"] = 0;
             root["Spot"]["Points_"+to_string(i)]["3_AcCurent"] = 0;
             tt += param->getOnSampleInterval();
+            // date fixed
+            if ( tt > timer + 3600 ) {
+                tt -= 24 * 3600;
+            }
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }
@@ -759,6 +786,10 @@ int protocolUse :: handleOffData(string info)
     time_t tt = mktime(tm_time);
     printf("%d:%s\n", (int)tt, timeBuf);
     tt += 8 * 3600; // Change to UTC+8
+    // date fixed
+    if ( tt > timer + 3600 ) {
+        tt -= 24 * 3600;
+    }
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
 
     length = info.size() - 56 - 4;
@@ -809,6 +840,10 @@ int protocolUse :: handleOffData(string info)
             LOG(LOG_DBG, to_string(tt));
             LOG(LOG_DBG, to_string(tt_ms_part));
             LOG(LOG_DBG, to_string(param->getDepolInterval()));
+            // date fixed
+            if ( tt > timer + 3600 ) {
+                tt -= 24 * 3600;
+            }
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
 
             stringstream ss;
@@ -854,6 +889,10 @@ int protocolUse :: handleOffData(string info)
             }
             tt = (time_t)round(tt_ms / 1000);
             tt_ms_part = (int)(tt_ms - tt * 1000);
+            // date fixed
+            if ( tt > timer + 3600 ) {
+                tt -= 24 * 3600;
+            }
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
             stringstream ss;
             ss << setfill('0') << setw(3) << to_string(tt_ms_part);
@@ -926,6 +965,10 @@ int protocolUse :: handleAssistData(string info)
     time_t tt = mktime(tm_time);
     printf("%d:%s\n", (int)tt, timeBuf);
     tt += 8 * 3600; // Change to UTC+8
+    // date fixed
+    if ( tt > timer + 3600 ) {
+        tt -= 24 * 3600;
+    }
     strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
     length = info.size() - 56 - 4;
     printf("real len:%d\n", length);
@@ -968,6 +1011,10 @@ int protocolUse :: handleAssistData(string info)
                 root["Spot"]["Points_"+to_string(i)][dName] = result;
             }
             tt += param->getOffSampleInterval();
+            // date fixed
+            if ( tt > timer + 3600 ) {
+                tt -= 24 * 3600;
+            }
             strftime(timeBuf, sizeof(timeBuf), "%Y-%m-%d %H:%M:%S", localtime(&tt));
         }
     }

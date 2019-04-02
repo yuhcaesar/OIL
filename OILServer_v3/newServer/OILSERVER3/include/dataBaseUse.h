@@ -34,8 +34,8 @@ public:
         }
         else
         {
-            LOG(LOG_ERR,"DB link failed");
-            LOG(LOG_ERR,mysql_error(&connection));
+            LOG(LOG_ERR,"[init] DB link failed");
+            LOG(LOG_ERR,mysql_error(&this->connection));
         }
         LOG(LOG_MSG,"DB opened");
     }
@@ -50,8 +50,8 @@ public:
         }
         else
         {
-            LOG(LOG_ERR,"DB link failed");
-            LOG(LOG_ERR, mysql_error(&connection));
+            LOG(LOG_ERR,"[restart] DB link failed");
+            LOG(LOG_ERR, mysql_error(&this->connection));
         }
         LOG(LOG_MSG,"DB opened");
     }
@@ -60,9 +60,9 @@ public:
     {
         if(mysql_query(&connection, sql.c_str()))
         {
-            LOG(LOG_ERR,"DB operate fail");
+            LOG(LOG_ERR,"[Query] DB operate fail");
             LOG(LOG_ERR , mysql_error(&connection));
-            if(!mysql_ping(&connection))
+            if(!mysql_ping(&this->connection))
                 reStart();
         }
         else
@@ -92,7 +92,7 @@ public:
         string s = "";
         //LOG(LOG_DBG,"sql select querying... ");
         if (mysql_query(&this->connection, sql.c_str())) {
-            LOG(LOG_DBG,"DB operate fail");
+            LOG(LOG_DBG,"[Select] DB operation fail");
             LOG(LOG_ERR , mysql_error(&connection));
             if(!mysql_ping(&connection))
                 reStart();

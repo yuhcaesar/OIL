@@ -22,6 +22,7 @@
 #define DOWN_PARAM_DATA10 "%04x"
 #define DOWN_PARAM_DATA11 "%02x"
 #define DOWN_PARAM_DATA12 "%02x"
+#define DOWN_PARAM_DATA13 "%02x"
 #define DOWN_PARAM_TRAILER(x) x-4,4
 
 #endif

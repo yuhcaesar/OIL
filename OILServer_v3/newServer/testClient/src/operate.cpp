@@ -105,11 +105,11 @@ int main()
         sleep(1);
         //发送
         //sendString  = assistdata;
-        if(write(clientSock,period_new,sizeof(period_new))==-1)
-          {
-            printf("send error!\n");
-          }
-        string info = "21233c3c3c3c31315368656e59616e672d3030313035001200140c050a1e00010303000a03e801013e3e";
+        //if(write(clientSock,period_new,sizeof(period_new))==-1)
+        //  {
+        //    printf("send error!\n");
+        //  }
+        string info = "21233c3c3c3c31315368656e59616e672d3030333035001300140c050a1e00010303000a03e80101013e3e";
         unsigned char *pC = (unsigned char*)malloc( sizeof(unsigned char) * info.size() / 2);
         for ( int i = 0; i < info.size(); i = i + 2 ) {
             const char * E = info.substr(i,2).c_str();
@@ -122,7 +122,7 @@ int main()
             printf("send error!\n");
         }
 
-        info = "21233c3c3c3c31315368656e59616e672d3030313145550009012c1a99aba4b63e3e";
+        info = "21233c3c3c3c31315368656e59616e672d3030333145550009012c1a99aba4b63e3e";
         pC = (unsigned char*)malloc( sizeof(unsigned char) * info.size() / 2);
         for ( int i = 0; i < info.size(); i = i + 2 ) {
           const char * E = info.substr(i,2).c_str();
