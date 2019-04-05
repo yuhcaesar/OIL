@@ -1,0 +1,5 @@
+OILServer_v3/newServer/OILSERVER3/log.txt
+*.txt
+OILServer_v3/newServer/OILSERVER3/json/*
+*.o
+*.json

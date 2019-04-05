@@ -1,5 +1,0 @@
-ps
-
-找到operate进程号码
-
-kill -9 进程号码
