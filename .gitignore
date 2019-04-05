@@ -1,4 +1,4 @@
-.txt
-.o
-.json
+*.txt
+*.o
+*.json
 log.txt*
