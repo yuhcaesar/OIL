@@ -1,0 +1,9 @@
+http://39.104.89.196:8080/icpscloudOILNew3/facility/getDevDetail1Action.action
+
+上传的文件名就这个了暂时先不改了
+
+新版网址
+http://39.104.89.196:8080/monitor17/monitor/login!loginInput.action
+
+201805032149网址
+http://39.104.89.196:8080/monitor/login!loginInput.action

@@ -1,0 +1,63 @@
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\bin\Debug\serverPlatform.exe
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\bin\Debug\serverPlatform.pdb
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\bin\Debug\MySql.Data.dll
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\MainWindow.baml
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\App.g.cs
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform_MarkupCompile.cache
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform.exe
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+C:\Users\Administrator\AppData\Local\Temporary Projects\serverPlatform\obj\x86\Debug\serverPlatform.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.exe
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\bin\Debug\serverPlatform.exe
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\bin\Debug\serverPlatform.pdb
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\App.g.cs
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform_MarkupCompile.cache
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
+C:\Users\Administrator\Desktop\linkMySQL\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.exe
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\bin\Debug\serverPlatform.exe
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\bin\Debug\serverPlatform.pdb
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\MainWindow.baml
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\App.g.cs
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform_MarkupCompile.cache
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
+C:\Users\Administrator\Desktop\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
+E:\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.exe
+E:\serverPlatform\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.exe
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\bin\Debug\serverPlatform.exe
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\bin\Debug\serverPlatform.pdb
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.csprojResolveAssemblyReference.cache
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\MainWindow.baml
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\MainWindow.g.cs
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\App.g.cs
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform_MarkupCompile.cache
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
+E:\工程存档\serverPlatform（这是一个网络连接和数据库）\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.exe
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.pdb
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\bin\Debug\serverPlatform.exe
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\bin\Debug\serverPlatform.pdb
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.csprojResolveAssemblyReference.cache
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\MainWindow.baml
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\MainWindow.g.cs
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\App.g.cs
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform_MarkupCompile.cache
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.g.resources
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.Properties.Resources.resources
+D:\gitWorks\OIL\OIL\测试用小工程\serverPlatform\obj\x86\Debug\serverPlatform.csproj.GenerateResource.Cache
